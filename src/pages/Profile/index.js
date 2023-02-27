@@ -1,3 +1,5 @@
+import Header from "../../components/Header";
+
 import styled from "styled-components";
 import userPic from '../../assets/images/users/jennifer.png'
 
@@ -162,74 +164,77 @@ const Text = styled.p`
 //component
 const Profile = () => {
     return (
-        <Container>
-            <Background> Background Image </Background>
-            <Main>
-                <UserContainer>
-                    <UserLeftWrapper>
-                        <UserDetails>
-                            <Image src={userPic}></Image>
-                            <Name>Jennifer Smith</Name>
-                            <Location>Zürich, Switzerland</Location>
-                        </UserDetails>
-                        <Button>Edit profile</Button>
-                    </UserLeftWrapper>
-                    <UserRightWrapper>
-                        <UserInfo>
-                            <UserInfoLeft>
-                                <UserAbout>
-                                    <Text>About</Text>
-                                    <TextAbout>Lorem ipsum dolor sit amet, vim ut quas volumus probatus, has tantas laudem iracundia et, ad per utamur ceteros apeirian</TextAbout>
-                                </UserAbout>
-                                <UserContactDetails>
-                                    <UserEmail>
-                                        <Text>Email</Text>
-                                        <Text>jennifersmith@gmail.com</Text>
-                                    </UserEmail>
-                                    <UserPhone>
-                                        <Text>Phone</Text>
-                                        <Text>123-456-7890</Text>
-                                    </UserPhone>
-                                </UserContactDetails>
-                            </UserInfoLeft>
-                            <UserInfoRight>
-                                <Text>Things I like</Text>
-                                <LabelContainer>
-                                    <Label>Cooking</Label>
-                                    <Label>Travel</Label>
-                                    <Label>Reading</Label>
-                                    <Label>Swimming</Label>
-                                    <Label>Running</Label>
-                                </LabelContainer>
-                            </UserInfoRight>
-                        </UserInfo>
-                        <UserNumbers>
-                            <div>
-                                <Number>34</Number>
-                                <p>Posts</p>
-                            </div>
-                            <div>
-                                <Number>256</Number>
-                                <p>Likes</p>
-                            </div>
-                            <div>
-                                <Number>98</Number>
-                                <p>Friends</p>
-                            </div>
-                            <div>
-                                <Number>129</Number>
-                                <p>Followers</p>
-                            </div>
-                            <div>
-                                <Number>154</Number>
-                                <p>Following</p>
-                            </div>
-                        </UserNumbers>
-                    </UserRightWrapper>
-                </UserContainer>
-                <div>Profile posts</div>
-            </Main>
-        </Container>
+        <>
+            <Header />
+            <Container>
+                <Background> Background Image </Background>
+                <Main>
+                    <UserContainer>
+                        <UserLeftWrapper>
+                            <UserDetails>
+                                <Image src={userPic}></Image>
+                                <Name>Jennifer Smith</Name>
+                                <Location>Zürich, Switzerland</Location>
+                            </UserDetails>
+                            <Button>Edit profile</Button>
+                        </UserLeftWrapper>
+                        <UserRightWrapper>
+                            <UserInfo>
+                                <UserInfoLeft>
+                                    <UserAbout>
+                                        <Text>About</Text>
+                                        <TextAbout>Lorem ipsum dolor sit amet, vim ut quas volumus probatus, has tantas laudem iracundia et, ad per utamur ceteros apeirian</TextAbout>
+                                    </UserAbout>
+                                    <UserContactDetails>
+                                        <UserEmail>
+                                            <Text>Email</Text>
+                                            <Text>jennifersmith@gmail.com</Text>
+                                        </UserEmail>
+                                        <UserPhone>
+                                            <Text>Phone</Text>
+                                            <Text>123-456-7890</Text>
+                                        </UserPhone>
+                                    </UserContactDetails>
+                                </UserInfoLeft>
+                                <UserInfoRight>
+                                    <Text>Things I like</Text>
+                                    <LabelContainer>
+                                        <Label>Cooking</Label>
+                                        <Label>Travel</Label>
+                                        <Label>Reading</Label>
+                                        <Label>Swimming</Label>
+                                        <Label>Running</Label>
+                                    </LabelContainer>
+                                </UserInfoRight>
+                            </UserInfo>
+                            <UserNumbers>
+                                <div>
+                                    <Number>34</Number>
+                                    <p>Posts</p>
+                                </div>
+                                <div>
+                                    <Number>256</Number>
+                                    <p>Likes</p>
+                                </div>
+                                <div>
+                                    <Number>98</Number>
+                                    <p>Friends</p>
+                                </div>
+                                <div>
+                                    <Number>129</Number>
+                                    <p>Followers</p>
+                                </div>
+                                <div>
+                                    <Number>154</Number>
+                                    <p>Following</p>
+                                </div>
+                            </UserNumbers>
+                        </UserRightWrapper>
+                    </UserContainer>
+                    <div>Profile posts</div>
+                </Main>
+            </Container>
+        </>
     )
 }
 

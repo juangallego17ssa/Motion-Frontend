@@ -4,14 +4,14 @@ import SignUp from './pages/SignUp';
 import Posts from './pages/Posts';
 import Profile from './pages/Profile';
 import Friends from './pages/Friends';
-import Header from './components/Header';
+
 import RouteProtected from './components/RouteProtected/RouteProtected';
 
 
 function App() {
   return (
     <div className="App">
-      <Header />
+     
       <Routes>
         <Route path='/' element={<SignUp />} />
         <Route path='/posts' element={<RouteProtected route={<Posts />} />} />
