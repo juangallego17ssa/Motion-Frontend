@@ -1,11 +1,15 @@
 import styled from "styled-components";
+import Header from "../../components/Header";
 
 
 
 const Friends = () => {
 
   return (
-    <span>Friends</span>
+    <>
+      <Header />
+      <span>Friends</span>
+    </>
   )
 }
 
