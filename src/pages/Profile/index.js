@@ -1,6 +1,11 @@
+import Header from "../../components/Header";
+
 const Profile = () => {
     return (
-        <span>Profile</span>
+        <>
+            <Header />
+            <span>Profile</span>
+        </>
     )
 }
 
