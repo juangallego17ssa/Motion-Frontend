@@ -1,9 +1,8 @@
 import './App.css';
-
 import { Routes, Route } from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import Posts from './pages/Posts';
-import Profile from './pages/SignUp';
+import Profile from './pages/Profile';
 import Friends from './pages/Friends';
 import Header from './components/Header';
 import RouteProtected from './components/RouteProtected/RouteProtected';
