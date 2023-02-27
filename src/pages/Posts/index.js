@@ -1,6 +1,10 @@
+import Header from "../../components/Header";
 const Posts = () => {
     return (
-        <span>Posts</span>
+        <>
+         <Header />
+         <span>Posts</span>
+        </>
     )
 }
 
