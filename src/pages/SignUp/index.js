@@ -1,6 +1,4 @@
-import axios from "axios";
-import { useSelector } from "react-redux";
-import tshirtAPI from "../axios/tshirtAPI";
+import motionAPI from '../../axios/motionAPI'
 
 const Login = () => {
   // Prepare the request for login in and getting the token
@@ -17,7 +15,7 @@ const Login = () => {
   // Fetch the data and save the token in the local storage
   const handleLogin = async () => {
     try {
-      const token = (await tshirtAPI("token/", myConfig)).data.access;
+      const token = (await motionAPI("token/", myConfig)).data.access;
       console.log(token);
       localStorage.setItem("token", token);
     } catch (exception) {
