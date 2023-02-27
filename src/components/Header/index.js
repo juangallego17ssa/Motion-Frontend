@@ -9,12 +9,8 @@ const Header = () => {
                 <h1>Motion page</h1>
             </div>
             <div className="rightHeader">
-                <Link to="/">Home</Link>
-                <Link to="/login">Login</Link>
-                <Link to="/cart">Cart</Link>
+                <Link to="/">SignUp</Link>
             </div>
-
-
         </StyledHeader>
     )
 }
