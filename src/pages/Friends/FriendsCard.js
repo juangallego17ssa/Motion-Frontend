@@ -8,7 +8,7 @@ const StyledFriendCard = styled.div`
     padding: 30px;
     display: flex;  flex-direction: column;
     justify-content: flex-start; align-items: center;
-    /* height: 489px;  */
+    height: 489px; 
     width: 362px;
     border-radius: 5px;
     background-color: #FFF;
@@ -65,12 +65,26 @@ const Button = styled.button`
         font-weight: 600;
         } 
 `;
+const Img = styled.div`
+  clip-path: circle(90px at 80% 65%);
+  background-color: #F2F2F2 ;
+`;
+const User = styled.p`
+  display: flex; justify-content: center; align-items: center;
+  width: 90px; height: 90px; border-radius: 50px;
+  background-color: #F2F2F2;
+  font-size: 1.5rem; font-weight: 600;
+`
 //-------Component--------->
 export default function FriendsCard({user}) {
     // console.log(user)
   return (
     <StyledFriendCard >
       <FlexDiv>
+        <div>
+          {user.avatar?(<Img src={user.avatar}/>):(<User>{user.first_name.charAt(0).toUpperCase()}</User>)}
+        </div>
+        
         <img className='img' src={user.avatar}/>
         <p className='name'>{user.first_name} {user.last_name}</p>
         <p className='country'>{user.location}</p>
