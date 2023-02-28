@@ -8,15 +8,14 @@ import SignUp from "./pages/SignUp/Components/SignUp/SignUp";
 import Success from "./pages/SignUp/Components/Success/Success";
 import Validation from "./pages/SignUp/Components/Validation/Validation";
 import Posts from "./pages/Posts";
-import Profile from "./pages/SignUp";
+import Profile from "./pages/Profile";
 import Friends from "./pages/Friends";
-import Header from "./components/Header";
 import RouteProtected from "./components/RouteProtected/RouteProtected";
 
 function App() {
   return (
     <div className="App">
-     
+
       <Routes>
         <Route path="/" element={<Root />} />
         <Route path="/home" element={<Home />}>
