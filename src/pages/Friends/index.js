@@ -1,5 +1,20 @@
 import styled from "styled-components";
 import Header from "../../components/Header";
+import FriendsCard from "./FriendsCard";
+
+
+//-------STYLE--------->
+const StyledFriends = styled.div`
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  /* margin-top: 80px; */
+  height: 100vh;
+  background-color: #F2F2F2;
+ 
+`;
+
 
 
 
@@ -8,7 +23,12 @@ const Friends = () => {
   return (
     <>
       <Header />
-      <span>Friends</span>
+    <StyledFriends>
+      <div>
+        <p>Friends</p>
+        <FriendsCard/>
+      </div>
+    </StyledFriends>
     </>
   )
 }
