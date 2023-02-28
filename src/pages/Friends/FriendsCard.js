@@ -8,7 +8,8 @@ const StyledFriendCard = styled.div`
     padding: 30px;
     display: flex;  flex-direction: column;
     justify-content: flex-start; align-items: center;
-    height: 489px; width: 362px;
+    /* height: 489px;  */
+    width: 362px;
     border-radius: 5px;
     background-color: #FFF;
     gap: 30px;
@@ -34,6 +35,7 @@ const FlexDiv = styled.div`
     gap: .3rem;
    .img{
     width: 90px;
+    border-radius: 50px;
    }
    .name{
     font-size: 22px;
