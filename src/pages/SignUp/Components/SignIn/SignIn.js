@@ -70,7 +70,7 @@ const SignIn = () => {
                 
         // Fetch the data and save the token in the local storage
         try {
-            const response = (await motionAPI("token/", myConfig)).data;
+            const response = (await motionAPI("auth/token/", myConfig)).data;
             const token = response.access;
             const user = response.user
             localStorage.setItem("token", token);

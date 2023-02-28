@@ -53,7 +53,7 @@ const SignUp = () => {
     // Fetch the data and save the token in the local storage
     try {
       setError("");
-      const response = await motionAPI("registration/", myConfig);
+      const response = await motionAPI("auth/registration/", myConfig);
       if (response.status === 200) {
         setEmailHome(email)
         navigate("/home/success/")

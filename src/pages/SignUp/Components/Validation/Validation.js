@@ -98,7 +98,7 @@ const Validation = () => {
                 
         // Fetch the data and save the token in the local storage
         try {
-            const response = (await motionAPI("registration/validation/", myConfig)).data;
+            const response = (await motionAPI("auth/registration/validation/", myConfig)).data;
             localStorage.setItem("token","")
             navigate("/")
             
@@ -113,12 +113,7 @@ const Validation = () => {
                 if (exception.response.data.username[0]  === 'This username is taken') { message += 'This username is taken'}
             } 
             if  (message==="") { message = "unknown error"}
-            // if (exception.response.data.code[0] === 'This code is not valid!') { message = 'This code is not valid!\n'}
-            // if (exception.response.data.code[0] === 'This code has already been used!') { message = 'This code has already been used!\n'}
-            // if ( (exception.response.data.username ? exception.response.data.username : "")  === 'This username is taken') { message += 'This username is taken'}
-            // if  ((exception.response.data.code[0] !== 'This code is not valid!')
-            //     && (exception.response.data.code[0] !== 'This code has already been used!')
-            //     && (exception.response.data.username ? exception.response.data.username : "") !== 'This username is taken')) { debugger ; message = "unknown error"}
+
             window.alert(message)
         }
     }
