@@ -1,9 +1,9 @@
 import axios from "axios"
 
 
-const getToken = () => {
-    return localStorage.getItem("token")
-}
+// const getToken = () => {
+//     return localStorage.getItem("token")
+// }
 
 const myHeader = {
     // "Authorization": `Bearer ${getToken()}`,
@@ -16,8 +16,8 @@ const configAPI = {
     headers: myHeader
 }
 
-const tshirtAPI = axios.create(
+const motionAPI = axios.create(
     configAPI
 )
 
-export default tshirtAPI
+export default motionAPI

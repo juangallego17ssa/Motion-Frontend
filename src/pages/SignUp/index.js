@@ -1,43 +1,13 @@
-import motionAPI from '../../axios/motionAPI'
+import { Navigate } from "react-router-dom";
 
-const Login = () => {
-  // Prepare the request for login in and getting the token
-  const myBody = JSON.stringify({
-    email: "rijipak673@v2ssr.com",
-    password: "password",
-  });
-
-  const myConfig = {
-    method: "post",
-    data: myBody,
-  };
-
-  // Fetch the data and save the token in the local storage
-  const handleLogin = async () => {
-    try {
-      const token = (await motionAPI("token/", myConfig)).data.access;
-      console.log(token);
-      localStorage.setItem("token", token);
-    } catch (exception) {
-      console.log(exception);
-    }
-  };
-
-  // Logout
-  const handleLogout = () => {
-    localStorage.setItem("token", "");
-  };
-
+const Root = () => {
+  
+  // Check if there is a token in the local storage
+  const token = localStorage.getItem("token")
+  
+  // If there is a token, redirect to /post, if there is no token return the home with a nested route
   return (
-    <div className="containerLogin">
-      <form onSubmit={(e) => e.preventDefault()}>
-        <input placeholder={"email"}></input>
-        <input type={"password"} placeholder={"password"}></input>
-        <button onClick={() => handleLogin()}>Login</button>
-        <button onClick={() => handleLogout()}>Logout</button>
-      </form>
-    </div>
-  );
-};
-
-export default Login;
+    token ? <Navigate to="/posts"/> : <Navigate to="/home/signin" />
+  )
+  }
+export default Root;
