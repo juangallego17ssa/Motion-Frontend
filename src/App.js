@@ -10,7 +10,6 @@ import Validation from "./pages/SignUp/Components/Validation/Validation";
 import Posts from "./pages/Posts";
 import Profile from "./pages/SignUp";
 import Friends from "./pages/Friends";
-import Header from "./components/Header";
 import RouteProtected from "./components/RouteProtected/RouteProtected";
 
 function App() {

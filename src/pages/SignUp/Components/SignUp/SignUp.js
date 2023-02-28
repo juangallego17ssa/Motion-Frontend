@@ -11,31 +11,34 @@ import motionAPI from "../../../../axios/motionAPI";
 import { useState } from "react";
 
 // import useNavigate to handle the button signUp
-import { Navigate, useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { HomepagePurpleButton, HomepageWhiteButton } from "../../../../styles/StyledComponents/Button.style";
 
 const SignUp = () => {
+  
+  // see Home.js. Basically it return a set function (setEmailHome) associated to a state variable (emailHome)
+  // it is used to pass the email to the next page in the process
+  const setEmailHome = useOutletContext()[1];
+
+
+
   //// controlled form
   // email input
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  // const [success, setSuccess] = useState("")
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
 
 
-
-  const setEmailHome = useOutletContext()[1];
-
-
-  //// handle the button sign up
+  //// handle the button sign in
   const navigate = useNavigate();
   const handleSignIn = () => {
     navigate("/");
   };
 
-  //// handle the button sign in
+  //// handle the button sign up
   const handleSingUp = async () => {
     // Prepare the request for login in and getting the token
     const myBody = JSON.stringify({
@@ -52,7 +55,6 @@ const SignUp = () => {
       setError("");
       const response = await motionAPI("registration/", myConfig);
       if (response.status === 200) {
-        // setSuccess(email)
         setEmailHome(email)
         navigate("/home/success/")
       }
@@ -65,28 +67,19 @@ const SignUp = () => {
     }
   };
 
-  // if (success) { 
-  //   return(<Navigate to={`/home/success/`} />)
-    // return(<Navigate to={`/home/success/${success}`} />)
-    // navigation.navigate('Home')
-  // }
-
-  // const test = () => {
-  //   setSuccess(email)
-  // }
 
   return (
     <DivStyled id="right">
 
-      {/* <button onClick={test}></button> */}
-
       <header className="homepage-header">
-        <div className="logo-container"></div>
-        <div className="sign-in-container">
-          <p> Already have an account? </p>
-          <button onClick={handleSignIn}>Sign in</button>
+        <div className="headerContainer">
+          <div className="sign-in-container">
+            <p> Already have an account? </p>
+            <HomepageWhiteButton onClick={handleSignIn}>Sign in</HomepageWhiteButton>
+          </div>
         </div>
       </header>
+
 
       <div className="form">
         <form onSubmit={(event) => event.preventDefault()}>
@@ -94,18 +87,11 @@ const SignUp = () => {
             <div className="form-title">Sign Up</div>
             <div className="input-email">
               {/* <img src={emailIcon} alt="email icon" /> */}
-              <input
-                type="text"
-                placeholder="Email"
-                value={email}
-                onChange={handleEmailChange}
-              />
+              <input type="text" placeholder="Email" value={email} onChange={handleEmailChange} />
             </div>
           </div>
 
-          <button className="form-btn" onClick={handleSingUp}>
-            Sign up
-          </button>
+          <HomepagePurpleButton className="form-btn" onClick={handleSingUp}>Sign up</HomepagePurpleButton>
         </form>
         <span>{error}</span>
 
