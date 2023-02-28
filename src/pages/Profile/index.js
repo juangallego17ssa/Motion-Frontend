@@ -1,11 +1,12 @@
-import Header from "../../components/Header";
 import styled from "styled-components";
-import User from "./User";
-import axios from "axios";
-import { updateUserData } from "../../redux/slices/user";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import profileBackground from '../../assets/images/profile-background-img.jpg'
+import { updateUserData } from "../../redux/slices/user";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import Header from "../../components/Header";
+import User from "./User";
+import UserEdit from "./UserEdit";
 
 //--------Style---------
 const Container = styled.div`
@@ -25,13 +26,14 @@ const Background = styled.div`
 
 const Main = styled.div`
     width: 1152px;
+    margin-top: 200px;
+    margin-bottom: 100px;
     border-radius: 4px;
     position: absolute;
-    margin-top: 200px;
 `;
 
 const ProfilePosts = styled.div`
-    height: 800px;
+    height: 200px;
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
     background-color: white;
 `;
@@ -39,6 +41,13 @@ const ProfilePosts = styled.div`
 //--------Profile Page---------
 const Profile = () => {
     const dispatch = useDispatch();
+
+    //currentView: 'user', 'edit'
+    const [currentView, setCurrentView] = useState('user');
+
+    const updateCurrentView = (view) => {
+        setCurrentView(view);
+    }
 
     useEffect(() => {
         if (!localStorage.getItem('token')) {
@@ -64,17 +73,34 @@ const Profile = () => {
         getMe();
     }, []);
 
+    const userData = useSelector(state => state.user.userData);
+
     return (
-        <>
-            <Header />
-            <Container>
-                <Background />
-                <Main>
-                    <User></User>
-                    <ProfilePosts>Profile posts</ProfilePosts>
-                </Main>
-            </Container>
-        </>
+        userData
+            ?
+            <>
+                <Header />
+                <Container>
+                    <Background />
+                    <Main>
+                        {
+                            currentView === 'user'
+                                ?
+                                <>
+                                    <User
+                                        userData={userData}
+                                        updateCurrentView={updateCurrentView}
+                                    />
+                                    <ProfilePosts>Profile posts</ProfilePosts>
+                                </>
+                                :
+                                <UserEdit userData={userData} />
+                        }
+                    </Main>
+                </Container>
+            </>
+            :
+            null
     );
 }
 
