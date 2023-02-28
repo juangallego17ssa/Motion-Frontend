@@ -8,6 +8,8 @@ import jennifer from '../../assets/images/users/jennifer.png'
 import menu from '../../assets/svgs/menu.svg'
 import post from '../../assets/svgs/posts_logo.svg'
 import friends from '../../assets/svgs/icon-friends.svg'
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 
 //--------Style---------
@@ -70,6 +72,8 @@ const UserDiv = styled.div`
 
 
 const Header = () => {
+    const [ShowProfile, setShowProfile] = useState(false);
+
     return (
         <StyledHeader>
             <LogoDiv>
@@ -94,7 +98,9 @@ const Header = () => {
                         <span >3</span>
                     </div>
                 </div>
-                <img src={jennifer} alt="user-avatar"/>
+                <Link to={'/profile'}>
+                     <img src={jennifer} alt="user-avatar"/>
+                </Link>
                 <img src={menu} alt="menu"/>
 
             </UserDiv>

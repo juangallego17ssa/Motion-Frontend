@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
+import { BiCheck } from "react-icons/bi";
 
 //-------STYLE--------->
 
@@ -40,6 +41,9 @@ const FlexDiv = styled.div`
     width: 90px;
     height: 90px;
     border-radius: 50px;
+    :hover{
+      transform: scale(1.1);
+    }
    }
    .name{
     font-size: 22px;
@@ -58,10 +62,18 @@ const ButtonContainer = styled.div`
 `;
 const Button = styled.button`
     width: 120px; height: 40px;
-    background-color: #fff;
     border-radius: 30px;
     border: 1px solid rgba(0,0,0,.5);
     font-size: 0.8rem; font-weight: 500;  
+    background-color: #fff;
+    &.false{
+      background-color: #fff;
+    }
+    &.true{
+      background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
+      color: #FFF;font-weight:bolder;border:none;
+    }
+    
         :hover{
         background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
         border: none;
@@ -82,10 +94,16 @@ const User = styled.p`
 //-------Component--------->
 export default function FriendsCard({user}) {
    
-  const userData = useSelector(state => state.user.userData);
+  const userData = useSelector(state => state.user.userData); 
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFriend, setIsFriend] = useState(false);
 
     const followHandler = ()=>{
-      console.log(userData.first_name)
+      setIsFollowing(!isFollowing)
+      // console.log(userData.first_name)
+    }
+    const handleAddFriend = ()=>{
+      setIsFriend(!isFriend)
     }
 
 
@@ -100,14 +118,20 @@ export default function FriendsCard({user}) {
         <p className='country'>{user.location}</p>
       </FlexDiv>
       <ButtonContainer>
-        <Button onClick={followHandler}>FOLLOW</Button>
-        <Button>ADD FRIEND</Button>
+        {isFollowing?
+        <Button className='true' onClick={followHandler}>FOLLOWING</Button>:
+        <Button className='false'onClick={followHandler}>FOLLOW</Button>}
+        {/* <Button onClick={followHandler}>{isFollowing?`FOLLOWING`:`FOLLOW`}</Button> */}
+        {isFriend?
+        <Button onClick={handleAddFriend}><BiCheck/>FRIEND</Button>:
+        <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
+       
       </ButtonContainer>
       <FlexDiv>
         <p>{user.about_me}</p>
       </FlexDiv>
       <HobbiesBox>
-        {user.things_user_likes.map(thing=><Tag key={thing}>{thing}</Tag>)}
+        {user.things_user_likes.map((thing,index)=><Tag key={index}>{thing}</Tag>)}
       </HobbiesBox>
     </StyledFriendCard>
   );

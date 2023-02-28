@@ -18,8 +18,8 @@ const StyledFriends = styled.div`
  
 `;
 const Spinner = styled.div`
-  border: .5rem solid #f3f3f3; /* Light grey */
-  border-top: .5rem solid #C468FF; /* Blue */
+  border: .5rem solid #F2F2F2; /* Background*/
+  border-top: .5rem solid #C468FF;/*Spinner*/
   border-radius: 50%;
   width: 50px;
   height: 50px;
