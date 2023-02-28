@@ -112,11 +112,11 @@ const UserPhone = styled.div`
 const UserInfoRight = styled.div`
 `;
 
-const LabelContainer = styled.div`
+const TagContainer = styled.div`
   padding-top: 22px;
 `;
 
-const Label = styled.p`
+const Tag = styled.p`
   width: max-content;
   text-align: center;
   padding: 9px 16px;
@@ -186,13 +186,13 @@ const User = ({ updateCurrentView, userData }) => {
           </UserInfoLeft>
           <UserInfoRight>
             <Text>Things I like</Text>
-            <LabelContainer>
-              <Label>Cooking</Label>
-              <Label>Travel</Label>
-              <Label>Reading</Label>
-              <Label>Swimming</Label>
-              <Label>Running</Label>
-            </LabelContainer>
+            <TagContainer>
+              {
+                (userData.things_user_likes).map((thing, idx) => {
+                  return <Tag key={idx}>{thing}</Tag>
+                })
+              }
+            </TagContainer>
           </UserInfoRight>
         </UserInfo>
         <UserNumbers>
