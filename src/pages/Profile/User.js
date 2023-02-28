@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import userPic from '../../assets/images/users/jennifer.png'
 
@@ -144,69 +145,75 @@ const Text = styled.p`
 
 //--------User Component---------
 const User = () => {
+  const userData = useSelector(state => state.user.userData);
+
   return (
-    <UserContainer>
-      <UserLeftWrapper>
-        <UserDetails>
-          <Image src={userPic}></Image>
-          <Name>Jennifer Smith</Name>
-          <Location>Zürich, Switzerland</Location>
-        </UserDetails>
-        <Button>Edit profile</Button>
-      </UserLeftWrapper>
-      <UserRightWrapper>
-        <UserInfo>
-          <UserInfoLeft>
-            <UserAbout>
-              <Text>About</Text>
-              <TextAbout>Lorem ipsum dolor sit amet, vim ut quas volumus probatus, has tantas laudem iracundia et, ad per utamur ceteros apeirian</TextAbout>
-            </UserAbout>
-            <UserContactDetails>
-              <UserEmail>
-                <Text>Email</Text>
-                <Text>jennifersmith@gmail.com</Text>
-              </UserEmail>
-              <UserPhone>
-                <Text>Phone</Text>
-                <Text>123-456-7890</Text>
-              </UserPhone>
-            </UserContactDetails>
-          </UserInfoLeft>
-          <UserInfoRight>
-            <Text>Things I like</Text>
-            <LabelContainer>
-              <Label>Cooking</Label>
-              <Label>Travel</Label>
-              <Label>Reading</Label>
-              <Label>Swimming</Label>
-              <Label>Running</Label>
-            </LabelContainer>
-          </UserInfoRight>
-        </UserInfo>
-        <UserNumbers>
-          <div>
-            <Number>34</Number>
-            <p>Posts</p>
-          </div>
-          <div>
-            <Number>256</Number>
-            <p>Likes</p>
-          </div>
-          <div>
-            <Number>98</Number>
-            <p>Friends</p>
-          </div>
-          <div>
-            <Number>129</Number>
-            <p>Followers</p>
-          </div>
-          <div>
-            <Number>154</Number>
-            <p>Following</p>
-          </div>
-        </UserNumbers>
-      </UserRightWrapper>
-    </UserContainer>
+    userData
+      ?
+      <UserContainer>
+        <UserLeftWrapper>
+          <UserDetails>
+            <Image src={userPic}></Image>
+            <Name>{userData.first_name} {userData.last_name}</Name>
+            <Location>{userData.location}</Location>
+          </UserDetails>
+          <Button>Edit profile</Button>
+        </UserLeftWrapper>
+        <UserRightWrapper>
+          <UserInfo>
+            <UserInfoLeft>
+              <UserAbout>
+                <Text>About</Text>
+                <TextAbout>{userData.about_me}</TextAbout>
+              </UserAbout>
+              <UserContactDetails>
+                <UserEmail>
+                  <Text>Email</Text>
+                  <Text>{userData.email}</Text>
+                </UserEmail>
+                <UserPhone>
+                  <Text>Phone</Text>
+                  <Text>{userData.phone_number}</Text>
+                </UserPhone>
+              </UserContactDetails>
+            </UserInfoLeft>
+            <UserInfoRight>
+              <Text>Things I like</Text>
+              <LabelContainer>
+                <Label>Cooking</Label>
+                <Label>Travel</Label>
+                <Label>Reading</Label>
+                <Label>Swimming</Label>
+                <Label>Running</Label>
+              </LabelContainer>
+            </UserInfoRight>
+          </UserInfo>
+          <UserNumbers>
+            <div>
+              <Number>{userData.amount_of_posts}</Number>
+              <p>Posts</p>
+            </div>
+            <div>
+              <Number>{userData.amount_of_likes}</Number>
+              <p>Likes</p>
+            </div>
+            <div>
+              <Number>{userData.amount_of_friends}</Number>
+              <p>Friends</p>
+            </div>
+            <div>
+              <Number>{userData.amount_of_followers}</Number>
+              <p>Followers</p>
+            </div>
+            <div>
+              <Number>{userData.amount_following}</Number>
+              <p>Following</p>
+            </div>
+          </UserNumbers>
+        </UserRightWrapper>
+      </UserContainer>
+      :
+      null
   );
 }
 
