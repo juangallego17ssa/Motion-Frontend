@@ -6,10 +6,10 @@ import FriendsCard from "./FriendsCard";
 //-------STYLE--------->
 const StyledFriends = styled.div`
   border: 1px solid red;
-  display: block;
-  flex-direction: column;
+  display: flex;
+  justify-content: center;
   box-sizing: border-box;
-  margin-top: 80px;
+  /* margin-top: 80px; */
   height: 100vh;
   background-color: #F2F2F2;
  
