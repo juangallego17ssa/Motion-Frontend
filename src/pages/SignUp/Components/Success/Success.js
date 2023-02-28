@@ -1,17 +1,17 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useOutletContext, useParams } from "react-router-dom"
 import DivStyled from "../SignIn/SignIn.style"
 
 const Success = () => {
 
-    const params = useParams()
+    // const params = useParams()
+    const email = useOutletContext()[0]
 
     const navigate = useNavigate()
 
     const handleContinue = () => {
-      navigate(`/home/validation/${params.email}`)
+        navigate(`/home/validation/`)
+    //  navigate(`/home/validation/${params.email}`)
     }
-
-
 
     return (
 
@@ -29,7 +29,7 @@ const Success = () => {
               <div className="form-title">Congratulations</div>
               <div className="input-email">
                 <img alt="email icon" />
-                <span>We’ve sent a confirmation code to your email {params.email}</span>
+                <span>We’ve sent a confirmation code to your email {email}</span>
               </div>
             </div>
   

@@ -4,7 +4,7 @@ import styled from "styled-components"
 const DivStyled = styled.div`
 
     width: 60%;
-    height: 100%;
+    height: 50%;
     background-color: white;
     display: flex;
     flex-direction: column;

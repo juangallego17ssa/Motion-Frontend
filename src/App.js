@@ -22,8 +22,8 @@ function App() {
         <Route path="/home" element={<Home />}>
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
-          <Route path="success/:email" element={<Success />} />
-          <Route path="validation/:email" element={<Validation />} />
+          <Route path="success/" element={<Success />} />
+          <Route path="validation/" element={<Validation />} />
         </Route>
         <Route path="/posts" element={<RouteProtected route={<Posts />} />} />
         <Route path="/profile" element={<Profile />} />

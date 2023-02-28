@@ -4,27 +4,24 @@ import backgroundImage from "../../../../assets/images/background_image.png"
 
 const MainStyled = styled.main`
     
-    height: 100%;
-
-    main {
     width: 100%;
     height: 100%;
     display: flex;
 
-        #left {
-            width: 40%;
-            height: 100%;
-            color: #FFFFFF;
-            background-image: url(${backgroundImage}), linear-gradient(132.96deg, #9a00f9 3.32%, #4e79fb 100%);
-            background-size: cover;
+    #left {
+        width: 40%;
+        height: 100%;
+        color: #FFFFFF;
+        background-image: url(${backgroundImage}), linear-gradient(132.96deg, #9a00f9 3.32%, #4e79fb 100%);
+        background-size: cover;
 
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-        }
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
 
-        #left .motion-container {
+
+        .motion-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -61,33 +58,38 @@ const MainStyled = styled.main`
                 }
             }
         }
-    }
-
-    .motion-footer {
-        margin-top: 150px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .social-media {
-            width: 100%;
+    
+    
+            .motion-footer {
+            margin-top: 150px;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            align-items: center;
 
-                img {
-                    width: 40px;
-                    height: 40px;
-                    margin-left: 16px;
+            .social-media {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        margin-left: 16px;
+                    }
                 }
-            }
 
-        .copyright {
-            padding: 40px 0;
-            font-weight: 400;
-            font-size: 12px;
-            text-align: center;
+            .copyright {
+                padding: 40px 0;
+                font-weight: 400;
+                font-size: 12px;
+                text-align: center;
+            }
         }
+    
     }
+
+
+    
 
 `
 export default MainStyled

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useOutletContext, useParams } from "react-router-dom"
 import DivStyled from "../SignIn/SignIn.style"
 import motionAPI from "../../../../axios/motionAPI";
 
 const Validation = () => {
 
-    const params = useParams()
-
+    // const params = useParams()
+    const email = useOutletContext()[0]
 
     //// controlled form
     // code
@@ -52,7 +52,7 @@ const Validation = () => {
     };
 
     // set the username for the first time
-    useEffect(() => setUsername(params.email.slice(0,params.email.search("@"))), [])
+    useEffect(() => setUsername(email.slice(0,email.search("@"))), [])
 
     //// handle the button complete
     let flagCheck = false
@@ -82,7 +82,7 @@ const Validation = () => {
         const myBody = JSON.stringify({
             // email: "rijipak673@v2ssr.com",
             // password: "password",
-            email: params.email,
+            email: email,
             username: username,
             code: code,
             password: password,
@@ -142,7 +142,7 @@ const Validation = () => {
                 </div>
                 <div className="input-username">
                     <label for="email">Email</label>
-                    <input type="text" value={params.email} disabled={"disabled"}/>
+                    <input type="text" value={email} disabled={"disabled"}/>
                     <label for="username">Username</label>
                     <input id="username" type="text" placeholder={username} value={username} onChange={handleUsernameChange}/>
                     <input id="firstName" type="text" placeholder="First name" value={firstName} onChange={handleFirstNameChange}/>

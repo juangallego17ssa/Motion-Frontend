@@ -11,18 +11,23 @@ import motionAPI from "../../../../axios/motionAPI";
 import { useState } from "react";
 
 // import useNavigate to handle the button signUp
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useOutletContext } from "react-router-dom";
 
 const SignUp = () => {
   //// controlled form
   // email input
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("")
+  // const [success, setSuccess] = useState("")
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
+
+
+
+  const setEmailHome = useOutletContext()[1];
+
 
   //// handle the button sign up
   const navigate = useNavigate();
@@ -47,7 +52,9 @@ const SignUp = () => {
       setError("");
       const response = await motionAPI("registration/", myConfig);
       if (response.status === 200) {
-        setSuccess(email)
+        // setSuccess(email)
+        setEmailHome(email)
+        navigate("/home/success/")
       }
     } catch (exception) {
       if (exception.response.data.email[0] === "This email is taken") {
@@ -58,19 +65,20 @@ const SignUp = () => {
     }
   };
 
-  if (success) { 
-    return(<Navigate to={`/home/success/${success}`} />)
+  // if (success) { 
+  //   return(<Navigate to={`/home/success/`} />)
+    // return(<Navigate to={`/home/success/${success}`} />)
     // navigation.navigate('Home')
-  }
+  // }
 
-  const test = () => {
-    setSuccess(email)
-  }
+  // const test = () => {
+  //   setSuccess(email)
+  // }
 
   return (
     <DivStyled id="right">
 
-      <button onClick={test}></button>
+      {/* <button onClick={test}></button> */}
 
       <header className="homepage-header">
         <div className="logo-container"></div>

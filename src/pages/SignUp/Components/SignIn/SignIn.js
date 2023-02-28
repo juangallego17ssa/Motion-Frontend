@@ -1,4 +1,3 @@
-
 // import the parent styled component
 import DivStyled from "./SignIn.style"
 
