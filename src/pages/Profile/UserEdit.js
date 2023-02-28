@@ -1,4 +1,6 @@
+import { useRef, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const EditMain = styled.div`
   background-color: #FFFFFF;
@@ -53,23 +55,33 @@ const Button = styled.button`
 `;
 
 const FormContainer = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+`;
+
+const InputGrid = styled.div`
+  padding: 60px 60px 40px 60px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px;
 `;
 
 const FormField = styled.div`
   width: 320px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-`;
 
-const InputGrid = styled.div`
-  padding: 60px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 60px;
+  &.things-I-like {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  Input {
+    width: 100%;
+  }
 `;
 
 const Label = styled.p`
@@ -87,15 +99,81 @@ const Input = styled.input`
   border-bottom: 1px solid grey;
 `;
 
+const ThingsUserLikesContainer = styled.div`
+  width: 100%;    
+  padding: 0 60px 60px 60px;
+  display: flex;
+  flex-direction: column;
+  border: 5px solid yellow;
+`;
+
+const ThingsUserLike = styled.div`
+  width: 100%;  
+  padding: 20px 0 40px 0 ;
+`;
+
+const Tag = styled.p`
+  width: max-content;
+  text-align: center;
+  padding: 9px 16px;
+  background: #f2f2f2;
+  mix-blend-mode: normal;
+  border-radius: 18px;
+  color: black;
+  float: left;
+  margin-right: 8px;
+`;
+
+
 //--------Component----------
 const UserEdit = ({ userData }) => {
+  const formRef = useRef();
+
+  const [thingUserLikes, setThingUserLikes] = useState('');
+  const [thingsUserLikesList, setThingsUserLikesList] = useState(userData.things_user_likes);
+
+  const handleThingsChange = e => {
+    setThingUserLikes(e.target.value);
+  };
+
+  const addThingUserLikes = e => {
+    e.preventDefault();
+    setThingsUserLikesList(prevThingsUserLikes => [...prevThingsUserLikes, thingUserLikes]);
+    setThingUserLikes('');
+  };
+
   const handleDeleteAccountClick = () => {
     console.log('delete');
-  }
+  };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = e => {
+    e.preventDefault();
     console.log('save');
-  }
+
+    const formData = new FormData(formRef.current);
+    const formEntries = Object.fromEntries(formData.entries());
+    const userData = {
+      ...formEntries,
+      things_user_likes: thingsUserLikesList,
+    }
+
+    const updateUserData = async () => {
+      const data = JSON.stringify(userData);
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+      };
+      try {
+        const res = await axios.patch('https://motion.propulsion-home.ch/backend/api/users/me/', data, config);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    updateUserData();
+  };
 
   return (
     <>
@@ -108,10 +186,10 @@ const UserEdit = ({ userData }) => {
           </ImageContainer>
           <ButtonsContainer>
             <Button onClick={handleDeleteAccountClick}>Delete Account</Button>
-            <Button onClick={handleSaveClick}>Save</Button>
+            <Button type='submit' form='editForm' >Save</Button>
           </ButtonsContainer>
         </LeftContainer>
-        <FormContainer>
+        <FormContainer ref={formRef} id='editForm' onSubmit={handleSaveClick} >
           <InputGrid>
             <FormField>
               <Label htmlFor="first_name">First Name</Label>
@@ -134,28 +212,38 @@ const UserEdit = ({ userData }) => {
               <Input type="text" name="location" id="location" defaultValue={userData.location} />
             </FormField>
             <FormField>
-              <Label htmlFor="phone">phone</Label>
-              <Input type="text" name="phone" id="phone" defaultValue={userData.phone} />
+              <Label htmlFor="phone_number">Phone</Label>
+              <Input type="text" name="phone_number" id="phone_number" defaultValue={userData.phone} />
             </FormField>
             <FormField>
-              <Label htmlFor="about">About</Label>
-              <Input type="text" name="about" id="about" defaultValue={userData.about} />
+              <Label htmlFor="about_me">About me</Label>
+              <Input type="text" name="about_me" id="about_me" defaultValue={userData.about} />
             </FormField>
             <FormField>
               <Label htmlFor="password">Password</Label>
               <Input type="password" name="password" id="password" defaultValue='password' />
             </FormField>
-            <FormField>
-              <Label htmlFor="things-I-like">Things I like</Label>
-              <div>
-                Cooking, etc
-              </div>
-              <div>
-                <Input type="text" name="things-I-like" id="things-I-like" defaultValue={userData.things_user_likes} />
-                <Button> Add </Button>
-              </div>
-            </FormField>
           </InputGrid>
+          <ThingsUserLikesContainer>
+            <Label htmlFor="things-I-like">Things I like</Label>
+            {
+              thingsUserLikesList.length !== 0
+                ?
+                <ThingsUserLike>
+                  {
+                    thingsUserLikesList.map((thing, idx) => {
+                      return <Tag key={idx}>{thing}</Tag>
+                    })
+                  }
+                </ThingsUserLike>
+                :
+                null
+            }
+            <FormField className="things-I-like">
+              <Input type="text" id="things-I-like" onChange={handleThingsChange} placeholder='Type something...' />
+              <Button onClick={addThingUserLikes}> Add </Button>
+            </FormField>
+          </ThingsUserLikesContainer>
         </FormContainer>
       </EditMain>
     </>
