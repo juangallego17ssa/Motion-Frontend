@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Header from "../../components/Header";
 import FriendsCard from "./FriendsCard";
+import { useEffect } from "react";
 
 
 //-------STYLE--------->
@@ -18,8 +19,10 @@ const StyledFriends = styled.div`
 
 
 
-
+//-------COMPONENT--------->
 const Friends = () => {
+
+  
 
   return (
     <>

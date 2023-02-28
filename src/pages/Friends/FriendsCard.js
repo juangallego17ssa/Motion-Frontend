@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import alber from '../../assets/images/users/alber.png'
 
 //-------STYLE--------->
 
@@ -17,7 +16,7 @@ const StyledFriendCard = styled.div`
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
   
 `;
-const Tag = styled.span`
+const Tag = styled.p`
         margin: 3px;
         background-color: #F2F2F2;
         padding: 0.8rem 1.2rem;
@@ -47,8 +46,7 @@ const HobbiesBox = styled.div`
     flex-wrap: wrap;
 `;
 const ButtonContainer = styled.div`
-    position: relative;
-    
+    position: relative; 
     display: flex;
     gap: 6px;
 `;
@@ -67,7 +65,7 @@ const Button = styled.button`
 `;
 //-------Component--------->
 export default function FriendsCard({user}) {
-    console.log(user)
+    // console.log(user)
   return (
     <StyledFriendCard >
       <FlexDiv>
@@ -80,10 +78,10 @@ export default function FriendsCard({user}) {
         <Button>ADD FRIEND</Button>
       </ButtonContainer>
       <FlexDiv>
-        <p>Lorem ipsum dolor sit amet, vim ut quas volumus probatus, has tantas laudem iracundia et, ad per utamur ceteros apeirian</p>
+        <p>{user.about_me}</p>
       </FlexDiv>
       <HobbiesBox>
-        {user.things_user_likes.map(thing=><Tag>{thing}</Tag>)}
+        {user.things_user_likes.map(thing=><Tag key={thing}>{thing}</Tag>)}
       </HobbiesBox>
     </StyledFriendCard>
   );
