@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 //-------STYLE--------->
 
@@ -7,13 +8,14 @@ const StyledFriendCard = styled.div`
     box-sizing: border-box;
     padding: 30px;
     display: flex;  flex-direction: column;
-    justify-content: flex-start; align-items: center;
-    height: 489px; 
+    justify-content: flex-start;
+    align-items: center;
+    /* height: 489px;  */
+   
     width: 362px;
     border-radius: 5px;
     background-color: #FFF;
     gap: 30px;
-    justify-content: center;
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
   
 `;
@@ -33,8 +35,10 @@ const FlexDiv = styled.div`
     align-items: center;
     text-align: center;
     gap: .3rem;
-   .img{
+   img{
+    position: relative;
     width: 90px;
+    height: 90px;
     border-radius: 50px;
    }
    .name{
@@ -48,7 +52,7 @@ const HobbiesBox = styled.div`
     flex-wrap: wrap;
 `;
 const ButtonContainer = styled.div`
-    position: relative; 
+    position: relative; top:0px;
     display: flex;
     gap: 6px;
 `;
@@ -77,20 +81,26 @@ const User = styled.p`
 `
 //-------Component--------->
 export default function FriendsCard({user}) {
+   
+  const userData = useSelector(state => state.user.userData);
+
+    const followHandler = ()=>{
+      console.log(userData.first_name)
+    }
+
+
+
+
     // console.log(user)
   return (
     <StyledFriendCard >
       <FlexDiv>
-        <div>
-          {user.avatar?(<Img src={user.avatar}/>):(<User>{user.first_name.charAt(0).toUpperCase()}</User>)}
-        </div>
-        
-        <img className='img' src={user.avatar}/>
+       {user.avatar?(<img src={user.avatar}/>):(<User>{user.first_name.charAt(0).toUpperCase()}</User>)}
         <p className='name'>{user.first_name} {user.last_name}</p>
         <p className='country'>{user.location}</p>
       </FlexDiv>
       <ButtonContainer>
-        <Button>FOLLOW</Button>
+        <Button onClick={followHandler}>FOLLOW</Button>
         <Button>ADD FRIEND</Button>
       </ButtonContainer>
       <FlexDiv>
