@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 }
@@ -45,4 +46,5 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 `

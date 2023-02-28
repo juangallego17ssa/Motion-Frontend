@@ -10,80 +10,35 @@ const DivStyled = styled.div`
     flex-direction: column;
 
     .homepage-header {
-        padding: 40px 40px 0 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
 
-        @media (min-width: 0px) and (max-width: 700px) {
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 30px;
-        }
-
-        .logo-container {
-            display: none;
-
-            @media (min-width: 0px) and (max-width: 700px) {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-            }
-
-            .img {
-                width: 40px;
-                padding-right: 8px;
-            }
-
-            .motion {
-                background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
-                -webkit-text-fill-color: transparent;
-                /* -webkit-background-clip: text; */
-                font-size: 35px;
-                letter-spacing: 0.75px;
-                font-weight: 500;
-                padding-left: 8px;
-
-                @media (max-width: 400px) {
-                    display: none;
-                }
-            }
-        }
-
-
-        .sign-up-container {
+        .headerContainer {
+            height: 40px;
+            padding: 40px 40px 0 40px;
             display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
             align-items: center;
-            font-size: 14px;
-            color: black;
 
             @media (min-width: 0px) and (max-width: 700px) {
-                flex-direction: column;
-                align-items: flex-end;
-                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 30px;
             }
 
-            button {
-                border: 1px solid rgba(0, 0, 0, 0.2);
-                background-color: white;
-                border-radius: 50px;
-                padding: 14px 38px;
-                margin-left: 18px;
-                font-size: 10px;
-                text-align: center;
-                letter-spacing: 1px;
-                text-transform: uppercase;
+            .sign-up-container, .sign-in-container {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                color: black;
 
                 @media (min-width: 0px) and (max-width: 700px) {
-                    padding: 10px 20px;
-                    margin-top: 5px;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    flex-wrap: wrap;
                 }
             }
         }
-
     }
-    
     .form {
         margin: 126px auto;
         padding: 0 26px;
@@ -101,6 +56,7 @@ const DivStyled = styled.div`
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 400px;
     
             .form-title {
                 font-weight: 500;
@@ -117,6 +73,18 @@ const DivStyled = styled.div`
                 @media (min-width: 0px) and (max-width: 700px) {
                     margin-bottom: 80px;
                 }
+            }
+
+            .success-icon img{
+                height: 81px;
+                width: 81px;
+                margin: 60px
+
+            }
+
+            .success-message {
+                
+
             }
     
             .input-email,
@@ -147,23 +115,12 @@ const DivStyled = styled.div`
                     outline: none;
                 }
             }
-        }
-    
-        .form-btn {
-            padding: 23px 120px;
-            background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
-            border: transparent;
-            border-radius: 30px;
-            font-size: 12px;
-            text-align: center;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #FFFFFF;
-        
-            @media (min-width: 0px) and (max-width: 700px) {
-                padding: 20px 100px;
+
+            .placeholder-password{
+                border:none;
             }
         }
+    
     
         .step-container {
             padding: 25px;

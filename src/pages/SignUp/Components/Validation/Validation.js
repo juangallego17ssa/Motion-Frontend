@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useOutletContext, useParams } from "react-router-dom"
 import DivStyled from "../SignIn/SignIn.style"
 import motionAPI from "../../../../axios/motionAPI";
 
 const Validation = () => {
 
-    const params = useParams()
-
+    // const params = useParams()
+    const email = useOutletContext()[0]
 
     //// controlled form
     // code
@@ -52,7 +52,7 @@ const Validation = () => {
     };
 
     // set the username for the first time
-    useEffect(() => setUsername(params.email.slice(0,params.email.search("@"))), [])
+    useEffect(() => setUsername(email.slice(0,email.search("@"))), [])
 
     //// handle the button complete
     let flagCheck = false
@@ -82,7 +82,7 @@ const Validation = () => {
         const myBody = JSON.stringify({
             // email: "rijipak673@v2ssr.com",
             // password: "password",
-            email: params.email,
+            email: email,
             username: username,
             code: code,
             password: password,
@@ -98,7 +98,7 @@ const Validation = () => {
                 
         // Fetch the data and save the token in the local storage
         try {
-            const response = (await motionAPI("registration/validation/", myConfig)).data;
+            const response = (await motionAPI("auth/registration/validation/", myConfig)).data;
             localStorage.setItem("token","")
             navigate("/")
             
@@ -113,12 +113,7 @@ const Validation = () => {
                 if (exception.response.data.username[0]  === 'This username is taken') { message += 'This username is taken'}
             } 
             if  (message==="") { message = "unknown error"}
-            // if (exception.response.data.code[0] === 'This code is not valid!') { message = 'This code is not valid!\n'}
-            // if (exception.response.data.code[0] === 'This code has already been used!') { message = 'This code has already been used!\n'}
-            // if ( (exception.response.data.username ? exception.response.data.username : "")  === 'This username is taken') { message += 'This username is taken'}
-            // if  ((exception.response.data.code[0] !== 'This code is not valid!')
-            //     && (exception.response.data.code[0] !== 'This code has already been used!')
-            //     && (exception.response.data.username ? exception.response.data.username : "") !== 'This username is taken')) { debugger ; message = "unknown error"}
+
             window.alert(message)
         }
     }
@@ -142,7 +137,7 @@ const Validation = () => {
                 </div>
                 <div className="input-username">
                     <label for="email">Email</label>
-                    <input type="text" value={params.email} disabled={"disabled"}/>
+                    <input type="text" value={email} disabled={"disabled"}/>
                     <label for="username">Username</label>
                     <input id="username" type="text" placeholder={username} value={username} onChange={handleUsernameChange}/>
                     <input id="firstName" type="text" placeholder="First name" value={firstName} onChange={handleFirstNameChange}/>
