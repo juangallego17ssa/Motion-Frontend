@@ -14,6 +14,7 @@ import friends from '../../assets/svgs/icon-friends.svg'
 
 const StyledHeader = styled.header`
     box-sizing: border-box;
+    height: 80px;
     width: 100vw;
     position: absolute; top: 0; left: 0;
     box-shadow: 0 0 10px rgba(0,0,0,.5);
