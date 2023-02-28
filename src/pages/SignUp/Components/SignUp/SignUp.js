@@ -5,7 +5,7 @@ import DivStyled from "../SignIn/SignIn.style";
 import motionAPI from "../../../../axios/motionAPI";
 
 // import the images used
-// import emailIcon from "../../../assets/svgs/email.svg"
+import mailIcon from "../../../../assets/images/mail-icon.jpg"
 
 // import useState to create controlled form
 import { useState } from "react";
@@ -86,7 +86,7 @@ const SignUp = () => {
           <div className="form-inputs">
             <div className="form-title">Sign Up</div>
             <div className="input-email">
-              {/* <img src={emailIcon} alt="email icon" /> */}
+              <img src={mailIcon} alt="email icon" />
               <input type="text" placeholder="Email" value={email} onChange={handleEmailChange} />
             </div>
           </div>
