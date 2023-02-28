@@ -12,7 +12,7 @@ const myHeader = {
 
 
 const configAPI = {
-    baseURL: "https://motion.propulsion-home.ch/backend/api/auth/",
+    baseURL: "https://motion.propulsion-home.ch/backend/api/",
     headers: myHeader
 }
 
