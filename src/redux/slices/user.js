@@ -6,7 +6,10 @@ export const userSlice = createSlice({
     userData: {},
   },
   reducers: {
+    updateUserData: (state, action) => {
+      state.userData = action.payload;
+    },
   }
 })
-export const { } = userSlice.actions;
+export const { updateUserData } = userSlice.actions;
 export default userSlice.reducer;
