@@ -33,9 +33,12 @@ const Friends = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
             };
-            const response = await axios.get("https://motion.propulsion-home.ch/backend/api/users/", config);
-            setUsers(response.data.results);
-            console.log(users)
+            const response = await axios.get("https://motion.propulsion-home.ch/backend/api/users/?limit=200", config);
+            const results = (response.data.results)
+            setUsers(results.filter((user)=>user.first_name !== ''& user.location !== ''))
+            console.log(results.filter((user)=>user.first_name !== ''& user.about_me !== ''))
+            // setUsers(response.data.results);
+            // console.log(users)
         } catch (error) {
             console.log(error);
         }
