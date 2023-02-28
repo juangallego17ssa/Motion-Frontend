@@ -1,13 +1,15 @@
-
 // import the parent styled component
 import DivStyled from "./SignIn.style"
+
+// import default components
+import { HomepageWhiteButton } from "../../../../styles/StyledComponents/Button.style"
+import { HomepagePurpleButton } from "../../../../styles/StyledComponents/Button.style"
 
 // import the axios instance to fetch the token
 import motionAPI from "../../../../axios/motionAPI"
 
 
 // import the images used
-import logoIcon from "../../../../assets/images/logo.png"
 import avatarIcon from "../../../../assets/svgs/avatar.svg"
 import passwordIcon from "../../../../assets/svgs/password.svg"
 
@@ -16,15 +18,10 @@ import passwordIcon from "../../../../assets/svgs/password.svg"
 import { useState } from "react"
 
 // import useNavigate to handle the button signUp
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 
 const SignIn = () => {
-
-
-    //// set state for token
-    // const [token,setToken] = useState("")
-
 
     //// controlled form
     // email input
@@ -50,6 +47,14 @@ const SignIn = () => {
     //// handle the button sign in
     const handleSingIn = async() => {
 
+
+        // Check the form
+        if (    (email === "") 
+        ||  (password === "") ) {
+        window.alert("Email and/or Password missing!")
+        return
+        }
+
         // Prepare the request for login in and getting the token
         const myBody = JSON.stringify({
             // email: "rijipak673@v2ssr.com",
@@ -65,36 +70,30 @@ const SignIn = () => {
                 
         // Fetch the data and save the token in the local storage
         try {
-            const response = (await motionAPI("token/", myConfig)).data;
+            const response = (await motionAPI("auth/token/", myConfig)).data;
             const token = response.access;
             const user = response.user
             localStorage.setItem("token", token);
             localStorage.setItem("user", user);
-            // setToken(token)
             navigate("/")
             
         } catch (exception) {
-            console.log(exception);
+            window.alert("Invalid credentials!")
         }
     }
 
-    // if (token) { return(<Navigate to="/"/>)}
+
 
     return(
 
         <DivStyled id="right">
-
-
-            {/* {token?<Navigate to="/"/>:""} */}
                 
             <header className="homepage-header">
-                <div className="logo-container">
-                    <img src={logoIcon} alt="Motion logo gradient" />
-                    <div className="motion">Motion</div>
-                </div>
-                <div className="sign-up-container">
-                    <p> Don't have an account? </p>
-                    <button onClick={handleSignUp}>Sign up</button>
+                <div className="headerContainer">
+                    <div className="sign-up-container">
+                        <p> Don't have an account? </p>
+                        <HomepageWhiteButton onClick={handleSignUp}>Sign up</HomepageWhiteButton>
+                    </div>
                 </div>
             </header>
 
@@ -117,7 +116,7 @@ const SignIn = () => {
 
                     </div>
 
-                    <button className="form-btn" onClick={handleSingIn}>Sign in</button>
+                    <HomepagePurpleButton className="form-btn" onClick={handleSingIn}>Sign in</HomepagePurpleButton>
                 
                 </form>
                 

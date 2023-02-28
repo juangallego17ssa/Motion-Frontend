@@ -8,14 +8,19 @@ import google from "../../../../assets/svgs/google.svg"
 import twitter from "../../../../assets/svgs/twitter_icon.svg"
 import facebook from "../../../../assets/svgs/facebook_icon.svg"
 import instagram from "../../../../assets/svgs/instagram_icon.svg"
+import { useState } from "react";
+
+
 
 
 
 const Home = () => {
-
+    
+    const [emailHome, setEmailHome] = useState("");
+    
     return (
         <MainStyled>
-        <main>    
+
             <div id="left">
                 <div className="motion-container">
                     <div><img src={motionLogo} alt="Motion logo" /></div>
@@ -39,8 +44,8 @@ const Home = () => {
                     <div className="copyright">© Motion 2018. All rights reserved</div>
                 </div>
             </div>
-            <Outlet />
-        </main>
+            <Outlet context={[emailHome, setEmailHome]}/>
+
         </MainStyled>
     )
 }
