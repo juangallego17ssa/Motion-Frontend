@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom"
 import DivStyled from "../SignIn/SignIn.style"
 import motionAPI from "../../../../axios/motionAPI";
+import { HomepagePurpleButton } from "../../../../styles/StyledComponents/Button.style";
 
 const Validation = () => {
 
@@ -121,7 +122,7 @@ const Validation = () => {
 
 
     return (
-        <DivStyled id="right">
+        <DivStyled id="right" step="step3">
             <header className="homepage-header">
                 <div className="logo-container"></div>
                 <div className="sign-in-container">
@@ -142,8 +143,8 @@ const Validation = () => {
                     <input id="username" type="text" placeholder={username} value={username} onChange={handleUsernameChange}/>
                     <input id="firstName" type="text" placeholder="First name" value={firstName} onChange={handleFirstNameChange}/>
                     <input id="lastName" type="text" placeholder="Last name" value={lastName} onChange={handleLastNameChange}/>
-                    <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
-                    <input type="passwordRepeat" placeholder="Password repeat" value={passwordRepeat} onChange={handlePasswordRepeatChange}/>
+                    <input id="password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
+                    <input id="passwordRepeat" type="password" placeholder="Password repeat" value={passwordRepeat} onChange={handlePasswordRepeatChange}/>
 
                 </div>
                 </div>
@@ -155,9 +156,9 @@ const Validation = () => {
             </form>
     
             <div className="step-container">
-                <div className="step"></div>
-                <div className="step"></div>
-                <div className="step"></div>
+                <div className="step step1"></div>
+                <div className="step step2"></div>
+                <div className="step step3"></div>
             </div>
             </div>
         </DivStyled>

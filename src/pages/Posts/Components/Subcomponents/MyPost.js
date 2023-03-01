@@ -1,12 +1,20 @@
+import styled from "styled-components"
 
+const MyPostStyled = styled.div`
+
+    background-color: white;
+    margin: 2%;
+    width: 20%;
+    min-width: 500px;
+
+`
 
 const MyPost = (props) => {
 
 
-
-
+    
 return(
-    <div>{props.post}</div>
+    <MyPostStyled>{props.post}</MyPostStyled>
 )
 
 }

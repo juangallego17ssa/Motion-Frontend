@@ -120,11 +120,6 @@ const SignIn = () => {
                 
                 </form>
                 
-                <div className="step-container">
-                    <div className="step"></div>
-                    <div className="step"></div>
-                    <div className="step"></div>
-                </div>
             </div>
             
       </DivStyled>
