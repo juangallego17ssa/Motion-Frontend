@@ -86,7 +86,8 @@ const DivStyled = styled.div`
                 
 
             }
-    
+            
+
             .input-email,
             .input-password {
                 width: 288px;
@@ -100,6 +101,12 @@ const DivStyled = styled.div`
                 @media (max-width: 400px) {
                     width: 220px;
                 }
+
+
+                img{
+                    object-fit:contain
+                }
+
         
                 ::placeholder {
                     color: black;
@@ -120,24 +127,27 @@ const DivStyled = styled.div`
                 border:none;
             }
         }
-    
-    
-        .step-container {
-            padding: 25px;
-            display: flex;
-            flex-direction: row;
-            display: none;
-    
-            .step {
-                width: 8px;
-                height: 8px;
-                border: 1px solid black;
-                border-radius: 100%;
-                margin: 8px;
-            }
-        }
     }
-    
+
+    .step-container {
+        padding: 25px;
+        display: flex;
+        flex-direction: row;
+
+        .step {
+            width: 8px;
+            height: 8px;
+            border: 1px solid black;
+            border-radius: 100%;
+            margin: 8px;
+        }
+        .${props=>props.step} {
+            background-color: black
+        }
+
+
+    }
+          
     .footer-right {
         display: none;
         

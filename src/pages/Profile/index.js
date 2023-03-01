@@ -100,7 +100,7 @@ const Profile = () => {
                 </Container>
             </>
             :
-            null
+            <p>No user data </p>
     );
 }
 
