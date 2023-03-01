@@ -1,15 +1,17 @@
 // import { StyledHeader } from "./Header.style"
 import styled from "styled-components";
 import { NavLink,Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import logo from '../../assets/images/logo.png'
 import notification_bell from '../../assets/svgs/notification_bell.svg'
+import { BiUser } from 'react-icons/bi'
+import { IoMdLogOut } from 'react-icons/io'
 import jennifer from '../../assets/images/users/jennifer.png'
 import menu from '../../assets/svgs/menu.svg'
 import post from '../../assets/svgs/posts_logo.svg'
 import friends from '../../assets/svgs/icon-friends.svg'
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { startTransition, useState } from "react";
 
 
 //--------Style---------
@@ -20,7 +22,7 @@ const StyledHeader = styled.header`
     width: 100vw;
     position: absolute; top: 0; left: 0;
     box-shadow: 0 0 10px rgba(0,0,0,.5);
-    padding: 1em;
+    padding: 2rem;
     gap: 5em;
     color: black;
     background-color: #FFF;
@@ -60,7 +62,7 @@ const NavDiv = styled.div`
 `;
 const UserDiv = styled.div`
     position: absolute;
-    right: 1em;
+    right: 2rem;
     align-items: center;
     display: flex;
     gap: 2em;
@@ -78,8 +80,37 @@ const UserDiv = styled.div`
             color: #fff; font-size: 14px;
         }
       }
+    }  
+`;
+const Profile = styled.div`
+    z-index: 1;
+    /* box-sizing: border-box; */
+    padding:0.5rem 0 ;
+    position: absolute; 
+    right:10%; top: 120%;
+    width: 180px;
+    border-radius: 4px;
+    background-color: #FFF;
+    .link{
+        /* border: 1px solid green; */
+        justify-content: center;
+        align-items: center;
+        padding: .8rem 2rem;
+        display:grid;
+        grid-template-columns: 1fr 3fr;
+        text-align: center;
+        text-decoration: none;
+        opacity:0.5;
+        color: black;
+        :hover{
+            background-color: #F2F2F2;
+            opacity: 1;
+        }
     }
-   
+    .icon{
+        transform: scale(1.5);
+
+    }
 `;
 
 
@@ -88,6 +119,12 @@ const UserDiv = styled.div`
 
 const Header = () => {
     const [ShowProfile, setShowProfile] = useState(false);
+    const navigate = useNavigate()
+
+    const logout =()=>{
+        localStorage.setItem('token','')
+        navigate('/')
+    }
 
     return (
         <StyledHeader>
@@ -111,9 +148,17 @@ const Header = () => {
                         <span >3</span>
                     </div>
                 </div>
-                <Link to={'/profile'}>
-                     <img src={jennifer} alt="user-avatar"/>
-                </Link>
+                <div>
+                     <img src={jennifer} alt="user-avatar" onClick={()=>setShowProfile(!ShowProfile)}/>
+                     {ShowProfile && (
+                        <Profile>
+                            <Link className="link" to={'/profile'}><BiUser className="icon"/>Profile</Link>
+                            <div className="link" onClick={logout}><IoMdLogOut className="icon" onClick={logout}/>Logout</div>
+                    
+                        </Profile>
+                     ) } 
+
+                </div>
                 <img src={menu} alt="menu"/>
 
             </UserDiv>
