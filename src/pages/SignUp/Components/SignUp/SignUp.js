@@ -69,7 +69,7 @@ const SignUp = () => {
 
 
   return (
-    <DivStyled id="right">
+    <DivStyled id="right" step="step1">
 
       <header className="homepage-header">
         <div className="headerContainer">
@@ -96,9 +96,9 @@ const SignUp = () => {
         <span>{error}</span>
 
         <div className="step-container">
-          <div className="step"></div>
-          <div className="step"></div>
-          <div className="step"></div>
+          <div className="step step1"></div>
+          <div className="step step2"></div>
+          <div className="step step3"></div>
         </div>
       </div>
     </DivStyled>

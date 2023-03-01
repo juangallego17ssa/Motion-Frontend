@@ -11,7 +11,8 @@ export const DivMainTop = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid rgb(0, 0, 0, 0.05);
+    border-bottom: 1px solid #ececec;
+    background-color:#F2F2F2;
 
     .navigation {
         height: 100%;
@@ -90,7 +91,7 @@ export const DivMainTop = styled.div`
             }
 
         }
-        
+
     }
 
 `

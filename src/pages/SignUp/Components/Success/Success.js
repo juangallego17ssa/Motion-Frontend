@@ -18,7 +18,7 @@ const Success = () => {
     return (
 
 
-        <DivStyled id="right">
+        <DivStyled id="right" step="step2">
         <header className="homepage-header">
           <div className="headerContainer">
             <div className="logo-container"></div>
@@ -40,9 +40,9 @@ const Success = () => {
           </form>
   
           <div className="step-container">
-            <div className="step"></div>
-            <div className="step"></div>
-            <div className="step"></div>
+          <div className="step step1"></div>
+          <div className="step step2"></div>
+          <div className="step step3"></div>
           </div>
         </div>
       </DivStyled>
