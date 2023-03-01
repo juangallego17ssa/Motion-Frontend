@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import motionAPI from "../../axios/motionAPI";
 import { BsFillCameraFill } from 'react-icons/bs';
 import { RxCross1 } from 'react-icons/rx';
 import { MdFileUpload } from 'react-icons/md';
@@ -56,11 +56,24 @@ const ImageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 19px;
+`;
+
+const Avatar = styled.div`
+  width: 100px;
+  height: 100px;
+  margin-bottom: 12px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: inline-block; position: relative; width: 100px; height: 100px; overflow: hidden; border-radius: 50%;
 
   img {
-    width: 95px;
-    height: 95px;
-    padding-bottom: 12px;
+    width: auto; height: 100%; margin-left: -12px;
+  }
+
+  div{
+    font-size: 30px;
   }
 `;
 
@@ -74,7 +87,7 @@ const Popover = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 8px 20px;
+    padding: 15px 25px;
 
     &:hover {
       cursor: pointer;
@@ -86,6 +99,17 @@ const Popover = styled.div`
         width: 24px;
         height: 24px;
         color: #a9a9a9
+      }
+    }
+
+    label {
+      color: black;
+      cursor: pointer;
+      padding-left: 20px;
+      font-size: 14px;
+
+      input {
+        display: none;
       }
     }
 
@@ -154,7 +178,7 @@ const FormField = styled.div`
   }
 
   Input {
-    width: 100%;
+    width: 80%;
   }
 `;
 
@@ -211,6 +235,7 @@ const UserEdit = ({ userData }) => {
 
   const [thingUserLikes, setThingUserLikes] = useState('');
   const [thingsUserLikesList, setThingsUserLikesList] = useState(userData.things_user_likes);
+  const [updateAvatarPopover, setUpdateAvatarPopover] = useState(false);
 
   const handleThingsChange = e => {
     setThingUserLikes(e.target.value);
@@ -229,13 +254,30 @@ const UserEdit = ({ userData }) => {
     setThingsUserLikesList([...filteredListWithoutThing]);
   };
 
+  const handleUploadAvatar = e => {
+    const img = e.target.files[0];
+    const formData = new FormData();
+    formData.append("avatar", img);
+    console.log(formData);
+
+    updateUserData(formData);
+  };
+
+  const handleDeleteAvatar = e => {
+    e.preventDefault();
+
+    const userData = {
+      avatar: '',
+    }
+    updateUserData(userData);
+  };
+
   const handleDeleteAccountClick = () => {
     console.log('delete');
   };
 
   const handleSaveClick = e => {
     e.preventDefault();
-    console.log('save');
 
     const formData = new FormData(formRef.current);
     const formEntries = Object.fromEntries(formData.entries());
@@ -244,25 +286,25 @@ const UserEdit = ({ userData }) => {
       things_user_likes: thingsUserLikesList,
     }
 
-    const updateUserData = async () => {
-      const data = JSON.stringify(userData);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-      };
-      try {
-        const res = await axios.patch('https://motion.propulsion-home.ch/backend/api/users/me/', data, config);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    updateUserData();
+    updateUserData(userData);
   };
 
-  const [updateAvatarPopover, setUpdateAvatarPopover] = useState(false);
+  //-------------------API call to update user data------------------
+  const updateUserData = async (userData) => {
+    const data = JSON.stringify(userData);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    };
+    try {
+      await motionAPI.patch('users/me/', data, config);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   return (
     <>
@@ -275,7 +317,15 @@ const UserEdit = ({ userData }) => {
       <EditMain>
         <LeftContainer>
           <ImageContainer>
-            <img></img>
+            <Avatar>
+              {
+                userData.avatar
+                  ?
+                  <img src={userData.avatar} />
+                  :
+                  <div>{userData.first_name.charAt(0)}</div>
+              }
+            </Avatar>
             <div>
               <Button onClick={() => setUpdateAvatarPopover((prev) => !prev)}>Update Image</Button>
               {updateAvatarPopover
@@ -284,9 +334,12 @@ const UserEdit = ({ userData }) => {
                   <Popover>
                     <div>
                       <MdFileUpload />
-                      <p>Upload</p>
+                      <label htmlFor="inputAvatar">
+                        Upload
+                        <input type="file" id="inputAvatar" className="avatarUpload" onChange={handleUploadAvatar}></input>
+                      </label>
                     </div>
-                    <div>
+                    <div onClick={handleDeleteAvatar}>
                       <ImBin2 />
                       <p>Remove</p>
                     </div>
@@ -334,7 +387,7 @@ const UserEdit = ({ userData }) => {
             </FormField>
             <FormField>
               <Label htmlFor="password">Password</Label>
-              <Input type="password" name="password" id="password" defaultValue='password' />
+              <Input type="password" name="password" id="password" placeholder="Enter a new password" />
             </FormField>
           </InputGrid>
           <ThingsUserLikesContainer>
