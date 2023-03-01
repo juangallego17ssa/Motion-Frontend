@@ -1,6 +1,38 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { BsFillCameraFill } from 'react-icons/bs';
+import { RxCross1 } from 'react-icons/rx';
+import { MdFileUpload } from 'react-icons/md';
+import { ImBin2 } from 'react-icons/im';
+
+
+const BackgroundEditContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+
+  button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    border: none;
+
+    .camera-icon{
+      color: white;
+      width: 20px;
+      height: 18px;
+      padding-right: 23px;
+    }
+  
+    p {
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+`;
 
 const EditMain = styled.div`
   background-color: #FFFFFF;
@@ -24,12 +56,44 @@ const ImageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 19px;
+
+  img {
+    width: 95px;
+    height: 95px;
+    padding-bottom: 12px;
+  }
 `;
 
-const Image = styled.img`
-  width: 95px;
-  height: 95px;
-  padding-bottom: 12px;
+const Popover = styled.div`
+  background: #FFFFFF;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  margin-top: 23px;
+
+  >div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 20px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #f2f2f2;
+    }
+
+    >*{
+      &:first-child {
+        width: 24px;
+        height: 24px;
+        color: #a9a9a9
+      }
+    }
+
+    >p {
+      padding-left: 20px;
+      font-size: 14px;
+    }
+  }
 `;
 
 const ButtonsContainer = styled.div`
@@ -39,7 +103,7 @@ const ButtonsContainer = styled.div`
 `;
 
 const Button = styled.button`
-  padding: 16px 38px;
+  padding: 20px 48px;
   mix-blend-mode: normal;
   border: 1px solid #f2f2f2;
   border-radius: 30px;
@@ -47,18 +111,28 @@ const Button = styled.button`
   background-color: white;
   color: #000000;
   text-transform: uppercase;
+  font-size: 10px;
 
-&:hover {
-  cursor: pointer;
-  background-color: grey;
-}
+  &:hover {
+    cursor: pointer;
+    background-color: grey;
+  }
+
+  &.save-btn {
+    background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
+    border: transparent;
+    border-radius: 30px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
 `;
 
 const FormContainer = styled.form`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
 `;
 
 const InputGrid = styled.div`
@@ -100,16 +174,14 @@ const Input = styled.input`
 `;
 
 const ThingsUserLikesContainer = styled.div`
-  width: 100%;    
   padding: 0 60px 60px 60px;
   display: flex;
   flex-direction: column;
-  border: 5px solid yellow;
 `;
 
-const ThingsUserLike = styled.div`
+const ThingsUserLikes = styled.div`
   width: 100%;  
-  padding: 20px 0 40px 0 ;
+  padding: 20px 0;
 `;
 
 const Tag = styled.p`
@@ -121,7 +193,15 @@ const Tag = styled.p`
   border-radius: 18px;
   color: black;
   float: left;
-  margin-right: 8px;
+  margin: 0  8px 16px 0;
+  display: flex;
+  align-items: center;
+
+  .deleteX {
+    width: 10px;
+    padding-left: 15px;
+    cursor: pointer;
+  }
 `;
 
 
@@ -140,6 +220,13 @@ const UserEdit = ({ userData }) => {
     e.preventDefault();
     setThingsUserLikesList(prevThingsUserLikes => [...prevThingsUserLikes, thingUserLikes]);
     setThingUserLikes('');
+  };
+
+  const removeThingUserLikes = (thingToRemove) => {
+    const filteredListWithoutThing = thingsUserLikesList.filter((thing, idx) => {
+      return thingsUserLikesList[idx] !== thingToRemove;
+    });
+    setThingsUserLikesList([...filteredListWithoutThing]);
   };
 
   const handleDeleteAccountClick = () => {
@@ -175,18 +262,44 @@ const UserEdit = ({ userData }) => {
     updateUserData();
   };
 
+  const [updateAvatarPopover, setUpdateAvatarPopover] = useState(false);
+
   return (
     <>
-      <button> Upload image </button>
+      <BackgroundEditContainer>
+        <button>
+          <BsFillCameraFill className="camera-icon" />
+          <p> Update image </p>
+        </button>
+      </BackgroundEditContainer>
       <EditMain>
         <LeftContainer>
           <ImageContainer>
-            <Image></Image>
-            <Button>Update Image</Button>
+            <img></img>
+            <div>
+              <Button onClick={() => setUpdateAvatarPopover((prev) => !prev)}>Update Image</Button>
+              {updateAvatarPopover
+                ?
+                (
+                  <Popover>
+                    <div>
+                      <MdFileUpload />
+                      <p>Upload</p>
+                    </div>
+                    <div>
+                      <ImBin2 />
+                      <p>Remove</p>
+                    </div>
+                  </Popover>
+                )
+                :
+                null
+              }
+            </div>
           </ImageContainer>
           <ButtonsContainer>
             <Button onClick={handleDeleteAccountClick}>Delete Account</Button>
-            <Button type='submit' form='editForm' >Save</Button>
+            <Button className="save-btn" type='submit' form='editForm' >Save</Button>
           </ButtonsContainer>
         </LeftContainer>
         <FormContainer ref={formRef} id='editForm' onSubmit={handleSaveClick} >
@@ -226,19 +339,21 @@ const UserEdit = ({ userData }) => {
           </InputGrid>
           <ThingsUserLikesContainer>
             <Label htmlFor="things-I-like">Things I like</Label>
-            {
-              thingsUserLikesList.length !== 0
+            <ThingsUserLikes>
+              {thingsUserLikesList.length !== 0
                 ?
-                <ThingsUserLike>
-                  {
-                    thingsUserLikesList.map((thing, idx) => {
-                      return <Tag key={idx}>{thing}</Tag>
-                    })
-                  }
-                </ThingsUserLike>
+                thingsUserLikesList.map((thing) => {
+                  return (
+                    <Tag key={thing}>
+                      {thing}
+                      <RxCross1 className="deleteX" onClick={() => removeThingUserLikes(thing)} />
+                    </Tag>
+                  )
+                })
                 :
                 null
-            }
+              }
+            </ThingsUserLikes>
             <FormField className="things-I-like">
               <Input type="text" id="things-I-like" onChange={handleThingsChange} placeholder='Type something...' />
               <Button onClick={addThingUserLikes}> Add </Button>

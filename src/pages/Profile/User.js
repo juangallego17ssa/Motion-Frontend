@@ -188,9 +188,11 @@ const User = ({ updateCurrentView, userData }) => {
             <Text>Things I like</Text>
             <TagContainer>
               {
-                (userData.things_user_likes).map((thing, idx) => {
-                  return <Tag key={idx}>{thing}</Tag>
-                })
+                userData.things_user_likes ?
+                  (userData.things_user_likes).map((thing, idx) => {
+                    return <Tag key={idx}>{thing}</Tag>
+                  })
+                  : null
               }
             </TagContainer>
           </UserInfoRight>
