@@ -1,136 +1,21 @@
 import { useRef, useState } from "react";
-import styled from "styled-components";
-import axios from "axios";
-
-const EditMain = styled.div`
-  background-color: #FFFFFF;
-  display: flex;
-  flex-direction: row;
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
-`;
-
-const LeftContainer = styled.div`
-  min-width: 320px;
-  padding: 60px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  border-right: 2px solid #f2f2f2;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 19px;
-`;
-
-const Image = styled.img`
-  width: 95px;
-  height: 95px;
-  padding-bottom: 12px;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-
-const Button = styled.button`
-  padding: 16px 38px;
-  mix-blend-mode: normal;
-  border: 1px solid #f2f2f2;
-  border-radius: 30px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.07);
-  background-color: white;
-  color: #000000;
-  text-transform: uppercase;
-
-&:hover {
-  cursor: pointer;
-  background-color: grey;
-}
-`;
-
-const FormContainer = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-const InputGrid = styled.div`
-  padding: 60px 60px 40px 60px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 60px;
-`;
-
-const FormField = styled.div`
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-
-  &.things-I-like {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  Input {
-    width: 100%;
-  }
-`;
-
-const Label = styled.p`
-  font-size: 12px;
-  color: #000000;
-  mix-blend-mode: normal;
-  opacity: 0.5;
-`;
-
-const Input = styled.input`
-  padding: 10px 0;
-  outline: none;
-  border: none;
-  font-size: 14px;
-  border-bottom: 1px solid grey;
-`;
-
-const ThingsUserLikesContainer = styled.div`
-  width: 100%;    
-  padding: 0 60px 60px 60px;
-  display: flex;
-  flex-direction: column;
-  border: 5px solid yellow;
-`;
-
-const ThingsUserLike = styled.div`
-  width: 100%;  
-  padding: 20px 0 40px 0 ;
-`;
-
-const Tag = styled.p`
-  width: max-content;
-  text-align: center;
-  padding: 9px 16px;
-  background: #f2f2f2;
-  mix-blend-mode: normal;
-  border-radius: 18px;
-  color: black;
-  float: left;
-  margin-right: 8px;
-`;
+import { useDispatch } from "react-redux";
+import motionAPI from "../../axios/motionAPI";
+import { updateUserData } from "../../redux/slices/user";
+import { BsFillCameraFill } from 'react-icons/bs';
+import { RxCross1 } from 'react-icons/rx';
+import { MdFileUpload } from 'react-icons/md';
+import { ImBin2 } from 'react-icons/im';
+import { Avatar, BackgroundEditContainer, Button, ButtonsContainer, EditMain, Form, FormField, ImageContainer, Input, InputGrid, InputImg, Label, LabelImg, LeftContainer, Popover, Tag, ThingsUserLikes, ThingsUserLikesContainer } from "./UserEdit.styles";
 
 
-//--------Component----------
 const UserEdit = ({ userData }) => {
   const formRef = useRef();
+  const dispatch = useDispatch();
 
   const [thingUserLikes, setThingUserLikes] = useState('');
   const [thingsUserLikesList, setThingsUserLikesList] = useState(userData.things_user_likes);
+  const [updateAvatarPopover, setUpdateAvatarPopover] = useState(false);
 
   const handleThingsChange = e => {
     setThingUserLikes(e.target.value);
@@ -138,8 +23,39 @@ const UserEdit = ({ userData }) => {
 
   const addThingUserLikes = e => {
     e.preventDefault();
+
     setThingsUserLikesList(prevThingsUserLikes => [...prevThingsUserLikes, thingUserLikes]);
     setThingUserLikes('');
+  };
+
+  const removeThingUserLikes = (thingToRemove) => {
+    const filteredListWithoutThing = thingsUserLikesList.filter((thing, idx) => {
+      return thingsUserLikesList[idx] !== thingToRemove;
+    });
+    setThingsUserLikesList([...filteredListWithoutThing]);
+  };
+
+  const handleUploadBackground = e => {
+    const img = e.target.files[0];
+    updateUserDataFromEdit({ banner: img }, true);
+  }
+
+  const handleUploadAvatar = e => {
+    e.preventDefault();
+    const img = e.target.files[0];
+
+    setUpdateAvatarPopover(prev => !prev);
+    updateUserAvatar({ avatar: img });
+  };
+
+  const handleDeleteAvatar = e => {
+    e.preventDefault();
+
+    const userData = {
+      avatar: null,
+    }
+    setUpdateAvatarPopover(prev => !prev);
+    updateUserAvatar(userData);
   };
 
   const handleDeleteAccountClick = () => {
@@ -148,7 +64,6 @@ const UserEdit = ({ userData }) => {
 
   const handleSaveClick = e => {
     e.preventDefault();
-    console.log('save');
 
     const formData = new FormData(formRef.current);
     const formEntries = Object.fromEntries(formData.entries());
@@ -157,39 +72,96 @@ const UserEdit = ({ userData }) => {
       things_user_likes: thingsUserLikesList,
     }
 
-    const updateUserData = async () => {
-      const data = JSON.stringify(userData);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-      };
-      try {
-        const res = await axios.patch('https://motion.propulsion-home.ch/backend/api/users/me/', data, config);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    updateUserDataFromEdit(userData);
+  };
 
-    updateUserData();
+  //-------------------API calls to update user data ans user avatar------------------
+  const updateUserDataFromEdit = async (dataToUpdate) => {
+    const data = JSON.stringify(dataToUpdate)
+    const config = {
+      headers: {
+        //'Content-Type': 'multipart/form-data' for images 
+        //'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    };
+    try {
+      const res = await motionAPI.patch('users/me/', data, config);
+      dispatch(updateUserData(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUserAvatar = async (dataToUpdate) => {
+    const data = dataToUpdate;
+    const config = {
+      headers: {
+        //'Content-Type': 'multipart/form-data' for images 
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    };
+    try {
+      const res = await motionAPI.patch('users/me/', data, config);
+      dispatch(updateUserData(res.data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
-      <button> Upload image </button>
+      <BackgroundEditContainer>
+        <div>
+          <BsFillCameraFill className="camera-icon" />
+          <LabelImg htmlFor="inputBanner" className="banner-img">
+            Update image
+            <InputImg type="file" id="inputBanner" className="avatarUpload" onChange={handleUploadBackground} />
+          </LabelImg>
+        </div>
+      </BackgroundEditContainer>
       <EditMain>
         <LeftContainer>
           <ImageContainer>
-            <Image></Image>
-            <Button>Update Image</Button>
+            {
+              userData.avatar
+                ?
+                <Avatar avatarURL={userData.avatar} />
+                :
+                <Avatar>{userData.first_name.charAt(0)}</Avatar>
+            }
+            <div>
+              <Button onClick={() => setUpdateAvatarPopover((prev) => !prev)}>Update Image</Button>
+              {updateAvatarPopover
+                ?
+                (
+                  <Popover>
+                    <div>
+                      <MdFileUpload />
+                      <LabelImg htmlFor="inputAvatar">
+                        Upload
+                        <InputImg type="file" id="inputAvatar" className="avatarUpload" onChange={handleUploadAvatar} />
+                      </LabelImg>
+                    </div>
+                    <div onClick={handleDeleteAvatar}>
+                      <ImBin2 />
+                      <p>Remove</p>
+                    </div>
+                  </Popover>
+                )
+                :
+                null
+              }
+            </div>
           </ImageContainer>
           <ButtonsContainer>
             <Button onClick={handleDeleteAccountClick}>Delete Account</Button>
-            <Button type='submit' form='editForm' >Save</Button>
+            <Button variant='purple' type='submit' form='editForm' >Save</Button>
           </ButtonsContainer>
         </LeftContainer>
-        <FormContainer ref={formRef} id='editForm' onSubmit={handleSaveClick} >
+        <Form ref={formRef} id='editForm' onSubmit={handleSaveClick} >
           <InputGrid>
             <FormField>
               <Label htmlFor="first_name">First Name</Label>
@@ -221,30 +193,32 @@ const UserEdit = ({ userData }) => {
             </FormField>
             <FormField>
               <Label htmlFor="password">Password</Label>
-              <Input type="password" name="password" id="password" defaultValue='password' />
+              <Input type="password" name="password" id="password" placeholder="Enter a new password" />
             </FormField>
           </InputGrid>
           <ThingsUserLikesContainer>
             <Label htmlFor="things-I-like">Things I like</Label>
-            {
-              thingsUserLikesList.length !== 0
+            <ThingsUserLikes>
+              {thingsUserLikesList.length !== 0
                 ?
-                <ThingsUserLike>
-                  {
-                    thingsUserLikesList.map((thing, idx) => {
-                      return <Tag key={idx}>{thing}</Tag>
-                    })
-                  }
-                </ThingsUserLike>
+                thingsUserLikesList.map((thing) => {
+                  return (
+                    <Tag key={thing}>
+                      {thing}
+                      <RxCross1 className="deleteX" onClick={() => removeThingUserLikes(thing)} />
+                    </Tag>
+                  )
+                })
                 :
                 null
-            }
+              }
+            </ThingsUserLikes>
             <FormField className="things-I-like">
-              <Input type="text" id="things-I-like" onChange={handleThingsChange} placeholder='Type something...' />
+              <Input type="text" id="things-I-like" onChange={handleThingsChange} placeholder='Type something...' value={thingUserLikes} />
               <Button onClick={addThingUserLikes}> Add </Button>
             </FormField>
           </ThingsUserLikesContainer>
-        </FormContainer>
+        </Form>
       </EditMain>
     </>
   )
