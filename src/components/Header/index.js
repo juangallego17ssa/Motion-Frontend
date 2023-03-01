@@ -207,7 +207,8 @@ const Header = () => {
                     <UserName 
                         className="user-avatar"
                         onClick={()=>setShowProfile(!ShowProfile)}>
-                        {userData.first_name.charAt(0).toUpperCase()}
+                        {userData.first_name}
+                        {/* {userData.first_name.charAt(0).toUpperCase()} */}
                     </UserName>}
 
                      
