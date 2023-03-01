@@ -79,11 +79,11 @@ const Header = () => {
             <NavDiv>
                 <Link className="Link" to={'/posts'}>
                     <img src={post}/>
-                    <sapn>Posts</sapn>
+                    <span>Posts</span>
                 </Link>
                 <Link className="Link" to={'/friends'}>
                     <img src={friends}/>
-                    <sapn>Find Friends</sapn>
+                    <span>Find Friends</span>
                 </Link>
                 
             </NavDiv>
