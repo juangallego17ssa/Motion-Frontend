@@ -3,6 +3,11 @@ import MyPost from "../Subcomponents/MyPost";
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from "react";
 import motionAPI from "../../../../axios/motionAPI";
+import styled from "styled-components";
+
+
+
+
 
 const PostsFollow = () => {
 
@@ -40,7 +45,7 @@ const PostsFollow = () => {
     return(
     <MainPost>
     <div className="posts">
-        <div className="postNew post">MyPost in Follow</div>
+        <MyPost className="postNew post" post="MyPost in Follow"></MyPost>
         { postArray.length ? postArray.map( (post) => <MyPost key={uuid()} post={post} />) : "" }
     </div>
     </MainPost>
