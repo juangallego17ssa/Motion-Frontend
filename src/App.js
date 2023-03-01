@@ -7,7 +7,10 @@ import SignIn from "./pages/SignUp/Components/SignIn/SignIn";
 import SignUp from "./pages/SignUp/Components/SignUp/SignUp";
 import Success from "./pages/SignUp/Components/Success/Success";
 import Validation from "./pages/SignUp/Components/Validation/Validation";
-import Posts from "./pages/Posts";
+import Posts from "./pages/Posts/";
+import PostsFollow from "./pages/Posts/Components/PostsFollow/PostsFollow";
+import PostsFriends from "./pages/Posts/Components/PostsFriends/PostsFriends";
+import PostsLiked from "./pages/Posts/Components/PostsLiked/PostsLiked";
 import Profile from "./pages/Profile";
 import Friends from "./pages/Friends";
 import RouteProtected from "./components/RouteProtected/RouteProtected";
@@ -24,7 +27,11 @@ function App() {
           <Route path="success/" element={<Success />} />
           <Route path="validation/" element={<Validation />} />
         </Route>
-        <Route path="/posts" element={<RouteProtected route={<Posts />} />} />
+        <Route path="/posts" element={<RouteProtected route={<Posts />} />} > 
+          <Route path="follow" element={<PostsFollow />} />
+          <Route path="friends" element={<PostsFriends />} />
+          <Route path="liked" element={<PostsLiked />} />
+        </Route>
         <Route path="/profile" element={<Profile />} />
         <Route path="/friends" element={<Friends />} />
       </Routes>

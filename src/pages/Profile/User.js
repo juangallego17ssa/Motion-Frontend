@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import userPic from '../../assets/images/users/jennifer.png'
 
@@ -151,7 +150,6 @@ const Text = styled.p`
 
 //--------User Component---------
 const User = ({ updateCurrentView, userData }) => {
-
   const handleEditClick = () => {
     updateCurrentView('edit');
   }
@@ -187,10 +185,11 @@ const User = ({ updateCurrentView, userData }) => {
           <UserInfoRight>
             <Text>Things I like</Text>
             <TagContainer>
-              {
-                (userData.things_user_likes).map((thing, idx) => {
+              {userData.things_user_likes
+                ? userData.things_user_likes.map((thing, idx) => {
                   return <Tag key={idx}>{thing}</Tag>
                 })
+                : null
               }
             </TagContainer>
           </UserInfoRight>
