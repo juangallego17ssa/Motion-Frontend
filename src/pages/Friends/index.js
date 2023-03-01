@@ -8,14 +8,27 @@ import axios from "axios";
 //-------STYLE--------->
 const StyledFriends = styled.div`
   padding: 120px 7vw;
+  height: 100%;
   /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  height: 100%;
   background-color: #F2F2F2;
   gap: 30px;
  
+`;
+const Spinner = styled.div`
+  border: .5rem solid #F2F2F2; /* Background*/
+  border-top: .5rem solid #C468FF;/*Spinner*/
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  @keyframes spin {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg);  border-top: .5rem solid #6E91F6; }
+  100% { transform: rotate(360deg); }
+  }
 `;
 
 
@@ -23,9 +36,11 @@ const StyledFriends = styled.div`
 //-------COMPONENT--------->
 const Friends = () => {
  const [users, setUsers] = useState([]);
-  console.log(localStorage.getItem('token'))
+ const [isLoading, setIsLoading] = useState(false);
+  // console.log(localStorage.getItem('token'))
   useEffect(() => {
     const getUser = async () => {
+      setIsLoading(true)
         try {
             const config = {
                 headers: {
@@ -36,9 +51,8 @@ const Friends = () => {
             const response = await axios.get("https://motion.propulsion-home.ch/backend/api/users/?limit=200", config);
             const results = (response.data.results)
             setUsers(results.filter((user)=>user.first_name !== ''& user.location !== ''))
-            console.log(results.filter((user)=>user.first_name !== ''& user.about_me !== ''))
-            // setUsers(response.data.results);
-            // console.log(users)
+            setIsLoading(false)
+            // console.log(results.filter((user)=>user.first_name !== ''& user.about_me !== ''))
         } catch (error) {
             console.log(error);
         }
@@ -50,8 +64,8 @@ const Friends = () => {
     <>
       <Header />
     <StyledFriends>
-      
-        {users.map(user => <FriendsCard key={user.id} user={user}/>)}
+      {isLoading?<Spinner/>:users.map(user => <FriendsCard key={user.id} user={user}/>)}
+        {/* {users.map(user => <FriendsCard key={user.id} user={user}/>)} */}
   
     </StyledFriends>
     </>
@@ -62,105 +76,3 @@ export default Friends;
 
 
 
-//-------hard code user data ---------> fetch from
-
-// const users =[
-//   {
-//   "id": 833,
-//   "email": "lap77082@cuoly.com",
-//   "first_name": "bolor",
-//   "last_name": "jdjdj",
-//   "username": "gianbolor",
-//   "job": "",
-//   "avatar": null,
-//   "banner": null,
-//   "location": "",
-//   "phone_number": "",
-//   "about_me": "",
-//   "things_user_likes": [],
-//   "logged_in_user_is_following": false,
-//   "logged_in_user_is_friends": false,
-//   "logged_in_user_is_rejected": false,
-//   "logged_in_user_received_fr": false,
-//   "logged_in_user_sent_fr": false,
-//   "amount_of_posts": 0,
-//   "amount_of_likes": 0,
-//   "amount_of_friends": 1,
-//   "amount_of_followers": 4,
-//   "amount_following": 0
-// },
-// {
-//   "id": 948,
-//   "email": "hfggjrvsnpajhkikaw@wqcefp.com",
-//   "first_name": "",
-//   "last_name": "",
-//   "username": "hfggjrvsnpajhkikaw@wqcefp.com",
-//   "job": "",
-//   "avatar": null,
-//   "banner": null,
-//   "location": "",
-//   "phone_number": "",
-//   "about_me": "",
-//   "things_user_likes": [],
-//   "logged_in_user_is_following": false,
-//   "logged_in_user_is_friends": false,
-//   "logged_in_user_is_rejected": false,
-//   "logged_in_user_received_fr": false,
-//   "logged_in_user_sent_fr": false,
-//   "amount_of_posts": 0,
-//   "amount_of_likes": 0,
-//   "amount_of_friends": 1,
-//   "amount_of_followers": 0,
-//   "amount_following": 0
-// },
-// {
-//   "id": 809,
-//   "email": "juans@propulsionacademy.com",
-//   "first_name": "Juan Miguel",
-//   "last_name": "Sánchez Arce",
-//   "username": "JuanMiguelSanchezArce",
-//   "job": "",
-//   "avatar": "https://motion.propulsion-home.ch/media-files/JMSA_WhiteBackground.png",
-//   "banner": "https://motion.propulsion-home.ch/media-files/Groot_Revenge.jpg",
-//   "location": "",
-//   "phone_number": "",
-//   "about_me": "",
-//   "things_user_likes": [],
-//   "logged_in_user_is_following": false,
-//   "logged_in_user_is_friends": false,
-//   "logged_in_user_is_rejected": false,
-//   "logged_in_user_received_fr": false,
-//   "logged_in_user_sent_fr": false,
-//   "amount_of_posts": 0,
-//   "amount_of_likes": 0,
-//   "amount_of_friends": 2,
-//   "amount_of_followers": 8,
-//   "amount_following": 0
-// }, {
-//   "id": 5,
-//   "email": "guillaumer@propulsionacademy.com",
-//   "first_name": "Billy",
-//   "last_name": "Bob",
-//   "username": "Billy",
-//   "job": "Coffee drinker",
-//   "avatar": "https://motion.propulsion-home.ch/media-files/schrimp_man_TKoKgA3.jpg",
-//   "banner": null,
-//   "location": "Zürich",
-//   "phone_number": "",
-//   "about_me": "I like to drink coffee while playing guitar and shooting some free throws",
-//   "things_user_likes": [
-//       "BBQ",
-//       "Basket",
-//       "Guitar"
-//   ],
-//   "logged_in_user_is_following": false,
-//   "logged_in_user_is_friends": false,
-//   "logged_in_user_is_rejected": false,
-//   "logged_in_user_received_fr": false,
-//   "logged_in_user_sent_fr": false,
-//   "amount_of_posts": 0,
-//   "amount_of_likes": 0,
-//   "amount_of_friends": 2,
-//   "amount_of_followers": 14,
-//   "amount_following": 1
-// },]
