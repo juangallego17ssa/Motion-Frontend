@@ -2,16 +2,25 @@
 import styled from "styled-components";
 import { NavLink,Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import logo from '../../assets/images/logo.png'
-import notification_bell from '../../assets/svgs/notification_bell.svg'
+import { useSelector } from "react-redux";
+import { useState } from "react";
+
+//  >>>>>> Component <<<<<<<
+import ReceivedRequest from "./ReceivedRequest";
+import SentRequest from "./SentRequest";
+//  >>>>>> icon <<<<<<<
 import { BiUser } from 'react-icons/bi'
 import { IoMdLogOut } from 'react-icons/io'
+
+
+//  >>>>>> img <<<<<<<
+import logo from '../../assets/images/logo.png'
+import notification_bell from '../../assets/svgs/notification_bell.svg'
 import jennifer from '../../assets/images/users/jennifer.png'
 import menu from '../../assets/svgs/menu.svg'
 import post from '../../assets/svgs/posts_logo.svg'
 import friends from '../../assets/svgs/icon-friends.svg'
-import { useSelector } from "react-redux";
-import { startTransition, useState } from "react";
+import User from "../../redux/slices/user";
 
 
 //--------Style---------
@@ -82,7 +91,7 @@ const UserDiv = styled.div`
       }
     }  
 `;
-const Profile = styled.div`
+const ProfileBox = styled.div`
     z-index: 1;
     /* box-sizing: border-box; */
     padding:0.5rem 0 ;
@@ -91,6 +100,7 @@ const Profile = styled.div`
     width: 180px;
     border-radius: 4px;
     background-color: #FFF;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
     .link{
         /* border: 1px solid green; */
         justify-content: center;
@@ -112,12 +122,38 @@ const Profile = styled.div`
 
     }
 `;
+const UserName = styled.h1`
+    display: flex;
+    width: 40px; height:40px;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    cursor: default;
+`
+const NotificationBox = styled.div`
+    /* border: 1px solid blue; */
+    border-radius:4px;
+    z-index: 1;
+    position :absolute; right: 10%; top: 190%;
+    width: 300px;
+    padding:30px ;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+`;
+
 
 
 
 
 
 const Header = () => {
+    const userData = useSelector(state => state.user.userData);
+    const [ShowNotification, setShowNotification] = useState(false);
     const [ShowProfile, setShowProfile] = useState(false);
     const navigate = useNavigate()
 
@@ -141,21 +177,47 @@ const Header = () => {
                 </NavLink>
                 
             </NavDiv>
+
+ {/*   ========= Notification drop-down box =========  */}                
             <UserDiv>
                 <div className="notification">
-                    <img src={notification_bell}/>
+                    <img src={notification_bell} onClick={()=>setShowNotification(!ShowNotification)}/>
                     <div className="notification_num">
                         <span >3</span>
                     </div>
+                    { ShowNotification && (
+                        <NotificationBox>
+                            <h2>Received request</h2>
+                            <ReceivedRequest className='notice'/>
+                            <h2>Sent request</h2>
+                            <SentRequest/>
+                        </NotificationBox>
+                    )}
                 </div>
+
+
+ {/*   ========= if user dont set up avatar show first letter in capital =========  */}
                 <div>
-                     <img src={jennifer} alt="user-avatar" onClick={()=>setShowProfile(!ShowProfile)}/>
+                    {userData.avatar?
+                    <img 
+                        className="user-avatar"
+                        src={userData.avatar} 
+                        alt="user-avatar" 
+                        onClick={()=>setShowProfile(!ShowProfile)}/>:
+                    <UserName 
+                        className="user-avatar"
+                        onClick={()=>setShowProfile(!ShowProfile)}>
+                        {userData.first_name.charAt(0).toUpperCase()}
+                    </UserName>}
+
+                     
+ {/*   ========= profile dropdown box =========  */}
                      {ShowProfile && (
-                        <Profile>
+                        <ProfileBox>
                             <Link className="link" to={'/profile'}><BiUser className="icon"/>Profile</Link>
                             <div className="link" onClick={logout}><IoMdLogOut className="icon" onClick={logout}/>Logout</div>
                     
-                        </Profile>
+                        </ProfileBox>
                      ) } 
 
                 </div>
