@@ -1,6 +1,6 @@
 // import { StyledHeader } from "./Header.style"
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink,Link } from "react-router-dom";
 
 import logo from '../../assets/images/logo.png'
 import notification_bell from '../../assets/svgs/notification_bell.svg'
@@ -21,7 +21,7 @@ const StyledHeader = styled.header`
     position: absolute; top: 0; left: 0;
     box-shadow: 0 0 10px rgba(0,0,0,.5);
     padding: 1em;
-    gap: 1em;
+    gap: 5em;
     color: black;
     background-color: #FFF;
     display: flex;
@@ -29,18 +29,32 @@ const StyledHeader = styled.header`
     justify-content: flex-start;
 `;
 const LogoDiv = styled.div`
+    position: relative;
     display: flex;
     align-items: center;
-    gap: .5em;
+    gap: 12px;
+    h1{
+        font-size: 22px; font-weight: 400;
+    }
 `;
 const NavDiv = styled.div`
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 1em;
-    .Link{
+    gap: 3em;
+   
+    .NavLink{
         display: flex;
+        height: 80px;
         align-items: center;
-        gap: .8em;
+        gap: 5px;
+        text-decoration: none;
+        color: black;
+        &.active{
+            border-bottom:3px solid #AD73FD ;
+            
+        }
+
     }
     
 `;
@@ -65,6 +79,7 @@ const UserDiv = styled.div`
         }
       }
     }
+   
 `;
 
 
@@ -81,14 +96,12 @@ const Header = () => {
                 <h1>Motion</h1>
              </LogoDiv>
             <NavDiv>
-                <Link className="Link" to={'/posts'}>
-                    <img src={post}/>
-                    <span>Posts</span>
-                </Link>
-                <Link className="Link" to={'/friends'}>
-                    <img src={friends}/>
-                    <span>Find Friends</span>
-                </Link>
+                <NavLink className="NavLink" to={'/posts'}>
+                    <img src={post}/><span>Posts</span>
+                </NavLink>
+                <NavLink className="NavLink" to={'/friends'}>
+                    <img src={friends}/>Find Friends
+                </NavLink>
                 
             </NavDiv>
             <UserDiv>
