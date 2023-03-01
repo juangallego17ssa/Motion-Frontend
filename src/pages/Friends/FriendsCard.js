@@ -90,6 +90,10 @@ const User = styled.p`
   width: 90px; height: 90px; border-radius: 50px;
   background-color: #F2F2F2;
   font-size: 1.5rem; font-weight: 600;
+  :hover{
+    transform: scale(1.1);
+    cursor:default;
+  }
 `
 //-------Component--------->
 export default function FriendsCard({user}) {
