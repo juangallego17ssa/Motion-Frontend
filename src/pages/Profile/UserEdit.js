@@ -1,235 +1,14 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import motionAPI from "../../axios/motionAPI";
+import { updateUserData } from "../../redux/slices/user";
 import { BsFillCameraFill } from 'react-icons/bs';
 import { RxCross1 } from 'react-icons/rx';
 import { MdFileUpload } from 'react-icons/md';
 import { ImBin2 } from 'react-icons/im';
-import { updateUserData } from "../../redux/slices/user";
+import { Avatar, BackgroundEditContainer, Button, ButtonsContainer, EditMain, Form, FormField, ImageContainer, Input, InputGrid, InputImg, Label, LabelImg, LeftContainer, Popover, Tag, ThingsUserLikes, ThingsUserLikesContainer } from "./UserEdit.styles";
 
 
-const BackgroundEditContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding-bottom: 20px;
-
-  div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background: grey;
-    opacity: 80%;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 40px;
-
-    .camera-icon{
-      color: white;
-      width: 20px;
-      height: 18px;
-    }
-
-    .banner-img {
-      color: white;
-    }
-
-  }
-`;
-
-const EditMain = styled.div`
-  background-color: #FFFFFF;
-  display: flex;
-  flex-direction: row;
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
-`;
-
-const LeftContainer = styled.div`
-  min-width: 320px;
-  padding: 60px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  border-right: 2px solid #f2f2f2;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 19px;
-`;
-
-const Avatar = styled.div`
-  width: 100px;
-  height: 100px;
-  margin-bottom: 12px;
-  border: 1px solid grey;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  display: inline-block; position: relative; width: 100px; height: 100px; overflow: hidden; border-radius: 50%;
-
-  img {
-    width: auto; height: 100%; margin-left: -12px;
-  }
-
-  div{
-    font-size: 30px;
-  }
-`;
-
-const Popover = styled.div`
-  background: #FFFFFF;
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-  margin-top: 23px;
-
-  >div{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 15px 25px;
-
-    &:hover {
-      cursor: pointer;
-      background-color: #f2f2f2;
-    }
-
-    >*{
-      &:first-child {
-        width: 24px;
-        height: 24px;
-        color: #a9a9a9
-      }
-    }
-
-    >p {
-      padding-left: 20px;
-      font-size: 14px;
-    }
-  }
-`;
-
-const LabelImg = styled.label`
-  color: black;
-  cursor: pointer;
-  padding-left: 15px;
-  font-size: 14px;
-`;
-
-const InputImg = styled.input`
-  display: none;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-
-const Button = styled.button`
-  padding: 20px 48px;
-  mix-blend-mode: normal;
-  border: 1px solid #f2f2f2;
-  border-radius: 30px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.07);
-  background-color: white;
-  color: #000000;
-  text-transform: uppercase;
-  font-size: 10px;
-
-  &:hover {
-    cursor: pointer;
-    background-color: grey;
-  }
-
-  &.save-btn {
-    background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
-    border: transparent;
-    border-radius: 30px;
-    text-align: center;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #FFFFFF;
-  }
-`;
-
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-`;
-
-const InputGrid = styled.div`
-  padding: 60px 60px 40px 60px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 60px;
-`;
-
-const FormField = styled.div`
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-
-  &.things-I-like {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-`;
-
-const Label = styled.p`
-  font-size: 12px;
-  color: #000000;
-  mix-blend-mode: normal;
-  opacity: 0.5;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 10px 0;
-  outline: none;
-  border: none;
-  font-size: 14px;
-  border-bottom: 1px solid grey;
-`;
-
-const ThingsUserLikesContainer = styled.div`
-  padding: 0 60px 60px 60px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ThingsUserLikes = styled.div`
-  width: 100%;  
-  padding: 20px 0;
-`;
-
-const Tag = styled.p`
-  width: max-content;
-  text-align: center;
-  padding: 9px 16px;
-  background: #f2f2f2;
-  mix-blend-mode: normal;
-  border-radius: 18px;
-  color: black;
-  float: left;
-  margin: 0  8px 16px 0;
-  display: flex;
-  align-items: center;
-
-  .deleteX {
-    width: 10px;
-    padding-left: 15px;
-    cursor: pointer;
-  }
-`;
-
-
-//--------Component----------
 const UserEdit = ({ userData }) => {
   const formRef = useRef();
   const dispatch = useDispatch();
@@ -244,6 +23,7 @@ const UserEdit = ({ userData }) => {
 
   const addThingUserLikes = e => {
     e.preventDefault();
+
     setThingsUserLikesList(prevThingsUserLikes => [...prevThingsUserLikes, thingUserLikes]);
     setThingUserLikes('');
   };
@@ -261,19 +41,21 @@ const UserEdit = ({ userData }) => {
   }
 
   const handleUploadAvatar = e => {
+    e.preventDefault();
     const img = e.target.files[0];
 
     setUpdateAvatarPopover(prev => !prev);
-    updateUserDataFromEdit({ avatar: img }, true);
+    updateUserAvatar({ avatar: img });
   };
 
   const handleDeleteAvatar = e => {
     e.preventDefault();
 
     const userData = {
-      avatar: '',
+      avatar: null,
     }
-    updateUserDataFromEdit(userData);
+    setUpdateAvatarPopover(prev => !prev);
+    updateUserAvatar(userData);
   };
 
   const handleDeleteAccountClick = () => {
@@ -293,16 +75,30 @@ const UserEdit = ({ userData }) => {
     updateUserDataFromEdit(userData);
   };
 
-  //-------------------API call to update user data------------------
-  const updateUserDataFromEdit = async (dataToUpdate, isImage) => {
-    let data = {};
-    isImage
-      ?
-      data = dataToUpdate
-      :
-      data = JSON.stringify(userData)
+  //-------------------API calls to update user data ans user avatar------------------
+  const updateUserDataFromEdit = async (dataToUpdate) => {
+    const data = JSON.stringify(dataToUpdate)
     const config = {
       headers: {
+        //'Content-Type': 'multipart/form-data' for images 
+        //'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    };
+    try {
+      const res = await motionAPI.patch('users/me/', data, config);
+      dispatch(updateUserData(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUserAvatar = async (dataToUpdate) => {
+    const data = dataToUpdate;
+    const config = {
+      headers: {
+        //'Content-Type': 'multipart/form-data' for images 
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
@@ -320,24 +116,22 @@ const UserEdit = ({ userData }) => {
       <BackgroundEditContainer>
         <div>
           <BsFillCameraFill className="camera-icon" />
-          <LabelImg htmlFor="inputAvatar" className="banner-img">
+          <LabelImg htmlFor="inputBanner" className="banner-img">
             Update image
-            <InputImg type="file" id="inputAvatar" className="avatarUpload" onChange={handleUploadBackground} />
+            <InputImg type="file" id="inputBanner" className="avatarUpload" onChange={handleUploadBackground} />
           </LabelImg>
         </div>
       </BackgroundEditContainer>
       <EditMain>
         <LeftContainer>
           <ImageContainer>
-            <Avatar>
-              {
-                userData.avatar
-                  ?
-                  <img src={userData.avatar} />
-                  :
-                  <div>{userData.first_name.charAt(0)}</div>
-              }
-            </Avatar>
+            {
+              userData.avatar
+                ?
+                <Avatar avatarURL={userData.avatar} />
+                :
+                <Avatar>{userData.first_name.charAt(0)}</Avatar>
+            }
             <div>
               <Button onClick={() => setUpdateAvatarPopover((prev) => !prev)}>Update Image</Button>
               {updateAvatarPopover
@@ -364,10 +158,10 @@ const UserEdit = ({ userData }) => {
           </ImageContainer>
           <ButtonsContainer>
             <Button onClick={handleDeleteAccountClick}>Delete Account</Button>
-            <Button className="save-btn" type='submit' form='editForm' >Save</Button>
+            <Button variant='purple' type='submit' form='editForm' >Save</Button>
           </ButtonsContainer>
         </LeftContainer>
-        <FormContainer ref={formRef} id='editForm' onSubmit={handleSaveClick} >
+        <Form ref={formRef} id='editForm' onSubmit={handleSaveClick} >
           <InputGrid>
             <FormField>
               <Label htmlFor="first_name">First Name</Label>
@@ -420,11 +214,11 @@ const UserEdit = ({ userData }) => {
               }
             </ThingsUserLikes>
             <FormField className="things-I-like">
-              <Input type="text" id="things-I-like" onChange={handleThingsChange} placeholder='Type something...' />
+              <Input type="text" id="things-I-like" onChange={handleThingsChange} placeholder='Type something...' value={thingUserLikes} />
               <Button onClick={addThingUserLikes}> Add </Button>
             </FormField>
           </ThingsUserLikesContainer>
-        </FormContainer>
+        </Form>
       </EditMain>
     </>
   )

@@ -18,7 +18,6 @@ const Container = styled.div`
 
 const Background = styled.div`
     margin-top: 80px;
-    background-image: url(${profileBackground});
     background-image: url(${props => props.userDataBanner || profileBackground});
     background-position: center;
     width: 100%;
