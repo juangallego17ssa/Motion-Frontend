@@ -28,10 +28,19 @@ const UserDetails = styled.div`
   align-items: center;
 `;
 
-const Image = styled.img`
-  width: 95px;
-  height: 95px;
-  padding-bottom: 12px;
+const Avatar = styled.div`
+  width: 100px;
+  height: 100px;
+  margin-bottom: 12px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: inline-block; position: relative; width: 100px; height: 100px; overflow: hidden; border-radius: 50%;
+
+  img {
+    width: auto; height: 100%; margin-left: -12px;
+  }
 `;
 
 const Name = styled.p`
@@ -160,7 +169,9 @@ const User = ({ updateCurrentView, userData }) => {
     <UserContainer>
       <UserLeftContainer>
         <UserDetails>
-          <Image src={userPic}></Image>
+          <Avatar>
+            <img src={userData.avatar}></img>
+          </Avatar>
           <Name>{userData.first_name} {userData.last_name}</Name>
           <Location>{userData.location}</Location>
         </UserDetails>

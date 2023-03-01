@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import motionAPI from "../../axios/motionAPI";
 import { BsFillCameraFill } from 'react-icons/bs';
 import { RxCross1 } from 'react-icons/rx';
 import { MdFileUpload } from 'react-icons/md';
 import { ImBin2 } from 'react-icons/im';
+import { updateUserData } from "../../redux/slices/user";
 
 
 const BackgroundEditContainer = styled.div`
@@ -176,10 +178,6 @@ const FormField = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
-
-  Input {
-    width: 80%;
-  }
 `;
 
 const Label = styled.p`
@@ -190,6 +188,7 @@ const Label = styled.p`
 `;
 
 const Input = styled.input`
+  width: 100%;
   padding: 10px 0;
   outline: none;
   border: none;
@@ -232,6 +231,7 @@ const Tag = styled.p`
 //--------Component----------
 const UserEdit = ({ userData }) => {
   const formRef = useRef();
+  const dispatch = useDispatch();
 
   const [thingUserLikes, setThingUserLikes] = useState('');
   const [thingsUserLikesList, setThingsUserLikesList] = useState(userData.things_user_likes);
@@ -256,11 +256,9 @@ const UserEdit = ({ userData }) => {
 
   const handleUploadAvatar = e => {
     const img = e.target.files[0];
-    const formData = new FormData();
-    formData.append("avatar", img);
-    console.log(formData);
 
-    updateUserData(formData);
+    setUpdateAvatarPopover(prev => !prev);
+    updateUserDataFromEdit({ avatar: img }, true);
   };
 
   const handleDeleteAvatar = e => {
@@ -269,7 +267,7 @@ const UserEdit = ({ userData }) => {
     const userData = {
       avatar: '',
     }
-    updateUserData(userData);
+    updateUserDataFromEdit(userData);
   };
 
   const handleDeleteAccountClick = () => {
@@ -286,25 +284,30 @@ const UserEdit = ({ userData }) => {
       things_user_likes: thingsUserLikesList,
     }
 
-    updateUserData(userData);
+    updateUserDataFromEdit(userData);
   };
 
   //-------------------API call to update user data------------------
-  const updateUserData = async (userData) => {
-    const data = JSON.stringify(userData);
+  const updateUserDataFromEdit = async (dataToUpdate, isImage) => {
+    let data = {};
+    isImage
+      ?
+      data = dataToUpdate
+      :
+      data = JSON.stringify(userData)
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
-      await motionAPI.patch('users/me/', data, config);
+      const res = await motionAPI.patch('users/me/', data, config);
+      dispatch(updateUserData(res.data));
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <>
