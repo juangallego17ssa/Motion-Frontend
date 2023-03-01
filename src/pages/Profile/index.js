@@ -19,6 +19,7 @@ const Container = styled.div`
 const Background = styled.div`
     margin-top: 80px;
     background-image: url(${profileBackground});
+    background-image: url(${props => props.userDataBanner || profileBackground});
     background-position: center;
     width: 100%;
     height: 240px;
@@ -81,7 +82,7 @@ const Profile = () => {
             <>
                 <Header />
                 <Container>
-                    <Background />
+                    <Background userDataBanner={userData.banner} />
                     <Main>
                         {
                             currentView === 'user'

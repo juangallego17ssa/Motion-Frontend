@@ -14,25 +14,26 @@ const BackgroundEditContainer = styled.div`
   justify-content: flex-end;
   padding-bottom: 20px;
 
-  button {
+  div {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: none;
+    background: grey;
+    opacity: 80%;
     border: none;
+    padding: 8px 16px;
+    border-radius: 40px;
 
     .camera-icon{
       color: white;
       width: 20px;
       height: 18px;
-      padding-right: 23px;
     }
-  
-    p {
+
+    .banner-img {
       color: white;
-      font-size: 14px;
-      font-weight: 700;
     }
+
   }
 `;
 
@@ -104,22 +105,22 @@ const Popover = styled.div`
       }
     }
 
-    label {
-      color: black;
-      cursor: pointer;
-      padding-left: 20px;
-      font-size: 14px;
-
-      input {
-        display: none;
-      }
-    }
-
     >p {
       padding-left: 20px;
       font-size: 14px;
     }
   }
+`;
+
+const LabelImg = styled.label`
+  color: black;
+  cursor: pointer;
+  padding-left: 15px;
+  font-size: 14px;
+`;
+
+const InputImg = styled.input`
+  display: none;
 `;
 
 const ButtonsContainer = styled.div`
@@ -254,6 +255,11 @@ const UserEdit = ({ userData }) => {
     setThingsUserLikesList([...filteredListWithoutThing]);
   };
 
+  const handleUploadBackground = e => {
+    const img = e.target.files[0];
+    updateUserDataFromEdit({ banner: img }, true);
+  }
+
   const handleUploadAvatar = e => {
     const img = e.target.files[0];
 
@@ -312,10 +318,13 @@ const UserEdit = ({ userData }) => {
   return (
     <>
       <BackgroundEditContainer>
-        <button>
+        <div>
           <BsFillCameraFill className="camera-icon" />
-          <p> Update image </p>
-        </button>
+          <LabelImg htmlFor="inputAvatar" className="banner-img">
+            Update image
+            <InputImg type="file" id="inputAvatar" className="avatarUpload" onChange={handleUploadBackground} />
+          </LabelImg>
+        </div>
       </BackgroundEditContainer>
       <EditMain>
         <LeftContainer>
@@ -337,10 +346,10 @@ const UserEdit = ({ userData }) => {
                   <Popover>
                     <div>
                       <MdFileUpload />
-                      <label htmlFor="inputAvatar">
+                      <LabelImg htmlFor="inputAvatar">
                         Upload
-                        <input type="file" id="inputAvatar" className="avatarUpload" onChange={handleUploadAvatar}></input>
-                      </label>
+                        <InputImg type="file" id="inputAvatar" className="avatarUpload" onChange={handleUploadAvatar} />
+                      </LabelImg>
                     </div>
                     <div onClick={handleDeleteAvatar}>
                       <ImBin2 />
