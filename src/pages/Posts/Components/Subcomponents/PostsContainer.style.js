@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 
 
-export const MainPost = styled.div`
+export const PostsContainer = styled.div`
 
 
     position: absolute; top: 160px; left: 0; width:100%;
@@ -21,6 +21,5 @@ export const MainPost = styled.div`
 
 
 }
-
-
 `
+

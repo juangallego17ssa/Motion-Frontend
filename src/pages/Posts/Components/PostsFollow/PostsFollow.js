@@ -1,55 +1,41 @@
-import { MainPost } from "../Subcomponents/MainPost.style";
-import MyPost from "../Subcomponents/MyPost";
-import { v4 as uuid } from 'uuid';
+import { PostsContainer } from "../Subcomponents/PostsContainer.style";
+import Posts from "../Subcomponents/Posts";
+
 import { useEffect, useState } from "react";
 import motionAPI from "../../../../axios/motionAPI";
-import styled from "styled-components";
-
-
-
-
 
 const PostsFollow = () => {
+  const [postArray, setPostArray] = useState([]);
+  const token = localStorage.getItem("token");
 
-    const [postArray, setPostArray] = useState([])
-    const token = localStorage.getItem("token")
+  //// on load, get postArray
+  useEffect(() => {
+    getArray();
+  }, []);
 
+  //// get postArray
+  const getArray = async () => {
+    const myConfig = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: "get",
+    };
 
-    //// on load, get postArray
-    useEffect( () => {
-        getArray()
-    }, [])
-
-
-    //// get postArray
-    const getArray = async () => {
-        
-        const myConfig = {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            },
-            method: "get",
-        };
-
-        // send axios request
-        try {             
-            const response = (await motionAPI("social/posts/following/", myConfig))
-            setPostArray(response.data.results)
-        }
-        catch(exception) {
-            console.log(exception)
-        }    
+    // send axios request
+    try {
+      const response = await motionAPI("social/posts/following/", myConfig);
+      setPostArray(response.data.results);
+    } catch (exception) {
+      console.log(exception);
     }
+  };
 
+  return (
+    <PostsContainer>
+        <Posts postArray={postArray} filter={"follow"} />
+    </PostsContainer>
+  );
+};
 
-    return(
-    <MainPost>
-    <div className="posts">
-        <MyPost className="postNew post" post="MyPost in Follow"></MyPost>
-        { postArray.length ? postArray.map( (post) => <MyPost key={uuid()} post={post} />) : "" }
-    </div>
-    </MainPost>
-    )
-}
-
-export default PostsFollow
+export default PostsFollow;

@@ -1,53 +1,41 @@
-import { MainPost } from "../Subcomponents/MainPost.style";
-import MyPost from "../Subcomponents/MyPost";
-import { v4 as uuid } from 'uuid';
+import { PostsContainer } from "../Subcomponents/PostsContainer.style";
+import Posts from "../Subcomponents/Posts";
+
 import { useEffect, useState } from "react";
 import motionAPI from "../../../../axios/motionAPI";
 
-
-
-
-
 const PostsLiked = () => {
-    const [postArray, setPostArray] = useState([])
-    const token = localStorage.getItem("token")
+  const [postArray, setPostArray] = useState([]);
+  const token = localStorage.getItem("token");
 
+  //// on load, get postArray
+  useEffect(() => {
+    getArray();
+  }, []);
 
-    //// on load, get postArray
-    useEffect( () => {
-        getArray()
-    }, [])
+  //// get postArray
+  const getArray = async () => {
+    const myConfig = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: "get",
+    };
 
-
-    //// get postArray
-    const getArray = async () => {
-        
-        const myConfig = {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            },
-            method: "get",
-        };
-
-        // send axios request
-        try {             
-            const response = (await motionAPI("social/posts/likes/", myConfig))
-            setPostArray(response.data.results)
-        }
-        catch(exception) {
-            console.log(exception)
-        }    
+    // send axios request
+    try {
+      const response = await motionAPI("social/posts/likes/", myConfig);
+      setPostArray(response.data.results);
+    } catch (exception) {
+      console.log(exception);
     }
+  };
 
+  return (
+    <PostsContainer>
+        <Posts postArray={postArray} filter={"liked"} />
+    </PostsContainer>
+  );
+};
 
-    return(
-    <MainPost>
-    <div className="posts">
-        <div className="postNew post">MyPost in Liked</div>
-        { postArray.length ? postArray.map( (post) => <MyPost key={uuid()} post={post} />) : "" }
-    </div>
-    </MainPost>
-    )
-}
-
-export default PostsLiked
+export default PostsLiked;

@@ -7,7 +7,7 @@ const Root = () => {
   
   // If there is a token, redirect to /post, if there is no token return the home with a nested route
   return (
-    token ? <Navigate to="/posts"/> : <Navigate to="/home/signin" />
+    token ? <Navigate to="/posts/follow"/> : <Navigate to="/home/signin" />
   )
   }
 export default Root;
