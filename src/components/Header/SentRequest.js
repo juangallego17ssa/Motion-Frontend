@@ -34,12 +34,12 @@ const Friend = styled.div`
 const UserName = styled.p`
     font-weight: 500;
     position: absolute;
-    top: 10%;
+    top: 5%;
 
 `
 const UserLocation = styled.p`
     position: absolute;
-    top: 50%;
+    top: 40%;
     opacity: 0.5;
 `
 
@@ -55,7 +55,7 @@ export default function SentRequest(props) {
                  {/* <img src={props.avatar}/> */}
                  <div className="friend-info">
                      <UserName>{props.first_name} {props.last_name}</UserName>
-                     <UserLocation>{props.location}</UserLocation>
+                     <UserLocation>{props.location?props.location:'unknown location'}</UserLocation>
                  </div>
                  <div className="button-container">
                      <BiTimeFive className="icon"/>
