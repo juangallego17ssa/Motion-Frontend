@@ -79,15 +79,20 @@ const MyPostStyled = styled.div`
 
     }
 
+    .imagePost{
+        background-color:black;
+    }
+
+    
 `
 
 const MyPost = (props) => {
-
-
+    console.log(props.post)
     const firstName = props.post.user.first_name
     const lastName = props.post.user.last_name
     const avatar = props.post.user.avatar
     const created = new Date(props.post.created)
+    const image = props.post.images[0] ? props.post.images[0].image :""
     const now = new Date()
     const minutesAgo = Math.abs(now-created)/1000/60
     const hoursAgo = minutesAgo/60
@@ -127,6 +132,9 @@ const MyPost = (props) => {
             </div>
             <div className="textPost">
                 {content}
+            </div>
+            <div className="imagePost">
+                <img src={image} />
             </div>
             <div className="picturesPost"></div>
             <div className="repost post"></div>

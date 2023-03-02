@@ -34,28 +34,48 @@ const CreatePost = (props) => {
     }
 
     // create post object
+
+    
+
+
     const navigate = useNavigate()
     const sendPost = async () =>{
         const user = localStorage.getItem("user")
-        console.log(JSON.parse(user))
         
         const token = localStorage.getItem("token")
-        console.log(token)
 
         const content = draftPost
 
-        const myBody = JSON.stringify({
-            user: user,
-            content: content,
-        })
+        // const images = myPostImages.map(imageObject => {return {posts: imageObject.file}})
+        // console.log(images)
+        // console.log(myPostImages)
+
+        const formData = new FormData();
+        formData.append("user",user)
+        formData.append("content",content)
+        formData.append("images",myPostImages[0])
+        formData.append("images",myPostImages[1])
+        formData.append("images",myPostImages[2])
+        console.log(formData.getAll("images")[0])
+
         
         const myConfig = {
             headers: {
-                "Authorization":`Bearer ${token}`
+                "Authorization":`Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
             },
             method: "post",
-            data: myBody,
+            // data: myBody,
+            data: formData,
         };
+
+
+        // const myBody = JSON.stringify({
+        //     user: user,
+        //     content: content,
+        //     // images: myPostImages,
+        // })
+        
                 
         // Fetch the data and save the token in the local storage
         try {
@@ -63,6 +83,7 @@ const CreatePost = (props) => {
             setDraftPost("")
             setShowCreatePost(false)
             navigate("/")
+
             
         } catch (exception) {
             console.log(exception)
@@ -79,34 +100,30 @@ const CreatePost = (props) => {
     
     
     const [myPostImages, setMyPostImages] = useState([])
+    // const [imagesToSend, setImagesToSend] = useState([])
 
     const handleUploadImage = e => {
         if (myPostImages.length===4) {return window.alert("Maximum 4 pictures per post!")}
-        const myNewImage = {
-            url: URL.createObjectURL(e.target.files[0]),
-            file: e.target.files[0]
-        }
+        const myNewImage = {e.target.files[0] 
+        // url: URL.createObjectURL(e.target.files[0]),
+
         const imgs = [...myPostImages, myNewImage]
         setMyPostImages(imgs)
-        console.log(myPostImages)
+        // {
+            // image: e.target.files[0],
+            // image: e.target.files[0],
+            // posts: e.target.files[0]
+        // }
+        // const imageToSend = {
+        //     image: e.target.files[0],
+        // }
+        
+        // const imgsToSend = [...imagesToSend, imageToSend]
+        // setImagesToSend(imgs)
+        // console.log(myPostImages)
     }
 
-    // const uploadImagePost = async (dataToUpdate) => {
-    //     const data = dataToUpdate;
-    //     const config = {
-    //       headers: {
-    //         //'Content-Type': 'multipart/form-data' for images 
-    //         'Content-Type': 'multipart/form-data',
-    //         'Authorization': `Bearer ${localStorage.getItem('token')}`
-    //       },
-    //     };
-    //     try {
-    //       const res = await motionAPI.patch('users/me/', data, config);
-    //       dispatch(updateUserData(res.data));
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
+
         
 
 return(

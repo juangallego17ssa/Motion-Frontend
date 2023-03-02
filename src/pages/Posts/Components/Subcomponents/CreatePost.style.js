@@ -226,6 +226,5 @@ export const MyCloseImage = styled(IoIosCloseCircle)`
     position:absolute;
     margin: 3px 0px 0px 59px;
 
-
 `
 
