@@ -11,8 +11,9 @@ const Avatar = styled.div`
   align-items: center;
   border-radius: 50%;
   background-image: url(${props => props.avatarURL});
-  background-size: 130%;
+  background-size: 160%;
   background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const UserAvatar = ({ userData, isSmallAvatar }) => {
