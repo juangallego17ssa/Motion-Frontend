@@ -6,7 +6,7 @@ import FriendsCard from "../../Friends/FriendsCard";
 const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 33px
+    gap: 33px;
 `;
 
 const ProfileFollowing = () => {
