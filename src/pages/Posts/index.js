@@ -41,9 +41,6 @@ const Posts = () => {
 
     }, []);
     
-    const userData = useSelector(state => state.user.userData);
-    console.log(userData)
-
     
 
     return (
