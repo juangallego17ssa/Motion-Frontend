@@ -194,13 +194,18 @@ useEffect(()=>{
   getRequests()
   },[])
 
-const requestsToUser = [];
-const requestsFromUser = requests.results?.map(result => {
-    return result.receiver;
+const requestsToUser = requests.results?.filter(result => {
+    // console.log(result.requester)
+    if(result.receiver.id === userData.id ){return result.requester;} 
+});
+const requestsFromUser = requests.results?.filter(result => {
+    // console.log(result.receiver)
+    if(result.receiver.id !== userData.id ){return result.receiver;} 
 })
 
-console.log(requestsFromUser)
+console.log(requestsToUser)
   
+const totalNotification = requestsToUser?.length+requestsFromUser?.length
 
 
 
@@ -226,22 +231,31 @@ console.log(requestsFromUser)
                     <IoMdNotifications className="icon" onClick={() => setShowNotification(!ShowNotification)} />
 
                     <div className="notification_num">
-                        <span >{requests.count}</span>
+                        <span >{totalNotification}</span>
                     </div>
                     {ShowNotification && (
                         <NotificationBox>
                             <h2>Received request</h2>
-                            <ReceivedRequest className='notice' />
+                            {requestsToUser?.map(request => 
+                             <ReceivedRequest key={request.id}
+                             first_name={request.requester.first_name}
+                             last_name={request.requester.last_name}
+                             location = {request.requester.location}
+                             avatar = {request.requester.avatar}
+                             className='notice' 
+                             
+                             />
+                                )}
+                
                             <h2>Sent request</h2>
                             {requestsFromUser?.map(request=>
                                  <SentRequest key={request.id} 
-                                 first_name={request.first_name}
-                                 last_name={request.last_name}
-                                 location = {request.location}
-                                 avatar = {request.avatar}
+                                 first_name={request.receiver.first_name}
+                                 last_name={request.receiver.last_name}
+                                 location = {request.receiver.location}
+                                 avatar = {request.receiver.avatar}
                                  />)}
-{/*                             
-                            <SentRequest requests={requests}/> */}
+
                         </NotificationBox>
                     )}
                 </div>
@@ -250,7 +264,6 @@ console.log(requestsFromUser)
                 {/*   ========= if user dont set up avatar show first letter in capital =========  */}
                 <div>
                     <UserAvatar userData={userData} isHeaderAvatar />
-
 
                     {/*   ========= profile dropdown box =========  */}
                     {ShowProfile && (
@@ -262,7 +275,7 @@ console.log(requestsFromUser)
                     )}
 
                 </div>
-                <BiDotsVerticalRounded className="icon" />
+                <BiDotsVerticalRounded className="icon" onClick={()=>setShowProfile(!ShowProfile)}/>
             </UserDiv>
         </StyledHeader >
     )

@@ -5,7 +5,7 @@ import UserAvatar from '../UserAvatar';
 //  >>>>>> icon <<<<<<<
 import { BiTimeFive} from 'react-icons/bi'
 
-import jennifer from '../../assets/images/users/jennifer.png'
+
 
 
 
@@ -32,9 +32,14 @@ const Friend = styled.div`
     } 
 `;
 const UserName = styled.p`
+    font-weight: 500;
+    position: absolute;
+    top: 10%;
 
 `
 const UserLocation = styled.p`
+    position: absolute;
+    top: 50%;
     opacity: 0.5;
 `
 
@@ -42,7 +47,7 @@ const UserLocation = styled.p`
 
 //------------- Component -------------// 
 export default function SentRequest(props) {
-    console.log(props)
+    // console.log(props)
 
   return (
              <Friend>
