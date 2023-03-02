@@ -19,12 +19,13 @@ const Friend = styled.div`
    
     .button-container{
         display: flex;
+        justify-content: flex-end;
         .icon{
             background-color:#F2F2F2 ;
-            padding: 5px;
+            padding: 3px;
             border-radius: 30px;
-            margin-left:20px ;
-            scale: calc(1.5);
+            margin-left:25px ;
+            /* scale: calc(1); */
             opacity: 0.5;
             :hover{
                 opacity: 1;

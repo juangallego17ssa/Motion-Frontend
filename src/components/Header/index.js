@@ -9,8 +9,8 @@ import { useState } from "react";
 import ReceivedRequest from "./ReceivedRequest";
 import SentRequest from "./SentRequest";
 //  >>>>>> icon <<<<<<<
-import { BiUser } from 'react-icons/bi'
-import { IoMdLogOut } from 'react-icons/io'
+import { BiUser,BiDotsVerticalRounded } from 'react-icons/bi'
+import { IoMdLogOut,IoMdNotifications} from 'react-icons/io'
 
 
 //  >>>>>> img <<<<<<<
@@ -38,6 +38,13 @@ const StyledHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    .icon{
+        transform: scale(1.8);
+        opacity: 0.3;
+        :hover{
+            opacity: 0.5;
+        }
+    }
 `;
 const LogoDiv = styled.div`
     position: relative;
@@ -75,6 +82,10 @@ const UserDiv = styled.div`
     align-items: center;
     display: flex;
     gap: 2em;
+    img{
+        width: 40px;
+        height: 40px;
+    }
     .notification{
       position: relative;
       display: flex;
@@ -118,6 +129,7 @@ const ProfileBox = styled.div`
         }
     }
     .icon{
+        opacity: 0.9;
         transform: scale(1.5);
 
     }
@@ -145,6 +157,20 @@ const NotificationBox = styled.div`
     gap: 40px;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 `;
+const Avatar = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-bottom: 12px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-image: url(${props => props.avatarURL});
+  background-position: center;
+`;
+
+
 
 
 
@@ -181,7 +207,8 @@ const Header = () => {
  {/*   ========= Notification drop-down box =========  */}                
             <UserDiv>
                 <div className="notification">
-                    <img src={notification_bell} onClick={()=>setShowNotification(!ShowNotification)}/>
+                    <IoMdNotifications className="icon" onClick={()=>setShowNotification(!ShowNotification)}/>
+
                     <div className="notification_num">
                         <span >3</span>
                     </div>
@@ -198,19 +225,14 @@ const Header = () => {
 
  {/*   ========= if user dont set up avatar show first letter in capital =========  */}
                 <div>
-                    {userData.avatar?
-                    <img 
-                        className="user-avatar"
-                        src={userData.avatar} 
-                        alt="user-avatar" 
-                        onClick={()=>setShowProfile(!ShowProfile)}/>:
-                    <UserName 
-                        className="user-avatar"
-                        onClick={()=>setShowProfile(!ShowProfile)}>
-                        {userData.first_name}
-                        {/* {userData.first_name.charAt(0).toUpperCase()} */}
-                    </UserName>}
-
+                        {
+                    userData.avatar
+                    ?
+                    <Avatar avatarURL={userData.avatar} onClick={()=>setShowProfile(!ShowProfile)} />
+                    :
+                    <Avatar onClick={()=>setShowProfile(!ShowProfile)}>{userData.first_name?.charAt(0)}</Avatar>
+                }
+            
                      
  {/*   ========= profile dropdown box =========  */}
                      {ShowProfile && (
@@ -222,7 +244,8 @@ const Header = () => {
                      ) } 
 
                 </div>
-                <img src={menu} alt="menu"/>
+                <BiDotsVerticalRounded className="icon" />
+              
 
             </UserDiv>
         </StyledHeader>
