@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import axios from 'axios';
 import { useSelector, useStore } from 'react-redux';
 import { BiCheck } from "react-icons/bi";
 
@@ -11,7 +13,7 @@ const StyledFriendCard = styled.div`
     display: flex;  flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    /* height: 489px;  */
+    height: 489px; 
    
     width: 362px;
     border-radius: 5px;
@@ -99,21 +101,55 @@ const User = styled.p`
 export default function FriendsCard({user}) {
    
   const userData = useSelector(state => state.user.userData); 
-  const [isFollowing, setIsFollowing] = useState(false);
-  const [isFriend, setIsFriend] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(user.logged_in_user_is_following);
+  const [isFriend, setIsFriend] = useState(user.logged_in_user_sent_fr);
+
+//>>>>>>>>>> Post Following <<<<<<<<<<<
+    const postUser = async () => {
+      const config = {
+        headers: { 
+          'Authorization': `Bearer ${localStorage.getItem('token')}`, 
+          'Content-Type': 'application/json'
+        },
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `https://motion.propulsion-home.ch/backend/api/social/followers/toggle-follow/${user.id}/`,
+       
+      };
+      
+      axios(config)
+      // .then(response => {
+      //   console.log(JSON.stringify(response.data));
+      // })
+      .catch(function (error) {
+        console.log(error);
+      });}
+  
 
     const followHandler = ()=>{
       setIsFollowing(!isFollowing)
-      // console.log(userData.first_name)
+      postUser()
+      // console.log(user)
+      
     }
+
+//>>>>>>>>>> Send friend request <<<<<<<<<<<
+const sendFriendRequest = async()=>{
+  // console.log(user)
+}
+
+
+
     const handleAddFriend = ()=>{
+      sendFriendRequest()
       setIsFriend(!isFriend)
+     
     }
 
 
 
 
-    // console.log(user)
+
   return (
     <StyledFriendCard >
       <FlexDiv>
@@ -123,7 +159,7 @@ export default function FriendsCard({user}) {
       </FlexDiv>
       <ButtonContainer>
         {isFollowing?
-        <Button className='true' onClick={followHandler}>FOLLOWING</Button>:
+        <Button className='true' onClick={followHandler} check={user.logged_in_user_is_following} >FOLLOWING</Button>:
         <Button className='false'onClick={followHandler}>FOLLOW</Button>}
         {/* <Button onClick={followHandler}>{isFollowing?`FOLLOWING`:`FOLLOW`}</Button> */}
         {isFriend?

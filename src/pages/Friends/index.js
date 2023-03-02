@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import FriendsCard from "./FriendsCard";
 import { useEffect,useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 //-------STYLE--------->
@@ -37,7 +38,14 @@ const Spinner = styled.div`
 const Friends = () => {
  const [users, setUsers] = useState([]);
  const [isLoading, setIsLoading] = useState(false);
+
+//  >>>>>>>   get user data from store   <<<<<<< //
+const userData = useSelector(state => state.user.userData);
+// console.log(userData)
+
+ 
   // console.log(localStorage.getItem('token'))
+
   useEffect(() => {
     const getUser = async () => {
       setIsLoading(true)
@@ -48,9 +56,9 @@ const Friends = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
             };
-            const response = await axios.get("https://motion.propulsion-home.ch/backend/api/users/?limit=200", config);
+            const response = await axios.get("https://motion.propulsion-home.ch/backend/api/users/?limit=50", config);
             const results = (response.data.results)
-            setUsers(results.filter((user)=>user.first_name !== ''& user.location !== ''))
+            setUsers(results.filter((user)=>user.first_name !== ''))
             setIsLoading(false)
             // console.log(results.filter((user)=>user.first_name !== ''& user.about_me !== ''))
         } catch (error) {
@@ -59,6 +67,9 @@ const Friends = () => {
     }
     getUser();
 }, []);
+
+
+
 
   return (
     <>
