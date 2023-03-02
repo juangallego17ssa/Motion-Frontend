@@ -116,14 +116,13 @@ export const UserContactDetails = styled.div`
   gap: 60px;
 `;
 
-export const UserEmail = styled.div`
+export const UserContact = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-export const UserPhone = styled.div`
-  display: flex;
-  flex-direction: column;
+  
+  p:first-child{
+    padding-bottom: 10px;
+  }
 `;
 
 export const UserInfoRight = styled.div`
