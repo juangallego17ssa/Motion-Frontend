@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import axios from 'axios';
-import { useSelector, useStore } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { BiCheck } from "react-icons/bi";
+import UserAvatar from '../../components/UserAvatar'
 
 //-------STYLE--------->
 
@@ -22,6 +22,7 @@ const StyledFriendCard = styled.div`
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
   
 `;
+
 const Tag = styled.p`
         margin: 3px;
         background-color: #F2F2F2;
@@ -50,18 +51,20 @@ const FlexDiv = styled.div`
    .name{
     font-size: 22px;
    }
-
 `;
+
 const HobbiesBox = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 `;
+
 const ButtonContainer = styled.div`
     position: relative; top:0px;
     display: flex;
     gap: 6px;
 `;
+
 const Button = styled.button`
     width: 120px; height: 40px;
     border-radius: 30px;
@@ -83,10 +86,12 @@ const Button = styled.button`
         font-weight: 600;
         } 
 `;
+
 const Img = styled.div`
   clip-path: circle(90px at 80% 65%);
   background-color: #F2F2F2 ;
 `;
+
 const User = styled.p`
   display: flex; justify-content: center; align-items: center;
   width: 90px; height: 90px; border-radius: 50px;
@@ -98,33 +103,34 @@ const User = styled.p`
   }
 `
 //-------Component--------->
-export default function FriendsCard({user}) {
-   
-  const userData = useSelector(state => state.user.userData); 
+export default function FriendsCard({ user }) {
+
+  const userData = useSelector(state => state.user.userData);
   const [isFollowing, setIsFollowing] = useState(user.logged_in_user_is_following);
   const [isFriend, setIsFriend] = useState(user.logged_in_user_sent_fr);
 
-//>>>>>>>>>> Post Following <<<<<<<<<<<
-    const postUser = async () => {
-      const config = {
-        headers: { 
-          'Authorization': `Bearer ${localStorage.getItem('token')}`, 
-          'Content-Type': 'application/json'
-        },
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: `https://motion.propulsion-home.ch/backend/api/social/followers/toggle-follow/${user.id}/`,
-       
-      };
-      
-      axios(config)
+  //>>>>>>>>>> Post Following <<<<<<<<<<<
+  const postUser = async () => {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: `https://motion.propulsion-home.ch/backend/api/social/followers/toggle-follow/${user.id}/`,
+
+    };
+
+    axios(config)
       // .then(response => {
       //   console.log(JSON.stringify(response.data));
       // })
       .catch(function (error) {
         console.log(error);
-      });}
-  
+      });
+  };
+
 
     const followHandler = ()=>{
       setIsFollowing(!isFollowing)
@@ -160,40 +166,32 @@ const sendFriendRequest = async()=>{
   // console.log(user)
 }
 
-
-
-    const handleAddFriend = ()=>{
-      sendFriendRequest()
-      setIsFriend(!isFriend)
-     
-    }
-
-
-
-
+  const handleAddFriend = () => {
+    sendFriendRequest()
+    setIsFriend(!isFriend)
+  };
 
   return (
     <StyledFriendCard >
       <FlexDiv>
-       {user.avatar?(<img src={user.avatar}/>):(<User>{user.first_name.charAt(0).toUpperCase()}</User>)}
+        <UserAvatar userData={user} />
         <p className='name'>{user.first_name} {user.last_name}</p>
         <p className='country'>{user.location}</p>
       </FlexDiv>
       <ButtonContainer>
-        {isFollowing?
-        <Button className='true' onClick={followHandler} check={user.logged_in_user_is_following} >FOLLOWING</Button>:
-        <Button className='false'onClick={followHandler}>FOLLOW</Button>}
+        {isFollowing ?
+          <Button className='true' onClick={followHandler} check={user.logged_in_user_is_following} >FOLLOWING</Button> :
+          <Button className='false' onClick={followHandler}>FOLLOW</Button>}
         {/* <Button onClick={followHandler}>{isFollowing?`FOLLOWING`:`FOLLOW`}</Button> */}
-        {isFriend?
-        <Button onClick={handleAddFriend}><BiCheck/>FRIEND</Button>:
-        <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
-       
+        {isFriend ?
+          <Button onClick={handleAddFriend}><BiCheck />FRIEND</Button> :
+          <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
       </ButtonContainer>
       <FlexDiv>
         <p>{user.about_me}</p>
       </FlexDiv>
       <HobbiesBox>
-        {user.things_user_likes.map((thing,index)=><Tag key={index}>{thing}</Tag>)}
+        {user.things_user_likes.map((thing, index) => <Tag key={index}>{thing}</Tag>)}
       </HobbiesBox>
     </StyledFriendCard>
   );
