@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 export const UserContainer = styled.div`
@@ -142,6 +143,11 @@ export const UserNumbers = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 78px;
+`;
+
+export const NavLinkItem = styled(NavLink)`
+  text-decoration: none;
+  color: black;
 `;
 
 export const Number = styled.p`
