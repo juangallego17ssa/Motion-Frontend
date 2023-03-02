@@ -1,35 +1,34 @@
 // import { StyledHeader } from "./Header.style"
 import styled from "styled-components";
-import { NavLink,Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState , useEffect } from "react";
+import axios from "axios";
 
 //  >>>>>> Component <<<<<<<
 import ReceivedRequest from "./ReceivedRequest";
 import SentRequest from "./SentRequest";
 //  >>>>>> icon <<<<<<<
-import { BiUser } from 'react-icons/bi'
-import { IoMdLogOut } from 'react-icons/io'
+import { BiUser, BiDotsVerticalRounded } from 'react-icons/bi'
+import { IoMdLogOut, IoMdNotifications } from 'react-icons/io'
 
 
 //  >>>>>> img <<<<<<<
 import logo from '../../assets/images/logo.png'
-import notification_bell from '../../assets/svgs/notification_bell.svg'
-import jennifer from '../../assets/images/users/jennifer.png'
-import menu from '../../assets/svgs/menu.svg'
 import post from '../../assets/svgs/posts_logo.svg'
 import friends from '../../assets/svgs/icon-friends.svg'
-import User from "../../redux/slices/user";
+import UserAvatar from "../UserAvatar";
 
 
 //--------Style---------
 
 const StyledHeader = styled.header`
+    z-index: 1;
     box-sizing: border-box;
     height: 80px;
     width: 100vw;
-    position: absolute; top: 0; left: 0;
+    position: sticky; top: 0; left: 0;
     box-shadow: 0 0 10px rgba(0,0,0,.5);
     padding: 2rem;
     gap: 5em;
@@ -38,6 +37,13 @@ const StyledHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    .icon{
+        transform: scale(1.8);
+        opacity: 0.3;
+        :hover{
+            opacity: 0.5;
+        }
+    }
 `;
 const LogoDiv = styled.div`
     position: relative;
@@ -71,15 +77,20 @@ const NavDiv = styled.div`
 `;
 const UserDiv = styled.div`
     position: absolute;
+    top: 1.1rem;
     right: 2rem;
     align-items: center;
     display: flex;
     gap: 2em;
+    img{
+        width: 40px;
+        height: 40px;
+    }
     .notification{
       position: relative;
       display: flex;
       .notification_num{
-        position: relative; top: -6px; left:3px;
+        position: relative; top: -1rem; left:3px;
         width: 20px; height: 20px;
         background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
         border-radius: 20px;
@@ -91,6 +102,7 @@ const UserDiv = styled.div`
       }
     }  
 `;
+
 const ProfileBox = styled.div`
     z-index: 1;
     /* box-sizing: border-box; */
@@ -118,10 +130,12 @@ const ProfileBox = styled.div`
         }
     }
     .icon{
+        opacity: 0.9;
         transform: scale(1.5);
 
     }
 `;
+
 const UserName = styled.h1`
     display: flex;
     width: 40px; height:40px;
@@ -131,7 +145,8 @@ const UserName = styled.h1`
     justify-content: center;
     color: #FFF;
     cursor: default;
-`
+`;
+
 const NotificationBox = styled.div`
     /* border: 1px solid blue; */
     border-radius:4px;
@@ -146,86 +161,123 @@ const NotificationBox = styled.div`
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 `;
 
-
-
-
-
-
 const Header = () => {
     const userData = useSelector(state => state.user.userData);
     const [ShowNotification, setShowNotification] = useState(false);
     const [ShowProfile, setShowProfile] = useState(false);
+    const [requests, setRequests] = useState('');
     const navigate = useNavigate()
 
-    const logout =()=>{
-        localStorage.setItem('token','')
+    const logout = () => {
+        localStorage.setItem('token', '')
         navigate('/')
     }
+
+ //>>>>>>>>>> get request list <<<<<<<<<<<
+useEffect(()=>{
+    const getRequests = async () => {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+      };
+      try {
+        const res = await axios.get(`https://motion.propulsion-home.ch/backend/api/social/friends/requests/`, config);
+        setRequests(res.data)
+        // console.log(res.data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+  getRequests()
+  },[])
+
+const requestsToUser = requests.results?.filter(result => {
+    // console.log(result.requester)
+    if(result.receiver.id === userData.id ){return result.requester;} 
+});
+const requestsFromUser = requests.results?.filter(result => {
+    // console.log(result.receiver)
+    if(result.receiver.id !== userData.id ){return result.receiver;} 
+})
+
+console.log(requestsToUser)
+  
+const totalNotification = requestsToUser?.length+requestsFromUser?.length
+
+
 
     return (
         <StyledHeader>
             <LogoDiv>
-                <img src={logo}/>
+                <img src={logo} />
                 <h1>Motion</h1>
-             </LogoDiv>
+            </LogoDiv>
             <NavDiv>
                 <NavLink className="NavLink" to={'/posts'}>
-                    <img src={post}/><span>Posts</span>
+                    <img src={post} /><span>Posts</span>
                 </NavLink>
                 <NavLink className="NavLink" to={'/friends'}>
-                    <img src={friends}/>Find Friends
+                    <img src={friends} />Find Friends
                 </NavLink>
-                
+
             </NavDiv>
 
- {/*   ========= Notification drop-down box =========  */}                
+            {/*   ========= Notification drop-down box =========  */}
             <UserDiv>
                 <div className="notification">
-                    <img src={notification_bell} onClick={()=>setShowNotification(!ShowNotification)}/>
+                    <IoMdNotifications className="icon" onClick={() => setShowNotification(!ShowNotification)} />
+
                     <div className="notification_num">
-                        <span >3</span>
+                        <span >{totalNotification}</span>
                     </div>
-                    { ShowNotification && (
+                    {ShowNotification && (
                         <NotificationBox>
                             <h2>Received request</h2>
-                            <ReceivedRequest className='notice'/>
+                            {requestsToUser?.map(request => 
+                             <ReceivedRequest key={request.id}
+                             first_name={request.requester.first_name}
+                             last_name={request.requester.last_name}
+                             location = {request.requester.location}
+                             avatar = {request.requester.avatar}
+                             className='notice' 
+                             
+                             />
+                                )}
+                
                             <h2>Sent request</h2>
-                            <SentRequest/>
+                            {requestsFromUser?.map(request=>
+                                 <SentRequest key={request.id} 
+                                 first_name={request.receiver.first_name}
+                                 last_name={request.receiver.last_name}
+                                 location = {request.receiver.location}
+                                 avatar = {request.receiver.avatar}
+                                 />)}
+
                         </NotificationBox>
                     )}
                 </div>
 
 
- {/*   ========= if user dont set up avatar show first letter in capital =========  */}
+                {/*   ========= if user dont set up avatar show first letter in capital =========  */}
                 <div>
-                    {userData.avatar?
-                    <img 
-                        className="user-avatar"
-                        src={userData.avatar} 
-                        alt="user-avatar" 
-                        onClick={()=>setShowProfile(!ShowProfile)}/>:
-                    <UserName 
-                        className="user-avatar"
-                        onClick={()=>setShowProfile(!ShowProfile)}>
-                        {userData.first_name}
-                        {/* {userData.first_name.charAt(0).toUpperCase()} */}
-                    </UserName>}
+                    <UserAvatar userData={userData} isSmallAvatar />
 
-                     
- {/*   ========= profile dropdown box =========  */}
-                     {ShowProfile && (
+                    {/*   ========= profile dropdown box =========  */}
+                    {ShowProfile && (
                         <ProfileBox>
-                            <Link className="link" to={'/profile'}><BiUser className="icon"/>Profile</Link>
-                            <div className="link" onClick={logout}><IoMdLogOut className="icon" onClick={logout}/>Logout</div>
-                    
+                            <Link className="link" to={'/profile'}><BiUser className="icon" />Profile</Link>
+                            <div className="link" onClick={logout}><IoMdLogOut className="icon" onClick={logout} />Logout</div>
+
                         </ProfileBox>
-                     ) } 
+                    )}
 
                 </div>
-                <img src={menu} alt="menu"/>
-
+                <BiDotsVerticalRounded className="icon" onClick={()=>setShowProfile(!ShowProfile)}/>
             </UserDiv>
-        </StyledHeader>
+        </StyledHeader >
     )
 }
 

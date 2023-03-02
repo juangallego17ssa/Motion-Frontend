@@ -1,21 +1,19 @@
-import { Avatar, Button, Location, Name, NavLinkItem, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserEmail, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserPhone, UserRightContainer } from "./User.styles";
+import { useNavigate } from "react-router-dom";
+import { Button, Location, Name, NavLinkItem, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserEmail, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserPhone, UserRightContainer } from "./User.styles";
+import UserAvatar from "../../components/UserAvatar";
 
-const User = ({ updateCurrentView, userData }) => {
+
+const User = ({ userData }) => {
+  const navigate = useNavigate();
   const handleEditClick = () => {
-    updateCurrentView('edit');
+    navigate("/edit");
   }
 
   return (
     <UserContainer>
       <UserLeftContainer>
         <UserDetails>
-          {
-            userData.avatar
-              ?
-              <Avatar avatarURL={userData.avatar} />
-              :
-              <Avatar>{userData.first_name?.charAt(0)}</Avatar>
-          }
+          <UserAvatar userData={userData} />
           <Name>{userData.first_name} {userData.last_name}</Name>
           <Location>{userData.location}</Location>
         </UserDetails>
