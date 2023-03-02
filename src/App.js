@@ -19,6 +19,7 @@ import ProfileFollowers from './pages/Profile/components/ProfileFollowers'
 import ProfileFollowing from './pages/Profile/components/ProfileFollowing'
 import Friends from "./pages/Friends";
 import RouteProtected from "./components/RouteProtected/RouteProtected";
+import UserEdit from "./pages/Profile/UserEdit";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="liked" element={<PostsLiked />} />
         </Route>
         <Route path="/profile" element={<RouteProtected route={<Profile />} />}>
+          <Route path="edit" element={<UserEdit />} />
           <Route path="posts" element={<ProfilePosts />} />
           <Route path="likes" element={<ProfileLikes />} />
           <Route path="friends" element={<ProfileFriends />} />

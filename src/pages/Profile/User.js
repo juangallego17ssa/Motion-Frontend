@@ -1,4 +1,4 @@
-import { Avatar, Button, Location, Name, NavLinkItem, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserEmail, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserPhone, UserRightContainer } from "./User.styles";
+import { Avatar, Button, Location, Name, NavLinkItem, NavLinkEdit, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserEmail, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserPhone, UserRightContainer } from "./User.styles";
 
 const User = ({ updateCurrentView, userData }) => {
   const handleEditClick = () => {
@@ -19,7 +19,7 @@ const User = ({ updateCurrentView, userData }) => {
           <Name>{userData.first_name} {userData.last_name}</Name>
           <Location>{userData.location}</Location>
         </UserDetails>
-        <Button onClick={handleEditClick}>Edit profile</Button>
+        <NavLinkEdit to="edit">Edit profile</NavLinkEdit>
       </UserLeftContainer>
       <UserRightContainer>
         <UserInfo>

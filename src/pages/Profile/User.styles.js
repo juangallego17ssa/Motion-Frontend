@@ -48,6 +48,24 @@ export const Location = styled.p`
   font-size: 14px;
 `;
 
+export const NavLinkEdit = styled(NavLink)`
+  padding: 16px 38px;
+  mix-blend-mode: normal;
+  border: 1px solid #f2f2f2;
+  border-radius: 30px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.07);
+  background-color: white;
+  color: #000000;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 10px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: grey;
+  }
+`;
+
 export const Button = styled.button`
   padding: 16px 38px;
   mix-blend-mode: normal;
