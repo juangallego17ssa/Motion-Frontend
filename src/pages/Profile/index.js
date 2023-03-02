@@ -21,7 +21,8 @@ const Background = styled.div`
 `;
 
 const Main = styled.div`
-    width: 1152px;
+    max-width: 1152px;
+    width: 100%;
     margin-top: 120px;
     margin-bottom: 100px;
     border-radius: 4px;

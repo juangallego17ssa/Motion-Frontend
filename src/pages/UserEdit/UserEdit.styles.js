@@ -1,4 +1,28 @@
 import styled, { css } from "styled-components";
+import profileBackground from '../../assets/images/profile-background-img.jpg'
+
+export const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F2F2F2;
+`;
+
+export const Background = styled.div`
+    background-image: url(${props => props.userDataBanner || profileBackground});
+    background-position: center;
+    width: 100%;
+    height: 240px;
+`;
+
+export const Main = styled.div`
+    max-width: 1152px;
+    width: 100%;
+    margin-top: 120px;
+    margin-bottom: 100px;
+    border-radius: 4px;
+    position: absolute;
+`;
 
 export const BackgroundEditContainer = styled.div`
   display: flex;
@@ -36,7 +60,8 @@ export const EditMain = styled.div`
 `;
 
 export const LeftContainer = styled.div`
-  min-width: 320px;
+  max-width: 320px;
+  width: 100%;
   padding: 60px 0;
   display: flex;
   flex-direction: column;
@@ -129,6 +154,7 @@ export const Button = styled.button`
 `;
 
 export const Form = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -142,7 +168,8 @@ export const InputGrid = styled.div`
 `;
 
 export const FormField = styled.div`
-  width: 320px;
+  max-width: 320px;
+  width: 100%;
   display: flex;
   flex-direction: column;
 

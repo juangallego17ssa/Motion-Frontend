@@ -1,29 +1,29 @@
 import "./App.css";
 
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import motionAPI from "./axios/motionAPI";
+import RouteProtected from "./components/RouteProtected/RouteProtected";
+import Friends from "./pages/Friends";
+import Posts from "./pages/Posts/";
+import PostsFollow from "./pages/Posts/Components/PostsFollow/PostsFollow";
+import PostsFriends from "./pages/Posts/Components/PostsFriends/PostsFriends";
+import PostsLiked from "./pages/Posts/Components/PostsLiked/PostsLiked";
+import Profile from "./pages/Profile";
+import ProfileFollowers from './pages/Profile/components/ProfileFollowers';
+import ProfileFollowing from './pages/Profile/components/ProfileFollowing';
+import ProfileFriends from './pages/Profile/components/ProfileFriends';
+import ProfileLikes from './pages/Profile/components/ProfileLikes';
+import ProfilePosts from './pages/Profile/components/ProfilePosts';
 import Root from "./pages/SignUp";
 import Home from "./pages/SignUp/Components/Home/Home";
 import SignIn from "./pages/SignUp/Components/SignIn/SignIn";
 import SignUp from "./pages/SignUp/Components/SignUp/SignUp";
 import Success from "./pages/SignUp/Components/Success/Success";
 import Validation from "./pages/SignUp/Components/Validation/Validation";
-import Posts from "./pages/Posts/";
-import PostsFollow from "./pages/Posts/Components/PostsFollow/PostsFollow";
-import PostsFriends from "./pages/Posts/Components/PostsFriends/PostsFriends";
-import PostsLiked from "./pages/Posts/Components/PostsLiked/PostsLiked";
-import Profile from "./pages/Profile";
-import UserEdit from "./pages/Profile/UserEdit";
-import ProfilePosts from './pages/Profile/components/ProfilePosts'
-import ProfileLikes from './pages/Profile/components/ProfileLikes'
-import ProfileFriends from './pages/Profile/components/ProfileFriends'
-import ProfileFollowers from './pages/Profile/components/ProfileFollowers'
-import ProfileFollowing from './pages/Profile/components/ProfileFollowing'
-import Friends from "./pages/Friends";
-import RouteProtected from "./components/RouteProtected/RouteProtected";
-import { useDispatch } from "react-redux";
-import motionAPI from "./axios/motionAPI";
+import UserEdit from "./pages/UserEdit/UserEdit";
 import { updateUserData } from "./redux/slices/user";
-import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
