@@ -70,11 +70,14 @@ const CreatePost = (props) => {
 
     }
 
-    const handleDeleteImage = (event, index) => {
-        console.log(event)
-        console.log(index)
+    const handleDeleteImage = (event) => {
+        let imgs = [...myPostImages]
+        const index = +event.target.getAttribute("index")
+        imgs.splice(index, 1)
+        setMyPostImages(imgs)
     }
-
+    
+    
     const [myPostImages, setMyPostImages] = useState([])
 
     const handleUploadImage = e => {
@@ -131,7 +134,10 @@ return(
             </div>
             
             <div className='pictureUpload'>
-                {myPostImages.map((image,index)=> <MiniImage key={uuid()} image={image}><div classname="deletingImage" index={index} onClick={(event) => console.log("Hey")}><MyCloseImage /></div></MiniImage>)}
+                {myPostImages.map((image,index) =>   <MiniImage key={uuid()} image={image}>
+                                                        <MyCloseImage/>
+                                                        <div className="closingContainer" index={index} onClick={handleDeleteImage}></div>
+                                                    </MiniImage>)}
             </div>
 
             <div className="attachAndSend">

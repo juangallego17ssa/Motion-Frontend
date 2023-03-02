@@ -196,11 +196,20 @@ export const MiniImage = styled.div`
     background-image: url(${props=>props.image.url});
     background-size: cover;
 
-    .deletingImage{
-        height:80px;
-        width: 80px;
-        position:absolute;
-    }
+
+        .closingContainer{
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            border:0px solid red;
+            margin: 4.8px 0px 0px 60.8px;
+            background-color: rgba(255,255,255,0);
+            cursor: pointer;
+            position:absolute;
+            display:flex;
+            justify-content: center;
+            align-items:center;
+        }
 
 `
 
@@ -214,7 +223,9 @@ export const MyCloseImage = styled(IoIosCloseCircle)`
     color: white;
     height: 18px;
     width: 18px;
+    position:absolute;
     margin: 3px 0px 0px 59px;
+
 
 `
 
