@@ -66,11 +66,16 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
+    position: relative;
+    box-shadow: 0 0 2px rgba(0,0,0,.3);
     width: 120px; height: 40px;
     border-radius: 30px;
-    border: 1px solid rgba(0,0,0,.5);
+    border: none;
     font-size: 0.8rem; font-weight: 500;  
     background-color: #fff;
+    &.pending{
+      background-color: #F2F2F2;
+    }
     &.false{
       background-color: #fff;
     }
@@ -80,6 +85,7 @@ const Button = styled.button`
     }
     
         :hover{
+        cursor: pointer;
         background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
         border: none;
         color: #FFF;
@@ -209,9 +215,11 @@ const sendFriendRequest = async()=>{
           <Button className='true' onClick={followHandler} check={user.logged_in_user_is_following} >FOLLOWING</Button> :
           <Button className='false' onClick={followHandler}>FOLLOW</Button>}
         {/* <Button onClick={followHandler}>{isFollowing?`FOLLOWING`:`FOLLOW`}</Button> */}
-        {isFriend ?
+        {user.logged_in_user_is_friends?
           <Button onClick={handleDeleteFriend}><BiCheck />FRIEND</Button> :
-          <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
+          user.logged_in_user_sent_fr?
+            <Button className='pending'>PENDING</Button>:
+            <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
       </ButtonContainer>
       <FlexDiv>
         <p>{user.about_me}</p>
