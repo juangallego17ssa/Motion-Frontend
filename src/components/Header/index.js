@@ -9,8 +9,8 @@ import { useState } from "react";
 import ReceivedRequest from "./ReceivedRequest";
 import SentRequest from "./SentRequest";
 //  >>>>>> icon <<<<<<<
-import { BiUser } from 'react-icons/bi'
-import { IoMdLogOut } from 'react-icons/io'
+import { BiUser,BiDotsVerticalRounded } from 'react-icons/bi'
+import { IoMdLogOut,IoMdNotifications} from 'react-icons/io'
 
 
 //  >>>>>> img <<<<<<<
@@ -38,6 +38,13 @@ const StyledHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    .icon{
+        transform: scale(1.8);
+        opacity: 0.3;
+        :hover{
+            opacity: 0.5;
+        }
+    }
 `;
 const LogoDiv = styled.div`
     position: relative;
@@ -122,6 +129,7 @@ const ProfileBox = styled.div`
         }
     }
     .icon{
+        opacity: 0.9;
         transform: scale(1.5);
 
     }
@@ -199,7 +207,8 @@ const Header = () => {
  {/*   ========= Notification drop-down box =========  */}                
             <UserDiv>
                 <div className="notification">
-                    <img src={notification_bell} onClick={()=>setShowNotification(!ShowNotification)}/>
+                    <IoMdNotifications className="icon" onClick={()=>setShowNotification(!ShowNotification)}/>
+
                     <div className="notification_num">
                         <span >3</span>
                     </div>
@@ -223,19 +232,7 @@ const Header = () => {
                     :
                     <Avatar onClick={()=>setShowProfile(!ShowProfile)}>{userData.first_name?.charAt(0)}</Avatar>
                 }
-                    {/* {userData.avatar? 
-                    <img 
-                        className="user-avatar"
-                        src={userData.avatar} 
-                        alt="user-avatar" 
-                        onClick={()=>setShowProfile(!ShowProfile)}/>:
-                    <UserName 
-                        className="user-avatar"
-                        onClick={()=>setShowProfile(!ShowProfile)}>
-                        {userData.first_name}
-                        {/* {userData.first_name.charAt(0).toUpperCase()} */}
-                    {/* </UserName> */}
-
+            
                      
  {/*   ========= profile dropdown box =========  */}
                      {ShowProfile && (
@@ -247,7 +244,8 @@ const Header = () => {
                      ) } 
 
                 </div>
-                <img src={menu} alt="menu"/>
+                <BiDotsVerticalRounded className="icon" />
+              
 
             </UserDiv>
         </StyledHeader>
