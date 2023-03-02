@@ -103,6 +103,7 @@ const DivStyled = styled.div `
                 }
                 
                 .email-and-user {
+                    display:grid;
                     font-size: 12px;
                     font-weight:400;
                     line-height:14.06px;
