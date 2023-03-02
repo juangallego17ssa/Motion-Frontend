@@ -50,19 +50,6 @@ export const UserDetails = styled.div`
   align-items: center;
 `;
 
-export const Avatar = styled.div`
-  width: 100px;
-  height: 100px;
-  margin-bottom: 12px;
-  border: 1px solid grey;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-image: url(${props => props.avatarURL});
-  background-position: center;
-`;
-
 export const Name = styled.p`
   font-size: 24px;
   padding-bottom: 8px;

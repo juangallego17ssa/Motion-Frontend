@@ -52,24 +52,6 @@ export const ImageContainer = styled.div`
   gap: 19px;
 `;
 
-export const Avatar = styled.div`
-  width: 100px;
-  height: 100px;
-  margin-bottom: 12px;
-  border: 1px solid grey;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-image: url(${props => props.avatarURL});
-  background-position: center center;
-  font-size: 40px;
-
-  div{
-    font-size: 30px;
-  }
-`;
-
 export const Popover = styled.div`
   background: #FFFFFF;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);

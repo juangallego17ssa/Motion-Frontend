@@ -1,6 +1,6 @@
 // import { StyledHeader } from "./Header.style"
 import styled from "styled-components";
-import { NavLink,Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState , useEffect } from "react";
@@ -10,18 +10,15 @@ import axios from "axios";
 import ReceivedRequest from "./ReceivedRequest";
 import SentRequest from "./SentRequest";
 //  >>>>>> icon <<<<<<<
-import { BiUser,BiDotsVerticalRounded } from 'react-icons/bi'
-import { IoMdLogOut,IoMdNotifications} from 'react-icons/io'
+import { BiUser, BiDotsVerticalRounded } from 'react-icons/bi'
+import { IoMdLogOut, IoMdNotifications } from 'react-icons/io'
 
 
 //  >>>>>> img <<<<<<<
 import logo from '../../assets/images/logo.png'
-import notification_bell from '../../assets/svgs/notification_bell.svg'
-import jennifer from '../../assets/images/users/jennifer.png'
-import menu from '../../assets/svgs/menu.svg'
 import post from '../../assets/svgs/posts_logo.svg'
 import friends from '../../assets/svgs/icon-friends.svg'
-import User from "../../redux/slices/user";
+import UserAvatar from "../UserAvatar";
 
 
 //--------Style---------
@@ -105,6 +102,7 @@ const UserDiv = styled.div`
       }
     }  
 `;
+
 const ProfileBox = styled.div`
     z-index: 1;
     /* box-sizing: border-box; */
@@ -137,6 +135,7 @@ const ProfileBox = styled.div`
 
     }
 `;
+
 const UserName = styled.h1`
     display: flex;
     width: 40px; height:40px;
@@ -146,7 +145,8 @@ const UserName = styled.h1`
     justify-content: center;
     color: #FFF;
     cursor: default;
-`
+`;
+
 const NotificationBox = styled.div`
     /* border: 1px solid blue; */
     border-radius:4px;
@@ -160,26 +160,6 @@ const NotificationBox = styled.div`
     gap: 40px;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 `;
-const Avatar = styled.div`
-  width: 43px;
-  height: 43px;
-  margin-bottom: 12px;
-  border: 1px solid grey;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-image: url(${props => props.avatarURL});
-  background-position: center;
-  background-size: 100%;
-`;
-
-
-
-
-
-
-//--------  Component --------->
 
 const Header = () => {
     const userData = useSelector(state => state.user.userData);
@@ -188,8 +168,8 @@ const Header = () => {
     const [requests, setRequests] = useState('');
     const navigate = useNavigate()
 
-    const logout =()=>{
-        localStorage.setItem('token','')
+    const logout = () => {
+        localStorage.setItem('token', '')
         navigate('/')
     }
 
@@ -227,31 +207,31 @@ console.log(requestsFromUser)
     return (
         <StyledHeader>
             <LogoDiv>
-                <img src={logo}/>
+                <img src={logo} />
                 <h1>Motion</h1>
-             </LogoDiv>
+            </LogoDiv>
             <NavDiv>
                 <NavLink className="NavLink" to={'/posts'}>
-                    <img src={post}/><span>Posts</span>
+                    <img src={post} /><span>Posts</span>
                 </NavLink>
                 <NavLink className="NavLink" to={'/friends'}>
-                    <img src={friends}/>Find Friends
+                    <img src={friends} />Find Friends
                 </NavLink>
-                
+
             </NavDiv>
 
- {/*   ========= Notification drop-down box =========  */}                
+            {/*   ========= Notification drop-down box =========  */}
             <UserDiv>
                 <div className="notification">
-                    <IoMdNotifications className="icon" onClick={()=>setShowNotification(!ShowNotification)}/>
+                    <IoMdNotifications className="icon" onClick={() => setShowNotification(!ShowNotification)} />
 
                     <div className="notification_num">
                         <span >{requests.count}</span>
                     </div>
-                    { ShowNotification && (
+                    {ShowNotification && (
                         <NotificationBox>
                             <h2>Received request</h2>
-                            <ReceivedRequest className='notice'/>
+                            <ReceivedRequest className='notice' />
                             <h2>Sent request</h2>
                             {requestsFromUser?.map(request=>
                                  <SentRequest key={request.id} 
@@ -267,32 +247,24 @@ console.log(requestsFromUser)
                 </div>
 
 
- {/*   ========= if user dont set up avatar show first letter in capital =========  */}
+                {/*   ========= if user dont set up avatar show first letter in capital =========  */}
                 <div>
-                        {
-                    userData.avatar
-                    ?
-                    <Avatar avatarURL={userData.avatar} onClick={()=>setShowProfile(!ShowProfile)} />
-                    :
-                    <Avatar onClick={()=>setShowProfile(!ShowProfile)}>{userData.first_name?.charAt(0)}</Avatar>
-                }
-            
-                     
- {/*   ========= profile dropdown box =========  */}
-                     {ShowProfile && (
+                    <UserAvatar userData={userData} isHeaderAvatar />
+
+
+                    {/*   ========= profile dropdown box =========  */}
+                    {ShowProfile && (
                         <ProfileBox>
-                            <Link className="link" to={'/profile'}><BiUser className="icon"/>Profile</Link>
-                            <div className="link" onClick={logout}><IoMdLogOut className="icon" onClick={logout}/>Logout</div>
-                    
+                            <Link className="link" to={'/profile'}><BiUser className="icon" />Profile</Link>
+                            <div className="link" onClick={logout}><IoMdLogOut className="icon" onClick={logout} />Logout</div>
+
                         </ProfileBox>
-                     ) } 
+                    )}
 
                 </div>
                 <BiDotsVerticalRounded className="icon" />
-              
-
             </UserDiv>
-        </StyledHeader>
+        </StyledHeader >
     )
 }
 
