@@ -1,143 +1,22 @@
-import styled from "styled-components"
+import { CreatePostStyled } from './CreatePost.style'
 import jennifer from '../../../../assets/images/users/jennifer.png'
 import sendButton from '../../../../assets/images/send_button.png'
+import addPictureIcon from '../../../../assets/images/add_picture.png'
+import addLinkIcon from '../../../../assets/images/add_link.png'
 import { useState } from "react"
+import motionAPI from '../../../../axios/motionAPI'
+import { useNavigate } from 'react-router'
 
 
-const CreatePostStyled = styled.div`
-
-    background-color: white;
-    margin: 30px;
-    /* width: 20%;
-    min-width: 560px; */
-    width: 560px;
-    border-radius: 3px;
-    height: 120px;
-
-    .createPostElementContainer {
-        margin: 30px;
-        display: flex;
-        justify-content:space-between;
-        align-items: center;
-
-        .createPostElementLeft{
-            display: flex;
-
-
-            img{
-                height: 60px;
-                width: 60px;
-            }
-
-            .createPostInput{
-                margin-left: 25px;
-                border: none;
-                width: 220px;
-                font-size: 16px;
-                color: #7d7d7d;
-                display:flex;
-                align-items:center;
-                justify-content: center;
-                cursor: pointer;
-            }
-
-
-
-        }
-
-        .createPostElementRight{
-            height: 60px;
-            width: 60px;
-            background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
-            border-radius: 30px;
-            display:flex;
-            align-items:center;
-            justify-content: center;
-        }
-
-
-    }
-
-    .darkBackground{
-        background-color: rgba(0,0,0,0.8);
-        height: 100vh;
-        width: 100vw;
-        position: absolute;
-        top: -162px;
-        left: -0px;
-        display:${props=>props.showCreatePost?"flex":"none"};
-    }
-
-
-    .createPostElement{
-        position:relative;
-        display:${props=>props.showCreatePost?"flex":"none"};
-        
-        background-color: white;
-        /* margin: 30px; */
-        top:-120px;
-        left:0;
-        /* width: 20%;
-        min-width: 560px; */
-        width: 560px;
-        border-radius: 3px;
-        min-height: 120px;
-
-        .createPostElementContainer {
-            margin: 30px;
-            width:500px;
-            display: flex;
-            justify-content:space-between;
-            align-items: center;
-
-            .createPostElementLeft{
-                display: flex;
-
-
-                img{
-                    height: 60px;
-                    width: 60px;
-                }
-
-                .createPostInput{
-                    margin-left: 25px;
-                    border: none;
-                    width: 220px;
-                    font-size: 16px;
-                    color: #7d7d7d;
-                    display:flex;
-                    align-items:center;
-                    justify-content: center;
-                    cursor: pointer;
-                }
-
-                .createPostInput:focus{
-                    color:black;
-                    background-color: white;
-                    border:none;
-
-                }
-
-
-
-            }
-
-            .createPostElementRight{
-                height: 60px;
-                width: 60px;
-                background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
-                border-radius: 30px;
-                display:flex;
-                align-items:center;
-                justify-content: center;
-            }
-        }
-    }
-
-
-`
 
 const CreatePost = (props) => {
+
+    //// Controled post
+    const [draftPost, setDraftPost] = useState("")
+
+    const handleDraftPostChange = event => {
+        setDraftPost(event.target.value);
+    };
 
 
 
@@ -145,13 +24,50 @@ const CreatePost = (props) => {
 
     const handleCreatePost = () =>{
         setShowCreatePost(true)
-          console.log(showCreatePost)
+        setDraftPost("")
     }
 
     const handleHideCreatePost = (event) => {
         return (event.target.className==="darkBackground")? setShowCreatePost(false) : ""
     }
 
+    // create post object
+    const navigate = useNavigate()
+    const sendPost = async () =>{
+        const user = localStorage.getItem("user")
+        console.log(JSON.parse(user))
+        
+        const token = localStorage.getItem("token")
+        console.log(token)
+
+        const content = draftPost
+
+        const myBody = JSON.stringify({
+            user: user,
+            content: content,
+        })
+        
+        const myConfig = {
+            headers: {
+                "Authorization":`Bearer ${token}`
+            },
+            method: "post",
+            data: myBody,
+        };
+                
+        // Fetch the data and save the token in the local storage
+        try {
+            const response = (await motionAPI("/social/posts/", myConfig)).data;
+            console.log(response)
+            setDraftPost("")
+            setShowCreatePost(false)
+            navigate("/")
+            
+        } catch (exception) {
+            console.log(exception)
+        }
+
+    }
 
 return(
     <>
@@ -160,7 +76,7 @@ return(
         <div className="createPostElementContainer">
             <div className="createPostElementLeft">
                 <img src={jennifer} alt="user-avatar"/>
-                <span className="createPostInput" onClick={handleCreatePost}>What’s on your mind, Jennifer?</span> 
+                <span className="createPostInput" onClick={handleCreatePost} >What’s on your mind, Jennifer?</span> 
             </div>
             <div className="createPostElementRight">
                 <img src={sendButton} alt="send_button" />
@@ -173,10 +89,17 @@ return(
             <div className="createPostElementContainer">
                 <div className="createPostElementLeft">
                     <img src={jennifer} alt="user-avatar"/>
-                    <input type="text" className="createPostInput" placeholder="What’s on your mind, Jennifer?" /> 
+                    <textarea type="text" className="createPostInput" placeholder="What’s on your mind, Jennifer?" value={draftPost} onChange={handleDraftPostChange}/> 
                 </div>
-                <div className="createPostElementRight">
-                    <img src={sendButton} alt="send_button" />
+            </div>
+
+            <div className="attachAndSend">
+                <div className="createPostAttachIcons">
+                    <img src={addPictureIcon} alt="add picture" />
+                    <img src={addLinkIcon} alt="add link" />
+                </div>
+                <div className="createPostElementRight" onClick={sendPost}>    
+                    <img src={sendButton} alt="send button" />
                 </div>
             </div>
         </div>

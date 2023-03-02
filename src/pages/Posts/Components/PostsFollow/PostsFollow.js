@@ -24,7 +24,7 @@ const PostsFollow = () => {
 
     // send axios request
     try {
-      const response = await motionAPI("social/posts/following/", myConfig);
+      const response = await motionAPI("social/posts/me/", myConfig);
       setPostArray(response.data.results);
     } catch (exception) {
       console.log(exception);

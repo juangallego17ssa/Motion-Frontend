@@ -11,10 +11,18 @@ const MyPostStyled = styled.div`
 
 const MyPost = (props) => {
 
+    console.log(props.post)
+
+    const firstName = props.user.first_name
+    const lastName = props.user.last_name
+    const avatar = props.user.avatar
 
     
 return(
-    <MyPostStyled>{props.post}</MyPostStyled>
+    <MyPostStyled>{props.post.content}
+
+    
+    </MyPostStyled>
 )
 
 }
