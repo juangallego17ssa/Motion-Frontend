@@ -158,12 +158,22 @@ export const UserNumbers = styled.div`
 
 export const NavLinkItem = styled(NavLink)`
   text-decoration: none;
-  color: black;
+
+  &.active {
+    p:last-child {
+      color: black;
+    }
+  }
+
+  p:last-child{
+    color: grey;
+  }
 `;
 
 export const Number = styled.p`
   font-size: 24px;
   padding-bottom: 7px;
+  color: black;
 `;
 
 export const Text = styled.p`
