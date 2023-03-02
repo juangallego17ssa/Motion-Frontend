@@ -2,7 +2,6 @@ import { CreatePostStyled, MiniImage, MyCloseImage, MylinkIcon } from './CreateP
 import jennifer from '../../../../assets/images/users/jennifer.png'
 import sendButton from '../../../../assets/images/send_button.png'
 import addPictureIcon from '../../../../assets/images/add_picture.png'
-import addLinkIcon from '../../../../assets/images/add_link.png'
 import { useState } from "react"
 import motionAPI from '../../../../axios/motionAPI'
 import { useNavigate } from 'react-router'
@@ -11,86 +10,50 @@ import { v4 as uuid } from "uuid";
 
 
 const CreatePost = (props) => {
+
     
-    //// Controled post
-    const [draftPost, setDraftPost] = useState("")
+    //////// Visual components
 
-    const handleDraftPostChange = event => {
-        setDraftPost(event.target.value);
-    };
-
-
-
-    const [showCreatePost, setShowCreatePost] = useState(false)
-
+    //// Shows the create post view
     const handleCreatePost = () =>{
         setShowCreatePost(true)
         setDraftPost("")
         setMyPostImages([])
     }
 
+    //// Hide the create post view
     const handleHideCreatePost = (event) => {
         return (event.target.className==="darkBackground")? setShowCreatePost(false) : ""
     }
 
-    // create post object
+
+
+    //////// Create post
+
+    //// Controled post
+    const [draftPost, setDraftPost] = useState("")
+
+    const handleDraftPostChange = event => {
+        setDraftPost(event.target.value);
+    };
+    const [showCreatePost, setShowCreatePost] = useState(false)
 
     
+    //// Prepare the images to be uploaded
+    const [myPostImages, setMyPostImages] = useState([])
 
-
-    const navigate = useNavigate()
-    const sendPost = async () =>{
-        const user = localStorage.getItem("user")
-        
-        const token = localStorage.getItem("token")
-
-        const content = draftPost
-
-        // const images = myPostImages.map(imageObject => {return {posts: imageObject.file}})
-        // console.log(images)
-        // console.log(myPostImages)
-
-        const formData = new FormData();
-        formData.append("user",user)
-        formData.append("content",content)
-        formData.append("images",myPostImages[0])
-        formData.append("images",myPostImages[1])
-        formData.append("images",myPostImages[2])
-        console.log(formData.getAll("images")[0])
-
-        
-        const myConfig = {
-            headers: {
-                "Authorization":`Bearer ${token}`,
-                'Content-Type': 'multipart/form-data',
-            },
-            method: "post",
-            // data: myBody,
-            data: formData,
-        };
-
-
-        // const myBody = JSON.stringify({
-        //     user: user,
-        //     content: content,
-        //     // images: myPostImages,
-        // })
-        
-                
-        // Fetch the data and save the token in the local storage
-        try {
-            const response = (await motionAPI("/social/posts/", myConfig)).data;
-            setDraftPost("")
-            setShowCreatePost(false)
-            navigate("/")
-
-            
-        } catch (exception) {
-            console.log(exception)
+    // add images
+    const handleUploadImage = e => {
+        if (myPostImages.length===4) {return window.alert("Maximum 4 pictures per post!")}
+        const myNewImage = {
+            file: e.target.files[0] ,
+            url: URL.createObjectURL(e.target.files[0]),
         }
-
+        const imgs = [...myPostImages, myNewImage]
+        setMyPostImages(imgs)
     }
 
+    // delete images
     const handleDeleteImage = (event) => {
         let imgs = [...myPostImages]
         const index = +event.target.getAttribute("index")
@@ -98,30 +61,46 @@ const CreatePost = (props) => {
         setMyPostImages(imgs)
     }
     
-    
-    const [myPostImages, setMyPostImages] = useState([])
-    // const [imagesToSend, setImagesToSend] = useState([])
+    //// Send the post
+    const navigate = useNavigate()
+    const sendPost = async () =>{
+        // declare variables
+        const user = localStorage.getItem("user")
+        const token = localStorage.getItem("token")
+        const content = draftPost
+        // const images = myPostImages.map(imageObject => {return {posts: imageObject.file}})
 
-    const handleUploadImage = e => {
-        if (myPostImages.length===4) {return window.alert("Maximum 4 pictures per post!")}
-        const myNewImage = {e.target.files[0] 
-        // url: URL.createObjectURL(e.target.files[0]),
+        // declare formData
+        const formData = new FormData();
+        formData.append("user",user)
+        formData.append("content",content)
+        for (let myPostImage of myPostImages) {
+            formData.append("images",myPostImage.file)
+        }
 
-        const imgs = [...myPostImages, myNewImage]
-        setMyPostImages(imgs)
-        // {
-            // image: e.target.files[0],
-            // image: e.target.files[0],
-            // posts: e.target.files[0]
-        // }
-        // const imageToSend = {
-        //     image: e.target.files[0],
-        // }
-        
-        // const imgsToSend = [...imagesToSend, imageToSend]
-        // setImagesToSend(imgs)
-        // console.log(myPostImages)
+        // declare config file
+        const myConfig = {
+            headers: {
+                "Authorization":`Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+            method: "post",
+            data: formData,
+        };
+                
+        // Fetch the data and save the token in the local storage
+        try {
+            const response = (await motionAPI("/social/posts/", myConfig)).data;
+            setDraftPost("")
+            setMyPostImages([])
+            setShowCreatePost(false)
+            navigate("/")
+        } catch (exception) {
+            console.log(exception)
+        }
+
     }
+
 
 
         

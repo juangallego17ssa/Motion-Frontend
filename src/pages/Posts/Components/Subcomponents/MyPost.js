@@ -80,7 +80,16 @@ const MyPostStyled = styled.div`
     }
 
     .imagePost{
-        background-color:black;
+        background-color: white;
+        margin: 30px;
+        display: flex;
+        justify-content:flex-start;
+        align-items: center;
+
+        img{
+            height: 80px;
+            margin-right: 8px;
+        }
     }
 
     
@@ -92,7 +101,10 @@ const MyPost = (props) => {
     const lastName = props.post.user.last_name
     const avatar = props.post.user.avatar
     const created = new Date(props.post.created)
-    const image = props.post.images[0] ? props.post.images[0].image :""
+    const image1 = props.post.images[0] ? props.post.images[0].image :""
+    const image2 = props.post.images[1] ? props.post.images[1].image :""
+    const image3 = props.post.images[2] ? props.post.images[2].image :""
+    const image4 = props.post.images[3] ? props.post.images[3].image :""
     const now = new Date()
     const minutesAgo = Math.abs(now-created)/1000/60
     const hoursAgo = minutesAgo/60
@@ -134,7 +146,10 @@ const MyPost = (props) => {
                 {content}
             </div>
             <div className="imagePost">
-                <img src={image} />
+                <img src={image1} />
+                <img src={image2} />
+                <img src={image3} />
+                <img src={image4} />
             </div>
             <div className="picturesPost"></div>
             <div className="repost post"></div>
