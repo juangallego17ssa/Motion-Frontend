@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 
 
-export const MainPost = styled.div`
+export const PostsContainer = styled.div`
 
 
     position: absolute; top: 160px; left: 0; width:100%;
@@ -13,14 +13,14 @@ export const MainPost = styled.div`
     justify-content: center;
 
     .posts{
+        margin-top: 30px;
         display: flex;
-        flex-wrap: wrap;
+        flex-flow: wrap;
         height: 100%;
         width: 90%;
         background-color:#F2F2F2;
 
 
 }
-
-
 `
+

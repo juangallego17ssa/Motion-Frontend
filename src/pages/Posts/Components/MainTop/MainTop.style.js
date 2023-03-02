@@ -47,7 +47,7 @@ export const DivMainTop = styled.div`
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                @include grayText;
+                color: rgb(124, 124, 125);
                 justify-content: space-between;
             }
 
