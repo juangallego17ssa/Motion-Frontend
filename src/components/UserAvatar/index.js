@@ -24,7 +24,7 @@ const UserAvatar = ({ userData, isHeaderAvatar }) => {
           ?
           <Avatar avatarURL={userData.avatar} isHeaderAvatar={isHeaderAvatar} />
           :
-          <Avatar isHeaderAvatar={isHeaderAvatar} >{userData.first_name?.charAt(0)}</Avatar>
+          <Avatar isHeaderAvatar={isHeaderAvatar} >{userData.first_name?.charAt(0).toUpperCase()}</Avatar>
       )
       :
       null
