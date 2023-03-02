@@ -35,13 +35,15 @@ const Friend = styled.div`
 
 
 //------------- Component -------------// 
-export default function SentRequest() {
+export default function SentRequest(props) {
+    console.log(props)
+
   return (
              <Friend>
-                 <img src={jennifer}/>
+                 <img src={props.avatar}/>
                  <div className="friend-info">
-                     <p>first_name last_name</p>
-                     <p>location</p>
+                     <p>{props.first_name} {props.last_name}</p>
+                     <p>{props.location}</p>
                  </div>
                  <div className="button-container">
                      <BiTimeFive className="icon"/>

@@ -205,7 +205,7 @@ useEffect(()=>{
       try {
         const res = await axios.get(`https://motion.propulsion-home.ch/backend/api/social/friends/requests/`, config);
         setRequests(res.data)
-        console.log(res.data)
+        // console.log(res.data)
       } catch (error) {
         console.log(error);
       }
@@ -214,11 +214,13 @@ useEffect(()=>{
   getRequests()
   },[])
 
+const requestsToUser = [];
+const requestsFromUser = requests.results?.map(result => {
+    return result.receiver;
+})
 
-  console.log(requests?requests.results[0].receiver:'no data')
-//   requests.results.forEach(result => {console.log(result.receiver)})
-//   const receivers = requests.requests.map(receiver=>receiver)
-    
+console.log(requestsFromUser)
+  
 
 
 
@@ -251,9 +253,15 @@ useEffect(()=>{
                             <h2>Received request</h2>
                             <ReceivedRequest className='notice'/>
                             <h2>Sent request</h2>
-                            {}
-                            
-                            <SentRequest requests={requests}/>
+                            {requestsFromUser?.map(request=>
+                                 <SentRequest key={request.id} 
+                                 first_name={request.first_name}
+                                 last_name={request.last_name}
+                                 location = {request.location}
+                                 avatar = {request.avatar}
+                                 />)}
+{/*                             
+                            <SentRequest requests={requests}/> */}
                         </NotificationBox>
                     )}
                 </div>
