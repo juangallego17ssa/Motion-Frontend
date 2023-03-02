@@ -263,7 +263,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
 
                 {/*   ========= if user dont set up avatar show first letter in capital =========  */}
                 <div>
-                    <UserAvatar userData={userData} isHeaderAvatar />
+                    <UserAvatar userData={userData} isSmallAvatar />
 
                     {/*   ========= profile dropdown box =========  */}
                     {ShowProfile && (

@@ -3,10 +3,10 @@ import profileBackground from '../../assets/images/profile-background-img.jpg'
 import { updateUserData } from "../../redux/slices/user";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import Header from "../../components/Header";
 import User from "./User";
 import { Outlet } from "react-router-dom";
+import motionAPI from '../../axios/motionAPI';
 
 //--------Style---------
 const Container = styled.div`
@@ -50,7 +50,7 @@ const Profile = () => {
                     },
                 };
 
-                const response = await axios.get("https://motion.propulsion-home.ch/backend/api/users/me", config);
+                const response = await motionAPI.get("users/me", config);
                 dispatch(updateUserData(response.data));
             } catch (error) {
                 console.log(error);
