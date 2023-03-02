@@ -53,7 +53,7 @@ export default function ReceivedRequest(props) {
     console.log(props)
   return (
              <Friend>
-                <UserAvatar userData={props} isHeaderAvatar />
+                <UserAvatar userData={props} isHeaderAvatar isSmallAvatar={true} />
                  <div className="friend-info">
                      <UserName>{props.first_name} {props.last_name}</UserName>
                      <UserLocation>{props.location}</UserLocation>
