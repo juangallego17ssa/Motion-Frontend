@@ -17,7 +17,7 @@ const Container = styled.div`
 `;
 
 const Background = styled.div`
-    margin-top: 80px;
+    /* margin-top: 80px; */
     background-image: url(${props => props.userDataBanner || profileBackground});
     background-position: center;
     width: 100%;
@@ -26,7 +26,7 @@ const Background = styled.div`
 
 const Main = styled.div`
     width: 1152px;
-    margin-top: 200px;
+    margin-top: 180px;
     margin-bottom: 100px;
     border-radius: 4px;
     position: absolute;
