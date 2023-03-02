@@ -32,7 +32,7 @@ const PostsFollow = () => {
   };
 
   return (
-    <PostsContainer>
+    <PostsContainer className="mainPostContainer">
         <Posts postArray={postArray} filter={"follow"} />
     </PostsContainer>
   );

@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const CreatePostStyled = styled.div`
 
     background-color: white;
-    margin: 30px;
+    margin: 0px 0px 30px 30px;
     /* width: 20%;
     min-width: 560px; */
     width: 560px;
