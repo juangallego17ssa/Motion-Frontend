@@ -55,7 +55,7 @@ const UserEdit = ({ userData }) => {
       avatar: null,
     }
     setUpdateAvatarPopover(prev => !prev);
-    updateUserImages(userData);
+    updateUserDataFromEdit(userData);
   };
 
   const handleDeleteAccountClick = () => {
@@ -80,7 +80,6 @@ const UserEdit = ({ userData }) => {
     const data = JSON.stringify(dataToUpdate)
     const config = {
       headers: {
-        //'Content-Type': 'multipart/form-data' for images 
         //'Content-Type': 'application/json'
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`

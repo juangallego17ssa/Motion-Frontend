@@ -63,6 +63,7 @@ export const Avatar = styled.div`
   border-radius: 50%;
   background-image: url(${props => props.avatarURL});
   background-position: center center;
+  font-size: 40px;
 
   div{
     font-size: 30px;
