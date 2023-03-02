@@ -37,7 +37,7 @@ const UserEdit = ({ userData }) => {
 
   const handleUploadBackground = e => {
     const img = e.target.files[0];
-    updateUserDataFromEdit({ banner: img }, true);
+    updateUserImages({ banner: img }, true);
   }
 
   const handleUploadAvatar = e => {
@@ -45,7 +45,7 @@ const UserEdit = ({ userData }) => {
     const img = e.target.files[0];
 
     setUpdateAvatarPopover(prev => !prev);
-    updateUserAvatar({ avatar: img });
+    updateUserImages({ avatar: img });
   };
 
   const handleDeleteAvatar = e => {
@@ -55,7 +55,7 @@ const UserEdit = ({ userData }) => {
       avatar: null,
     }
     setUpdateAvatarPopover(prev => !prev);
-    updateUserAvatar(userData);
+    updateUserImages(userData);
   };
 
   const handleDeleteAccountClick = () => {
@@ -94,7 +94,7 @@ const UserEdit = ({ userData }) => {
     }
   };
 
-  const updateUserAvatar = async (dataToUpdate) => {
+  const updateUserImages = async (dataToUpdate) => {
     const data = dataToUpdate;
     const config = {
       headers: {
