@@ -6,11 +6,11 @@ import { BsFillCameraFill } from 'react-icons/bs';
 import { RxCross1 } from 'react-icons/rx';
 import { MdFileUpload } from 'react-icons/md';
 import { ImBin2 } from 'react-icons/im';
-import { Avatar, BackgroundEditContainer, Button, ButtonsContainer, EditMain, Form, FormField, ImageContainer, Input, InputGrid, InputImg, Label, LabelImg, LeftContainer, Popover, Tag, ThingsUserLikes, ThingsUserLikesContainer } from "./UserEdit.styles";
+import { BackgroundEditContainer, Button, ButtonsContainer, EditMain, Form, FormField, ImageContainer, Input, InputGrid, InputImg, Label, LabelImg, LeftContainer, Popover, Tag, ThingsUserLikes, ThingsUserLikesContainer } from "./UserEdit.styles";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { Background, Container, Main } from "./User.styles";
-
+import UserAvatar from "../../components/UserAvatar";
 
 const UserEdit = () => {
   const formRef = useRef();
@@ -137,13 +137,7 @@ const UserEdit = () => {
             <EditMain>
               <LeftContainer>
                 <ImageContainer>
-                  {
-                    userData.avatar
-                      ?
-                      <Avatar avatarURL={userData.avatar} />
-                      :
-                      <Avatar>{userData.first_name?.charAt(0)}</Avatar>
-                  }
+                  <UserAvatar userData={userData} />
                   <div>
                     <Button onClick={() => setIsOpenAvatarPopover((prev) => !prev)}>Update Image</Button>
                     {isOpenAvatarPopover
