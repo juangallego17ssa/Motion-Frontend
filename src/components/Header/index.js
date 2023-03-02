@@ -196,11 +196,11 @@ useEffect(()=>{
 
 const requestsToUser = requests.results?.filter(result => {
     // console.log(result.requester)
-    if(result.receiver.id === userData.id ){return result.requester;} 
+    if(result.receiver.id === userData.id && result.status === 'P'){return result.requester;} 
 });
 const requestsFromUser = requests.results?.filter(result => {
     // console.log(result.receiver)
-    if(result.receiver.id !== userData.id ){return result.receiver;} 
+    if(result.receiver.id !== userData.id && result.status === 'P'){return result.receiver;} 
 })
 
 console.log(requestsToUser)
@@ -238,6 +238,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                             <h2>Received request</h2>
                             {requestsToUser?.map(request => 
                              <ReceivedRequest key={request.id}
+                             id={request.id}
                              first_name={request.requester.first_name}
                              last_name={request.requester.last_name}
                              location = {request.requester.location}
