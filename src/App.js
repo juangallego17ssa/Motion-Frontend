@@ -20,8 +20,38 @@ import ProfileFollowers from './pages/Profile/components/ProfileFollowers'
 import ProfileFollowing from './pages/Profile/components/ProfileFollowing'
 import Friends from "./pages/Friends";
 import RouteProtected from "./components/RouteProtected/RouteProtected";
+import { useDispatch } from "react-redux";
+import motionAPI from "./axios/motionAPI";
+import { updateUserData } from "./redux/slices/user";
+import { useEffect } from "react";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      return;
+    }
+
+    const getMe = async () => {
+      try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+        };
+
+        const response = await motionAPI.get("users/me", config);
+        dispatch(updateUserData(response.data));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getMe();
+  }, []);
+
   return (
     <div className="App">
 

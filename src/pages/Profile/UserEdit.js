@@ -19,7 +19,7 @@ const UserEdit = () => {
   const userData = useSelector(state => state.user.userData);
 
   const [thingUserLikes, setThingUserLikes] = useState('');
-  const [thingsUserLikesList, setThingsUserLikesList] = useState(userData ? userData.things_user_likes : []);
+  const [thingsUserLikesList, setThingsUserLikesList] = useState(userData && userData.things_user_likes ? userData.things_user_likes : []);
   const [isOpenAvatarPopover, setIsOpenAvatarPopover] = useState(false);
 
   const handleThingsChange = e => {
