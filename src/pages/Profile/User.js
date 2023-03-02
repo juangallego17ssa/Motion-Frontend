@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Location, Name, NavLinkItem, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserEmail, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserPhone, UserRightContainer } from "./User.styles";
 
-const User = ({ updateCurrentView, userData }) => {
+const User = ({ userData }) => {
+  const navigate = useNavigate();
   const handleEditClick = () => {
-    updateCurrentView('edit');
+    navigate("/edit");
   }
 
   return (
