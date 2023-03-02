@@ -32,6 +32,7 @@ const Posts = () => {
 
                 const response = await motionAPI.get("users/me", config);
                 dispatch(updateUserData(response.data));
+                console.log(response.data)
             } catch (error) {
                 console.log(error);
             }

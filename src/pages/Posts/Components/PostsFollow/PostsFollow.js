@@ -6,6 +6,7 @@ import motionAPI from "../../../../axios/motionAPI";
 
 const PostsFollow = () => {
   const [postArray, setPostArray] = useState([]);
+  const [myPostArray, setMyPostArray] = useState([]);
   const token = localStorage.getItem("token");
 
   //// on load, get postArray
@@ -24,8 +25,12 @@ const PostsFollow = () => {
 
     // send axios request
     try {
-      const response = await motionAPI("social/posts/me/", myConfig);
-      setPostArray(response.data.results);
+      const response1 = await motionAPI("social/posts/me/", myConfig);
+      const response2 = await motionAPI("social/posts/following/", myConfig);
+      setMyPostArray(response1.data.results);
+      setPostArray(response2.data.results);
+
+
     } catch (exception) {
       console.log(exception);
     }
@@ -33,7 +38,7 @@ const PostsFollow = () => {
 
   return (
     <PostsContainer className="mainPostContainer">
-        <Posts postArray={postArray} filter={"follow"} />
+        <Posts myPostArray={myPostArray} postArray={postArray} filter={"follow"} />
     </PostsContainer>
   );
 };

@@ -6,6 +6,7 @@ import { useState } from "react"
 import motionAPI from '../../../../axios/motionAPI'
 import { useNavigate } from 'react-router'
 import { v4 as uuid } from "uuid";
+import { useSelector } from 'react-redux'
 
 
 
@@ -102,6 +103,8 @@ const CreatePost = (props) => {
     }
 
 
+    const firstName = useSelector( (state) => state.user.userData.first_name)
+    const avatar = useSelector( (state) => state.user.userData.avatar) 
 
         
 
@@ -111,8 +114,8 @@ return(
         
         <div className="createPostElementContainer">
             <div className="createPostElementLeft">
-                <img src={jennifer} alt="user-avatar"/>
-                <span className="createPostInput" onClick={handleCreatePost} >What’s on your mind, Jennifer?</span> 
+                <img src={avatar} alt="user-avatar"/>
+                <span className="createPostInput" onClick={handleCreatePost} >What’s on your mind, {firstName}?</span> 
             </div>
             <div className="createPostElementRight">
                 <img src={sendButton} alt="send_button" />
@@ -124,8 +127,8 @@ return(
         <div className="createPostElement">
             <div className="createPostElementContainer">
                 <div className="createPostElementLeft">
-                    <img src={jennifer} alt="user-avatar"/>
-                    <textarea type="text" className="createPostInput" placeholder="What’s on your mind, Jennifer?" value={draftPost} onChange={handleDraftPostChange}/> 
+                    <img src={avatar} alt="user-avatar"/>
+                    <textarea type="text" className="createPostInput" placeholder={`What’s on your mind, ${firstName}?`} value={draftPost} onChange={handleDraftPostChange}/> 
                 </div>
             </div>
             

@@ -1,16 +1,52 @@
-import { NavLink } from "react-router-dom"
-import { DivMainTop } from "./MainTop.style"
+import { NavLink, useNavigate } from "react-router-dom"
+import motionAPI from "../../../../axios/motionAPI"
+import { DivMainTop, SearchLogo } from "./MainTop.style"
 
 
 const MainTop = () => {
+
+    const navigate = useNavigate()
+    const sendfriendRequest = async () =>{
+
+
+            console.log("hey")
+            // declare config file
+            const myConfig = {
+            headers: {
+                "Authorization":`Bearer ${localStorage.getItem("token")}`,
+            },
+            method: "post",
+        };
+                
+        // Fetch the data and save the token in the local storage
+
+        // follow someone /social/followers/toggle-follow/{user_id}/
+        // friend request /social/friends/request/{user_id}/
+
+        try {
+            const response = (await motionAPI(`/social/followers/toggle-follow/2314/`, myConfig)).data;
+            window.alert("sent")
+        } catch (exception) {
+            console.log(exception)
+        }
+
+    }
+
+
+
+
+
+
+
+
     return (
         <DivMainTop className="mainTop">
             <div className="navigation">
                 <div className="leftNav">
                     <div className="searchLogo">
-                    <img src="images/svg/search_icon.svg" alt="" />
+                    <SearchLogo />
                     </div>
-                    <div className="searchText">Search posts...</div>
+                    <div className="searchText" onClick={sendfriendRequest}>Search posts...</div>
                 </div>
                 <div className="rightNav">
                     <div className="liked NavLinkContainer">

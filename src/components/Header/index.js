@@ -216,7 +216,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                 <h1>Motion</h1>
             </LogoDiv>
             <NavDiv>
-                <NavLink className="NavLink" to={'/posts'}>
+                <NavLink className="NavLink" to={'/posts/follow'}>
                     <img src={post} /><span>Posts</span>
                 </NavLink>
                 <NavLink className="NavLink" to={'/friends'}>
