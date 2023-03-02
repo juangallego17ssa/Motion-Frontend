@@ -78,6 +78,7 @@ const NavDiv = styled.div`
 `;
 const UserDiv = styled.div`
     position: absolute;
+    top: 1.1rem;
     right: 2rem;
     align-items: center;
     display: flex;
@@ -90,7 +91,7 @@ const UserDiv = styled.div`
       position: relative;
       display: flex;
       .notification_num{
-        position: relative; top: -6px; left:3px;
+        position: relative; top: -1rem; left:3px;
         width: 20px; height: 20px;
         background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
         border-radius: 20px;
@@ -158,8 +159,8 @@ const NotificationBox = styled.div`
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 `;
 const Avatar = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 43px;
+  height: 43px;
   margin-bottom: 12px;
   border: 1px solid grey;
   display: flex;
@@ -168,6 +169,7 @@ const Avatar = styled.div`
   border-radius: 50%;
   background-image: url(${props => props.avatarURL});
   background-position: center;
+  background-size: 100%;
 `;
 
 
