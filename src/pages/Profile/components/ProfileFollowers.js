@@ -10,14 +10,14 @@ const Container = styled.div`
 `;
 
 const ProfileFollowers = () => {
-  const [following, setFollowing] = useState([]);
+  const [followers, setFollowers] = useState([]);
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
       return;
     }
 
-    const getFollowing = async () => {
+    const getFollowers = async () => {
       try {
         const config = {
           headers: {
@@ -27,21 +27,21 @@ const ProfileFollowers = () => {
         };
 
         const response = await motionAPI.get("social/followers/followers", config);
-        setFollowing(response.data.results);
+        setFollowers(response.data.results);
       } catch (error) {
         console.log(error);
       }
     }
 
-    getFollowing();
+    getFollowers();
   }, []);
 
   return (
     <Container>
       {
-        following
+        followers
           ?
-          following.map((user) => {
+          followers.map((user) => {
             return <FriendsCard user={user} key={user.id} />
           })
           :
