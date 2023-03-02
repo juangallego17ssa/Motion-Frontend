@@ -132,16 +132,39 @@ export default function FriendsCard({ user }) {
   };
 
 
-  const followHandler = () => {
-    setIsFollowing(!isFollowing)
-    postUser()
-    // console.log(user)
-  };
+    const followHandler = ()=>{
+      setIsFollowing(!isFollowing)
+      postUser()
+      // console.log(user)
+      
+    }
 
-  //>>>>>>>>>> Send friend request <<<<<<<<<<<
-  const sendFriendRequest = async () => {
-    // console.log(user)
+//>>>>>>>>>> Send friend request <<<<<<<<<<<
+const sendFriendRequest = async()=>{
+  var data = JSON.stringify({
+    "logged_in_user_sent_fr": true
+  });
+  
+  var config = {
+    method: 'post',
+  maxBodyLength: Infinity,
+    url:` https://motion.propulsion-home.ch/backend/api/social/friends/request/${user.id}/`,
+    headers: { 
+      'Authorization': `Bearer ${localStorage.getItem('token')}`, 
+      'Content-Type': 'application/json'
+    },
+    data : data
   };
+  
+  axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  // console.log(user)
+}
 
   const handleAddFriend = () => {
     sendFriendRequest()
