@@ -7,6 +7,7 @@ import axios from "axios";
 import Header from "../../components/Header";
 import User from "./User";
 import UserEdit from "./UserEdit";
+import { Outlet } from "react-router-dom";
 
 //--------Style---------
 const Container = styled.div`
@@ -91,7 +92,7 @@ const Profile = () => {
                                         userData={userData}
                                         updateCurrentView={updateCurrentView}
                                     />
-                                    <ProfilePosts>Profile posts</ProfilePosts>
+                                    <Outlet />
                                 </>
                                 :
                                 <UserEdit userData={userData} />
