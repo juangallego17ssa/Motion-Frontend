@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 
-const DivStyled = styled.div`
+const DivStyled = styled.div `
 
     width: 60%;
     height: 100%;
@@ -39,13 +39,14 @@ const DivStyled = styled.div`
             }
         }
     }
+    
     .form {
         margin: 126px auto;
         padding: 0 26px;
         display: flex;
-        flex-direction: column;
+        flex-wrap:wrap;
         justify-content: space-around;
-        align-items: center;
+        
     
         @media (min-width: 0px) and (max-width: 700px) {
             margin: auto;
@@ -57,16 +58,74 @@ const DivStyled = styled.div`
             flex-direction: column;
             align-items: center;
             height: 400px;
+            
+            
     
             .form-title {
-                font-weight: 500;
+                font-weight: 400;
                 font-size: 40px;
-            
+                line-height: 46.88px;
+
                 @media (min-width: 0px) and (max-width: 700px) {
                     font-size: 30px;
                 }
             }
     
+            
+            .input-container{
+                width: 100%;
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                column-gap: 20px;
+
+                .val-width{
+                    display:grid;
+                    grid-column-start:1;
+                    grid-column-end:-1;
+                    width: 100%;
+                
+                
+    
+                    .input-code{
+                        font-size: 16px;
+                        font-weight:400;
+                        line-height:26px;
+                        color: #000000;
+                        padding: 10px 0;
+                        outline: none;
+                        border: none;
+                        font-size: 14px;
+                        border-bottom: 1px solid grey;
+                        
+                    }
+    
+    
+                }
+                
+                .email-and-user {
+                    font-size: 12px;
+                    font-weight:400;
+                    line-height:14.06px;
+                    color: #000000;
+                    mix-blend-mode: normal;
+                    opacity: 0.5;
+                    
+                }
+
+                .name-and-pass {
+                    font-size: 16px;
+                    font-weight:400;
+                    line-height:26px;
+                    color: #000000;
+                    padding: 10px 0;
+                    outline: none;
+                    border: none;
+                    font-size: 14px;
+                    border-bottom: 1px solid grey;
+                    }
+                
+            
+
             .input-password {
                 margin-bottom: 170px;
             
@@ -127,27 +186,50 @@ const DivStyled = styled.div`
                 border:none;
             }
         }
-    }
 
-    .step-container {
-        padding: 25px;
-        display: flex;
-        flex-direction: row;
 
-        .step {
-            width: 8px;
-            height: 8px;
-            border: 1px solid black;
-            border-radius: 100%;
-            margin: 8px;
-        }
-        .${props=>props.step} {
-            background-color: black
-        }
+
 
 
     }
-          
+    
+    .form-btn{
+        display:flex;
+        justify-content:center;
+        width:100%;
+    }
+
+
+
+    }
+
+        
+
+        .step-container {
+            padding: 25px;
+            display:flex;
+            justify-content:center;
+            width:100%;
+            
+    
+            .step {
+                width: 8px;
+                height: 8px;
+                border: 1px solid black;
+                border-radius: 100%;
+                margin: 8px;
+            }
+            .${
+        props => props.step
+    } {
+                background-color: black
+            }
+    
+    
+        }
+    
+
+
     .footer-right {
         display: none;
         
