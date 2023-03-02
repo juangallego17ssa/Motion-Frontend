@@ -1,15 +1,26 @@
 // import { StyledHeader } from "./Header.style"
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink,Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
+//  >>>>>> Component <<<<<<<
+import ReceivedRequest from "./ReceivedRequest";
+import SentRequest from "./SentRequest";
+//  >>>>>> icon <<<<<<<
+import { BiUser } from 'react-icons/bi'
+import { IoMdLogOut } from 'react-icons/io'
+
+
+//  >>>>>> img <<<<<<<
 import logo from '../../assets/images/logo.png'
 import notification_bell from '../../assets/svgs/notification_bell.svg'
 import jennifer from '../../assets/images/users/jennifer.png'
 import menu from '../../assets/svgs/menu.svg'
 import post from '../../assets/svgs/posts_logo.svg'
 import friends from '../../assets/svgs/icon-friends.svg'
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import User from "../../redux/slices/user";
 
 
 //--------Style---------
@@ -20,8 +31,8 @@ const StyledHeader = styled.header`
     width: 100vw;
     position: absolute; top: 0; left: 0;
     box-shadow: 0 0 10px rgba(0,0,0,.5);
-    padding: 1em;
-    gap: 1em;
+    padding: 2rem;
+    gap: 5em;
     color: black;
     background-color: #FFF;
     display: flex;
@@ -29,24 +40,38 @@ const StyledHeader = styled.header`
     justify-content: flex-start;
 `;
 const LogoDiv = styled.div`
+    position: relative;
     display: flex;
     align-items: center;
-    gap: .5em;
+    gap: 12px;
+    h1{
+        font-size: 22px; font-weight: 400;
+    }
 `;
 const NavDiv = styled.div`
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 1em;
-    .Link{
+    gap: 3em;
+   
+    .NavLink{
         display: flex;
+        height: 80px;
         align-items: center;
-        gap: .8em;
+        gap: 5px;
+        text-decoration: none;
+        color: black;
+        &.active{
+            border-bottom:3px solid #AD73FD ;
+            
+        }
+
     }
     
 `;
 const UserDiv = styled.div`
     position: absolute;
-    right: 1em;
+    right: 2rem;
     align-items: center;
     display: flex;
     gap: 2em;
@@ -64,15 +89,78 @@ const UserDiv = styled.div`
             color: #fff; font-size: 14px;
         }
       }
+    }  
+`;
+const ProfileBox = styled.div`
+    z-index: 1;
+    /* box-sizing: border-box; */
+    padding:0.5rem 0 ;
+    position: absolute; 
+    right:10%; top: 120%;
+    width: 180px;
+    border-radius: 4px;
+    background-color: #FFF;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    .link{
+        /* border: 1px solid green; */
+        justify-content: center;
+        align-items: center;
+        padding: .8rem 2rem;
+        display:grid;
+        grid-template-columns: 1fr 3fr;
+        text-align: center;
+        text-decoration: none;
+        opacity:0.5;
+        color: black;
+        :hover{
+            background-color: #F2F2F2;
+            opacity: 1;
+        }
     }
+    .icon{
+        transform: scale(1.5);
+
+    }
+`;
+const UserName = styled.h1`
+    display: flex;
+    width: 40px; height:40px;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    cursor: default;
+`
+const NotificationBox = styled.div`
+    /* border: 1px solid blue; */
+    border-radius:4px;
+    z-index: 1;
+    position :absolute; right: 10%; top: 190%;
+    width: 300px;
+    padding:30px ;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
 `;
 
 
 
 
 
+
 const Header = () => {
+    const userData = useSelector(state => state.user.userData);
+    const [ShowNotification, setShowNotification] = useState(false);
     const [ShowProfile, setShowProfile] = useState(false);
+    const navigate = useNavigate()
+
+    const logout =()=>{
+        localStorage.setItem('token','')
+        navigate('/')
+    }
 
     return (
         <StyledHeader>
@@ -81,26 +169,59 @@ const Header = () => {
                 <h1>Motion</h1>
              </LogoDiv>
             <NavDiv>
-                <Link className="Link" to={'/posts'}>
-                    <img src={post}/>
-                    <span>Posts</span>
-                </Link>
-                <Link className="Link" to={'/friends'}>
-                    <img src={friends}/>
-                    <span>Find Friends</span>
-                </Link>
+                <NavLink className="NavLink" to={'/posts'}>
+                    <img src={post}/><span>Posts</span>
+                </NavLink>
+                <NavLink className="NavLink" to={'/friends'}>
+                    <img src={friends}/>Find Friends
+                </NavLink>
                 
             </NavDiv>
+
+ {/*   ========= Notification drop-down box =========  */}                
             <UserDiv>
                 <div className="notification">
-                    <img src={notification_bell}/>
+                    <img src={notification_bell} onClick={()=>setShowNotification(!ShowNotification)}/>
                     <div className="notification_num">
                         <span >3</span>
                     </div>
+                    { ShowNotification && (
+                        <NotificationBox>
+                            <h2>Received request</h2>
+                            <ReceivedRequest className='notice'/>
+                            <h2>Sent request</h2>
+                            <SentRequest/>
+                        </NotificationBox>
+                    )}
                 </div>
-                <Link to={'/profile'}>
-                     <img src={jennifer} alt="user-avatar"/>
-                </Link>
+
+
+ {/*   ========= if user dont set up avatar show first letter in capital =========  */}
+                <div>
+                    {userData.avatar?
+                    <img 
+                        className="user-avatar"
+                        src={userData.avatar} 
+                        alt="user-avatar" 
+                        onClick={()=>setShowProfile(!ShowProfile)}/>:
+                    <UserName 
+                        className="user-avatar"
+                        onClick={()=>setShowProfile(!ShowProfile)}>
+                        {userData.first_name}
+                        {/* {userData.first_name.charAt(0).toUpperCase()} */}
+                    </UserName>}
+
+                     
+ {/*   ========= profile dropdown box =========  */}
+                     {ShowProfile && (
+                        <ProfileBox>
+                            <Link className="link" to={'/profile'}><BiUser className="icon"/>Profile</Link>
+                            <div className="link" onClick={logout}><IoMdLogOut className="icon" onClick={logout}/>Logout</div>
+                    
+                        </ProfileBox>
+                     ) } 
+
+                </div>
                 <img src={menu} alt="menu"/>
 
             </UserDiv>
