@@ -74,7 +74,7 @@ const SignIn = () => {
             const token = response.access;
             const user = response.user
             localStorage.setItem("token", token);
-            localStorage.setItem("user", user);
+            localStorage.setItem("user", JSON.stringify(user));
             navigate("/")
             
         } catch (exception) {

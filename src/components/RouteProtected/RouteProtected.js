@@ -4,7 +4,7 @@ const RouteProtected = (props) => {
     const token = localStorage.getItem("token");
 
     return (
-        token ? props.route : <Navigate to="/login" />
+        token ? props.route : <Navigate to="/home/signin" />
     );
 }
 

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import profileBackground from '../../assets/images/profile-background-img.jpg'
 import { updateUserData } from "../../redux/slices/user";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Header from "../../components/Header";
 import User from "./User";
-import UserEdit from "./UserEdit";
+import { Outlet } from "react-router-dom";
 
 //--------Style---------
 const Container = styled.div`
@@ -32,22 +32,9 @@ const Main = styled.div`
     position: absolute;
 `;
 
-const ProfilePosts = styled.div`
-    height: 200px;
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
-    background-color: white;
-`;
-
 //--------Profile Page---------
 const Profile = () => {
     const dispatch = useDispatch();
-
-    //currentView: 'user', 'edit'
-    const [currentView, setCurrentView] = useState('user');
-
-    const updateCurrentView = (view) => {
-        setCurrentView(view);
-    }
 
     useEffect(() => {
         if (!localStorage.getItem('token')) {
@@ -83,19 +70,10 @@ const Profile = () => {
                 <Container>
                     <Background userDataBanner={userData.banner} />
                     <Main>
-                        {
-                            currentView === 'user'
-                                ?
-                                <>
-                                    <User
-                                        userData={userData}
-                                        updateCurrentView={updateCurrentView}
-                                    />
-                                    <ProfilePosts>Profile posts</ProfilePosts>
-                                </>
-                                :
-                                <UserEdit userData={userData} />
-                        }
+                        <User
+                            userData={userData}
+                        />
+                        <Outlet />
                     </Main>
                 </Container>
             </>
