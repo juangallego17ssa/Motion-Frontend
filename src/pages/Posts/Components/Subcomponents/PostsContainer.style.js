@@ -15,7 +15,7 @@ export const PostsContainer = styled.div`
     .posts{
         margin-top: 30px;
         display: flex;
-        flex-flow: column wrap;
+        flex-flow: wrap;
         height: 100%;
         width: 90%;
         background-color:#F2F2F2;

@@ -83,7 +83,6 @@ const MyPostStyled = styled.div`
 
 const MyPost = (props) => {
 
-    console.log(props.post)
 
     const firstName = props.post.user.first_name
     const lastName = props.post.user.last_name

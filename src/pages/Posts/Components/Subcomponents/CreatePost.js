@@ -69,6 +69,30 @@ const CreatePost = (props) => {
 
     }
 
+
+    const handleUploadImage = e => {
+        const img = e.target.files[0];
+        // uploadImagePost({ banner: img }, true);
+    }
+
+    // const uploadImagePost = async (dataToUpdate) => {
+    //     const data = dataToUpdate;
+    //     const config = {
+    //       headers: {
+    //         //'Content-Type': 'multipart/form-data' for images 
+    //         'Content-Type': 'multipart/form-data',
+    //         'Authorization': `Bearer ${localStorage.getItem('token')}`
+    //       },
+    //     };
+    //     try {
+    //       const res = await motionAPI.patch('users/me/', data, config);
+    //       dispatch(updateUserData(res.data));
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   };
+        
+
 return(
     <>
     <CreatePostStyled showCreatePost={showCreatePost}>
@@ -90,12 +114,16 @@ return(
                 <div className="createPostElementLeft">
                     <img src={jennifer} alt="user-avatar"/>
                     <textarea type="text" className="createPostInput" placeholder="What’s on your mind, Jennifer?" value={draftPost} onChange={handleDraftPostChange}/> 
+                    <div className='pictureUpload'></div>
                 </div>
             </div>
 
             <div className="attachAndSend">
                 <div className="createPostAttachIcons">
-                    <img src={addPictureIcon} alt="add picture" />
+                    <label>
+                        <img src={addPictureIcon} alt="add picture" />
+                        <input type="file" className="uploadInput" onChange={handleUploadImage}></input>
+                    </label>
                     <img src={addLinkIcon} alt="add link" />
                 </div>
                 <div className="createPostElementRight" onClick={sendPost}>    

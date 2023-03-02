@@ -112,7 +112,8 @@ export const CreatePostStyled = styled.div`
                     white-space: pre-wrap;
                     resize:none;
                     font:inherit;
-                    outline:none
+                    outline:none;
+                    cursor: text;
 
                 }
 
@@ -147,6 +148,11 @@ export const CreatePostStyled = styled.div`
                     img{
                         height:20px;
                         width:20px;
+                        cursor: pointer;
+                    }
+
+                    .uploadInput{
+                        display:none;
                     }
                 }
 
@@ -159,6 +165,7 @@ export const CreatePostStyled = styled.div`
                     display:flex;
                     align-items:center;
                     justify-content: center;
+                    cursor: pointer;
                 }
 
             }
