@@ -130,7 +130,7 @@ const UserEdit = ({ userData }) => {
                 ?
                 <Avatar avatarURL={userData.avatar} />
                 :
-                <Avatar>{userData.first_name.charAt(0)}</Avatar>
+                <Avatar>{userData.first_name?.charAt(0)}</Avatar>
             }
             <div>
               <Button onClick={() => setUpdateAvatarPopover((prev) => !prev)}>Update Image</Button>

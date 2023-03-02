@@ -1,4 +1,4 @@
-import { Avatar, Button, Location, Name, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserEmail, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserPhone, UserRightContainer } from "./User.styles";
+import { Avatar, Button, Location, Name, NavLinkItem, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserEmail, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserPhone, UserRightContainer } from "./User.styles";
 
 const User = ({ updateCurrentView, userData }) => {
   const handleEditClick = () => {
@@ -52,26 +52,26 @@ const User = ({ updateCurrentView, userData }) => {
           </UserInfoRight>
         </UserInfo>
         <UserNumbers>
-          <div>
+          <NavLinkItem to="posts">
             <Number>{userData.amount_of_posts}</Number>
             <p>Posts</p>
-          </div>
-          <div>
+          </NavLinkItem>
+          <NavLinkItem to="likes">
             <Number>{userData.amount_of_likes}</Number>
             <p>Likes</p>
-          </div>
-          <div>
+          </NavLinkItem>
+          <NavLinkItem to="friends">
             <Number>{userData.amount_of_friends}</Number>
             <p>Friends</p>
-          </div>
-          <div>
+          </NavLinkItem>
+          <NavLinkItem to="followers">
             <Number>{userData.amount_of_followers}</Number>
             <p>Followers</p>
-          </div>
-          <div>
+          </NavLinkItem>
+          <NavLinkItem to="following">
             <Number>{userData.amount_following}</Number>
             <p>Following</p>
-          </div>
+          </NavLinkItem>
         </UserNumbers>
       </UserRightContainer>
     </UserContainer>
