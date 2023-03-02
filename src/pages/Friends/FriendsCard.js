@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+
 import { BiCheck } from "react-icons/bi";
 import UserAvatar from '../../components/UserAvatar'
-
 //-------STYLE--------->
 
 const StyledFriendCard = styled.div`
@@ -104,6 +104,7 @@ const User = styled.p`
 `
 //-------Component--------->
 export default function FriendsCard({ user }) {
+  const dispatch = useDispatch()
 
   const userData = useSelector(state => state.user.userData);
   const [isFollowing, setIsFollowing] = useState(user.logged_in_user_is_following);
@@ -123,9 +124,9 @@ export default function FriendsCard({ user }) {
     };
 
     axios(config)
-      // .then(response => {
-      //   console.log(JSON.stringify(response.data));
-      // })
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
       .catch(function (error) {
         console.log(error);
       });
@@ -166,10 +167,35 @@ const sendFriendRequest = async()=>{
   // console.log(user)
 }
 
+// const deleteFriend = async()=>{
+//   var data = '';
+//   var config = {
+//   method: 'delete',
+//   url: `https://motion.propulsion-home.ch/backend/api/social/friends/requests/${user.id}/`,
+//   headers: { 
+//     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3ODU4MjM3LCJqdGkiOiI3YThkMzUzZjU3MTY0MTBmYmVjYzhmNGZkMjRlMjE4OCIsInVzZXJfaWQiOjIyNDV9.A1NVzg1BtEIGPVCQcxzbRK385oIdIDvPFJqfukQ0GdA'
+//   },
+//   data : data
+// };
+
+// axios(config)
+// .then(function (response) {
+//   console.log(JSON.stringify(response.data));
+// })
+// .catch(function (error) {
+//   console.log(error);
+// });
+
+// }
+
   const handleAddFriend = () => {
     sendFriendRequest()
     setIsFriend(!isFriend)
   };
+
+  const handleDeleteFriend = () => {
+
+  }
 
   return (
     <StyledFriendCard >
@@ -184,7 +210,7 @@ const sendFriendRequest = async()=>{
           <Button className='false' onClick={followHandler}>FOLLOW</Button>}
         {/* <Button onClick={followHandler}>{isFollowing?`FOLLOWING`:`FOLLOW`}</Button> */}
         {isFriend ?
-          <Button onClick={handleAddFriend}><BiCheck />FRIEND</Button> :
+          <Button onClick={handleDeleteFriend}><BiCheck />FRIEND</Button> :
           <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
       </ButtonContainer>
       <FlexDiv>
