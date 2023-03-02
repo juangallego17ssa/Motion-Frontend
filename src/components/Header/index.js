@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { NavLink,Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState , useEffect } from "react";
+import axios from "axios";
 
 //  >>>>>> Component <<<<<<<
 import ReceivedRequest from "./ReceivedRequest";
@@ -26,10 +27,11 @@ import User from "../../redux/slices/user";
 //--------Style---------
 
 const StyledHeader = styled.header`
+    z-index: 1;
     box-sizing: border-box;
     height: 80px;
     width: 100vw;
-    position: absolute; top: 0; left: 0;
+    position: sticky; top: 0; left: 0;
     box-shadow: 0 0 10px rgba(0,0,0,.5);
     padding: 2rem;
     gap: 5em;
@@ -177,18 +179,48 @@ const Avatar = styled.div`
 
 
 
-
+//--------  Component --------->
 
 const Header = () => {
     const userData = useSelector(state => state.user.userData);
     const [ShowNotification, setShowNotification] = useState(false);
     const [ShowProfile, setShowProfile] = useState(false);
+    const [requests, setRequests] = useState('');
     const navigate = useNavigate()
 
     const logout =()=>{
         localStorage.setItem('token','')
         navigate('/')
     }
+
+ //>>>>>>>>>> get request list <<<<<<<<<<<
+useEffect(()=>{
+    const getRequests = async () => {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+      };
+      try {
+        const res = await axios.get(`https://motion.propulsion-home.ch/backend/api/social/friends/requests/`, config);
+        setRequests(res.data)
+        console.log(res.data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+  getRequests()
+  },[])
+
+
+  console.log(requests?requests.results[0].receiver:'no data')
+//   requests.results.forEach(result => {console.log(result.receiver)})
+//   const receivers = requests.requests.map(receiver=>receiver)
+    
+
+
 
     return (
         <StyledHeader>
@@ -212,14 +244,16 @@ const Header = () => {
                     <IoMdNotifications className="icon" onClick={()=>setShowNotification(!ShowNotification)}/>
 
                     <div className="notification_num">
-                        <span >3</span>
+                        <span >{requests.count}</span>
                     </div>
                     { ShowNotification && (
                         <NotificationBox>
                             <h2>Received request</h2>
                             <ReceivedRequest className='notice'/>
                             <h2>Sent request</h2>
-                            <SentRequest/>
+                            {}
+                            
+                            <SentRequest requests={requests}/>
                         </NotificationBox>
                     )}
                 </div>

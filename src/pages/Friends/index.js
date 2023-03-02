@@ -67,26 +67,7 @@ const userData = useSelector(state => state.user.userData);
     }
     getUser();
 }, []);
-//>>>>>>>>>> get request list <<<<<<<<<<<
-useEffect(()=>{
-  const getRequests = async () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-    };
-    try {
-      const res = await axios.get(`https://motion.propulsion-home.ch/backend/api/social/friends/requests/`, config);
-      console.log(res.data)
-  
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-getRequests()
-},[])
 
 
 
