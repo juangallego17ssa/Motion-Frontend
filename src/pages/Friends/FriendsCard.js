@@ -151,7 +151,7 @@ export default function FriendsCard({ user }) {
   return (
     <StyledFriendCard >
       <FlexDiv>
-        <UserAvatar userData={user} isSmallAvatar={true} />
+        <UserAvatar userData={user} />
         <p className='name'>{user.first_name} {user.last_name}</p>
         <p className='country'>{user.location}</p>
       </FlexDiv>

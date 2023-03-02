@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const Avatar = styled.div`
-  width: ${props => props.isHeaderAvatar ? "40px" : "100px"};
-  height: ${props => props.isHeaderAvatar ? "40px" : "100px"};
-  font-size: ${props => props.isHeaderAvatar ? "20px" : "40px"};
+  width: ${props => props.isSmallAvatar ? "40px" : "100px"};
+  height: ${props => props.isSmallAvatar ? "40px" : "100px"};
+  font-size: ${props => props.isSmallAvatar ? "20px" : "40px"};
   margin-bottom: 12px;
   border: 1px solid grey;
   display: flex;
@@ -15,16 +15,16 @@ const Avatar = styled.div`
   background-position: center;
 `;
 
-const UserAvatar = ({ userData, isHeaderAvatar }) => {
+const UserAvatar = ({ userData, isSmallAvatar }) => {
   return (
     userData
       ?
       (
         userData.avatar
           ?
-          <Avatar avatarURL={userData.avatar} isHeaderAvatar={isHeaderAvatar} />
+          <Avatar avatarURL={userData.avatar} isSmallAvatar={isSmallAvatar} />
           :
-          <Avatar isHeaderAvatar={isHeaderAvatar} >{userData.first_name?.charAt(0).toUpperCase()}</Avatar>
+          <Avatar isSmallAvatar={isSmallAvatar} >{userData.first_name?.charAt(0).toUpperCase()}</Avatar>
       )
       :
       null
