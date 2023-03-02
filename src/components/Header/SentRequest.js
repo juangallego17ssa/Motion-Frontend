@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import UserAvatar from '../UserAvatar';
 
 //  >>>>>> icon <<<<<<<
 import { BiTimeFive} from 'react-icons/bi'
 
-import jennifer from '../../assets/images/users/jennifer.png'
+
 
 
 
@@ -28,20 +29,33 @@ const Friend = styled.div`
                 opacity: 1;
             }
         }
-    }
-  
+    } 
 `;
+const UserName = styled.p`
+    font-weight: 500;
+    position: absolute;
+    top: 10%;
+
+`
+const UserLocation = styled.p`
+    position: absolute;
+    top: 50%;
+    opacity: 0.5;
+`
 
 
 
 //------------- Component -------------// 
-export default function SentRequest() {
+export default function SentRequest(props) {
+    // console.log(props)
+
   return (
              <Friend>
-                 <img src={jennifer}/>
+                <UserAvatar userData={props} isHeaderAvatar isSmallAvatar={true} />
+                 {/* <img src={props.avatar}/> */}
                  <div className="friend-info">
-                     <p>first_name last_name</p>
-                     <p>location</p>
+                     <UserName>{props.first_name} {props.last_name}</UserName>
+                     <UserLocation>{props.location}</UserLocation>
                  </div>
                  <div className="button-container">
                      <BiTimeFive className="icon"/>

@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import UserAvatar from '../UserAvatar';
 
 //  >>>>>> icon <<<<<<<
 import { RxCross2,RxCheck } from 'react-icons/rx'
 
-import jennifer from '../../assets/images/users/jennifer.png'
+
 
 
 
@@ -34,17 +35,28 @@ const Friend = styled.div`
     }
   
 `;
+const UserName = styled.p`
+    font-weight: 500;
+    position: absolute;
+    top: 10%;
 
+`
+const UserLocation = styled.p`
+    position: absolute;
+    top: 50%;
+    opacity: 0.5;
+`
 
 
 //------------- Component -------------// 
-export default function ReceivedRequest() {
+export default function ReceivedRequest(props) {
+    console.log(props)
   return (
              <Friend>
-                 <img src={jennifer}/>
+                <UserAvatar userData={props} isHeaderAvatar isSmallAvatar={true} />
                  <div className="friend-info">
-                     <p>first_name last_name</p>
-                     <p>location</p>
+                     <UserName>{props.first_name} {props.last_name}</UserName>
+                     <UserLocation>{props.location}</UserLocation>
                  </div>
                  <div className="button-container">
                      <RxCheck className="icon"/>
