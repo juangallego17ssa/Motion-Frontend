@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Location, Name, NavLinkItem, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserEmail, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserPhone, UserRightContainer } from "./User.styles";
+import { Button, Location, Name, NavLinkItem, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserContact, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserRightContainer } from "./User.styles";
 import UserAvatar from "../../components/UserAvatar";
 
 
@@ -27,14 +27,14 @@ const User = ({ userData }) => {
               <TextAbout>{userData.about_me}</TextAbout>
             </UserAbout>
             <UserContactDetails>
-              <UserEmail>
+              <UserContact>
                 <Text>Email</Text>
                 <Text>{userData.email}</Text>
-              </UserEmail>
-              <UserPhone>
+              </UserContact>
+              <UserContact>
                 <Text>Phone</Text>
                 <Text>{userData.phone_number}</Text>
-              </UserPhone>
+              </UserContact>
             </UserContactDetails>
           </UserInfoLeft>
           <UserInfoRight>

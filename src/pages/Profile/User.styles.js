@@ -116,14 +116,13 @@ export const UserContactDetails = styled.div`
   gap: 60px;
 `;
 
-export const UserEmail = styled.div`
+export const UserContact = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-export const UserPhone = styled.div`
-  display: flex;
-  flex-direction: column;
+  
+  p:first-child{
+    padding-bottom: 10px;
+  }
 `;
 
 export const UserInfoRight = styled.div`
@@ -146,25 +145,38 @@ export const Tag = styled.p`
 `;
 
 export const UserNumbers = styled.div`
+  padding: 0 60px;
   border-top: 2px solid #f2f2f2;
   width: 100%;
   box-sizing: border-box;
-  padding: 40px 60px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 78px;
 `;
 
 export const NavLinkItem = styled(NavLink)`
+  width: max-content;
   text-decoration: none;
-  color: black;
+  padding: 40px 0;
+
+  &.active {
+    border-bottom: 3px solid #AD73FD;
+;
+
+    p:last-child {
+      color: black;
+    }
+  }
+
+  p:last-child{
+    color: grey;
+  }
 `;
 
 export const Number = styled.p`
   font-size: 24px;
   padding-bottom: 7px;
+  color: black;
 `;
 
 export const Text = styled.p`
