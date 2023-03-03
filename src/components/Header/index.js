@@ -224,7 +224,8 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                     <IoMdNotifications className="icon" onClick={() => {setShowNotification(!ShowNotification);setShowProfile(false)}} />
 
                     <div className="notification_num">
-                        <span >{totalNotification}</span>
+                        {requests? <span >{totalNotification}</span>:''}
+                       
                     </div>
                     {ShowNotification && (
                         <NotificationBox>
