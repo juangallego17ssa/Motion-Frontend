@@ -214,9 +214,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
             <NavDiv>
                 <NavLink className="NavLink" to={'/posts/follow'}>
                    {location.pathname === '/posts/follow'?<img src={post}/>:<img src={post_inactive}/>}
-                    {/* {({ isActive })=> isActive?
-                    (<img src={post}/>):(<img src={post_inactive}/>)
-                    }         */}
+                  
                     <span>Posts</span>
                 </NavLink>
                 <NavLink className="NavLink" to={'/friends'}>
@@ -229,7 +227,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
 
             </NavDiv>
 
-            {/*   ========= Notification drop-down box =========  */}
+  {/*   ========= Notification drop-down box =========  */}
             <UserDiv>
                 <div className="notification">
                     <IoMdNotifications className="icon" onClick={() => {setShowNotification(!ShowNotification);setShowProfile(false)}} />
@@ -267,11 +265,11 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                 </div>
 
 
-                {/*   ========= if user dont set up avatar show first letter in capital =========  */}
+ {/*   ========= if user dont set up avatar show first letter in capital =========  */}
                 <div>
                     <UserAvatar userData={userData} isSmallAvatar />
 
-                    {/*   ========= profile dropdown box =========  */}
+ {/*   ========= profile dropdown box =========  */}
                     {ShowProfile && (
                         <ProfileBox>
                             <Link className="link" to={'/profile'}><BiUser className="icon" />Profile</Link>
