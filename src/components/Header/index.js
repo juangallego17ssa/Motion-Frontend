@@ -1,7 +1,7 @@
 // import { StyledHeader } from "./Header.style"
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useSelector,useDispatch } from "react-redux";
 import { updateRequestData } from "../../redux/slices/request";
 import { useState , useEffect } from "react";
@@ -18,7 +18,9 @@ import { IoMdLogOut, IoMdNotifications } from 'react-icons/io'
 //  >>>>>> img <<<<<<<
 import logo from '../../assets/images/logo.png'
 import post from '../../assets/svgs/posts_logo.svg'
+import post_inactive from '../../assets/svgs/posts_logo_inactive.svg'
 import friends from '../../assets/svgs/icon-friends.svg'
+import friends_active from '../../assets/svgs/icon-friends_active.svg'
 import UserAvatar from "../UserAvatar";
 
 
@@ -154,6 +156,7 @@ const NotificationBox = styled.div`
 `;
 
 const Header = () => {
+    const location = useLocation()
     const dispatch = useDispatch()
     const requestsData = useSelector(state => state.request.requestsData)
     
@@ -210,10 +213,18 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
             </LogoDiv>
             <NavDiv>
                 <NavLink className="NavLink" to={'/posts/follow'}>
-                    <img src={post} /><span>Posts</span>
+                   {location.pathname === '/posts/follow'?<img src={post}/>:<img src={post_inactive}/>}
+                    {/* {({ isActive })=> isActive?
+                    (<img src={post}/>):(<img src={post_inactive}/>)
+                    }         */}
+                    <span>Posts</span>
                 </NavLink>
                 <NavLink className="NavLink" to={'/friends'}>
-                    <img src={friends} />Find Friends
+                {location.pathname === '/friends'?
+                    <img src={friends_active} />:
+                    <img src={friends} />
+                }
+                    <span>Find Friends</span>
                 </NavLink>
 
             </NavDiv>
