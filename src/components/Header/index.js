@@ -30,7 +30,7 @@ const StyledHeader = styled.header`
     height: 80px;
     width: 100vw;
     position: sticky; top: 0; left: 0;
-    box-shadow: 0 0 10px rgba(0,0,0,.5);
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
     padding: 2rem;
     gap: 5em;
     color: black;
@@ -196,8 +196,7 @@ const requestsToUser = requestsData.results?.filter(result => {
 const requestsFromUser = requestsData.results?.filter(result => {
     if(result.receiver.id !== userData.id && result.status === 'P'){return result.receiver;} 
 })
-//  dispatch(updateRequestData(res.data))
-console.log(requestsData)
+
   
 const totalNotification = requestsToUser?.length+requestsFromUser?.length
 
