@@ -76,13 +76,14 @@ const DivStyled = styled.div `
                 width: 100%;
                 display:grid;
                 grid-template-columns:1fr 1fr;
-                column-gap: 20px;
+                column-gap: 40px;
 
                 .val-width{
                     display:grid;
                     grid-column-start:1;
                     grid-column-end:-1;
                     width: 100%;
+                    padding-bottom:20px;
                 
                 
     
