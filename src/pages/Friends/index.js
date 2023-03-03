@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 //-------STYLE--------->
 const StyledFriends = styled.div`
   padding: 120px 7vw;
-  height: 100%;
+
   /* border: 1px solid red; */
   display: flex;
   justify-content: center;

@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import motionAPI from '../../../axios/motionAPI'
-import FriendsCard from "../../Friends/FriendsCard";
+import MyPost from "../../Posts/Components/Subcomponents/MyPost";
 
 const Container = styled.div`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    padding: 34px 0;
+    max-width: 1152px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;  
     gap: 33px;
 `;
 
 const ProfileLikes = () => {
   const [likedPosts, setLikedPosts] = useState([]);
 
-  useEffect(() => {
+  const fetchLikes = () => {
     if (!localStorage.getItem('token')) {
       return;
     }
@@ -34,15 +38,17 @@ const ProfileLikes = () => {
     }
 
     getLikedPosts();
-  }, []);
+  }
+
+  useEffect(fetchLikes, []);
 
   return (
     <Container>
       {
         likedPosts
           ?
-          likedPosts.map((user) => {
-            return <FriendsCard user={user} key={user.id} />
+          likedPosts.map((post) => {
+            return <MyPost postContent={post} />
           })
           :
           null

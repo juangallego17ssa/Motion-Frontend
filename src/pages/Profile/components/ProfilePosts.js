@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import motionAPI from '../../../axios/motionAPI'
-import FriendsCard from "../../Friends/FriendsCard";
+import MyPost from "../../Posts/Components/Subcomponents/MyPost";
 
 const Container = styled.div`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 33px;
+  max-width: 1152px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: row dense;
+  gap: 30px;
+
+  @media (max-width: 1152px) {
+    padding-top: 30px;
+    max-width: 700px;
+  }
 `;
 
 const ProfilePosts = () => {
@@ -43,7 +51,11 @@ const ProfilePosts = () => {
           ?
           posts.map((post) => {
             console.log(post)
-            return <div>{post.content}</div>
+            return (
+              <div>
+                <MyPost post={post} />
+              </div>
+            )
           })
           :
           null

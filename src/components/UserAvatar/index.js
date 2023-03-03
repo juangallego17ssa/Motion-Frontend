@@ -10,8 +10,8 @@ const Avatar = styled.div`
   align-items: center;
   border-radius: 50%;
   background-image: url(${props => props.avatarURL});
-  background-size: 160%;
   background-position: center;
+  background-size: contain;
   background-repeat: no-repeat;
 `;
 

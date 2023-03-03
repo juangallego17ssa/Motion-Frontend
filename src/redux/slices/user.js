@@ -9,7 +9,10 @@ export const userSlice = createSlice({
     updateUserData: (state, action) => {
       state.userData = action.payload;
     },
+    updateFollowingNumber: (state, action) => {
+      state.userData.amount_following = action.payload;
+    }
   }
 })
-export const { updateUserData } = userSlice.actions;
+export const { updateUserData, updateFollowingNumber } = userSlice.actions;
 export default userSlice.reducer;

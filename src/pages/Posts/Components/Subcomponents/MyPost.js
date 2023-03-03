@@ -1,20 +1,18 @@
 import { useState } from "react"
 import styled from "styled-components"
-import avatar from '../../../../assets/images/users/jennifer.png'
 import menu from '../../../../assets/svgs/menu.svg'
-import {MdDelete} from "react-icons/md"
+import { MdDelete } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
 import motionAPI from "../../../../axios/motionAPI"
-import {FcLike, FcLikePlaceholder} from "react-icons/fc"
+import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 
 
 const MyPostStyled = styled.div`
-
     background-color: white;
-    margin: 0px 0px 30px 30px;
     width: 560px;
     border-radius: 3px;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
+    padding: 10px 0;
 
     .headerPost{
         margin: 30px;
@@ -188,19 +186,19 @@ const MyPost = (props) => {
     const lastName = props.post.user.last_name
     const avatar = props.post.user.avatar
     const created = new Date(props.post.created)
-    const image1 = props.post.images[0] ? props.post.images[0].image :""
-    const image2 = props.post.images[1] ? props.post.images[1].image :""
-    const image3 = props.post.images[2] ? props.post.images[2].image :""
-    const image4 = props.post.images[3] ? props.post.images[3].image :""
+    const image1 = props.post.images[0] ? props.post.images[0].image : ""
+    const image2 = props.post.images[1] ? props.post.images[1].image : ""
+    const image3 = props.post.images[2] ? props.post.images[2].image : ""
+    const image4 = props.post.images[3] ? props.post.images[3].image : ""
     const [userLiked, setUserLiked] = useState(props.post.logged_in_user_liked)
     const postId = props.post.id
     const [likes, setLikes] = useState(props.post.amount_of_likes)
     const now = new Date()
-    const minutesAgo = Math.abs(now-created)/1000/60
-    const hoursAgo = minutesAgo/60
-    const daysAgo = hoursAgo/24
+    const minutesAgo = Math.abs(now - created) / 1000 / 60
+    const hoursAgo = minutesAgo / 60
+    const daysAgo = hoursAgo / 24
     const getTimeAgo = () => {
-        if (minutesAgo<=5){
+        if (minutesAgo <= 5) {
             return "just now"
         } else if (minutesAgo < 60) {
             return Math.floor(minutesAgo) + " minutes ago"
@@ -214,21 +212,21 @@ const MyPost = (props) => {
     }
     const timeAgo = getTimeAgo()
     const content = props.post.content
-    
+
 
 
     const navigate = useNavigate()
-    const deletePost = async () =>{
+    const deletePost = async () => {
 
 
-            // declare config file
-            const myConfig = {
+        // declare config file
+        const myConfig = {
             headers: {
-                "Authorization":`Bearer ${localStorage.getItem("token")}`,
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
             },
             method: "delete",
         };
-                
+
         // Fetch the data and save the token in the local storage
         try {
             const response = (await motionAPI(`/social/posts/${props.post.id}`, myConfig)).data;
@@ -240,24 +238,24 @@ const MyPost = (props) => {
     }
 
 
-    const handleLike =  async () =>{
+    const handleLike = async () => {
 
 
         // declare config file
         const myConfig = {
-        headers: {
-            "Authorization":`Bearer ${localStorage.getItem("token")}`,
-        },
-        method: "post",
-    };
-            
-    try {
-        const response = (await motionAPI(`/social/posts/toggle-like/${postId}/`, myConfig)).data;
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+            method: "post",
+        };
+
+        try {
+            const response = (await motionAPI(`/social/posts/toggle-like/${postId}/`, myConfig)).data;
         if (userLiked) {setLikes(likes-1)} else {setLikes(likes+1)}
-        setUserLiked(!userLiked)
-    } catch (exception) {
-        console.log(exception)
-    }
+            setUserLiked(!userLiked)
+        } catch (exception) {
+            console.log(exception)
+        }
 
 }
 
@@ -315,11 +313,11 @@ const MyPost = (props) => {
                     : ""}
                     </div>
                     <div className="amountLikes">{likes + ((likes===1) ? " like" :"  likes")}</div>
+                </div>
             </div>
-        </div>
 
-    </MyPostStyled>
-)
+        </MyPostStyled>
+    )
 
 }
 

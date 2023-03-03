@@ -41,9 +41,7 @@ const Profile = () => {
                 <Container>
                     <Background userDataBanner={userData.banner} />
                     <Main>
-                        <User
-                            userData={userData}
-                        />
+                        <User userData={userData} />
                         <Outlet />
                     </Main>
                 </Container>
