@@ -207,11 +207,11 @@ const UserEdit = () => {
                   </FormField>
                   <FormField>
                     <Label htmlFor="phone_number">Phone</Label>
-                    <Input type="text" name="phone_number" id="phone_number" defaultValue={userData.phone} />
+                    <Input type="text" name="phone_number" id="phone_number" defaultValue={userData.phone_number} />
                   </FormField>
                   <FormField>
                     <Label htmlFor="about_me">About me</Label>
-                    <Input type="text" name="about_me" id="about_me" defaultValue={userData.about} />
+                    <Input type="text" name="about_me" id="about_me" defaultValue={userData.about_me} />
                   </FormField>
                   <FormField>
                     <Label htmlFor="password">Password</Label>
