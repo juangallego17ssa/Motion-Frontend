@@ -4,6 +4,7 @@ import DivStyled from "../SignIn/SignIn.style"
 import motionAPI from "../../../../axios/motionAPI";
 import { HomepagePurpleButton } from "../../../../styles/StyledComponents/Button.style";
 
+
 const Validation = () => {
 
     // const params = useParams()
@@ -130,36 +131,43 @@ const Validation = () => {
             </header>
     
             <div className="form">
-            <form onSubmit={(event) => event.preventDefault()}>
-                <div className="form-inputs">
-                <div className="form-title">Verification</div>
-                <div className="input-code">
-                    <input type="text" placeholder="Validation Code" value={code} onChange={handleCodeChange}/>
-                </div>
-                <div className="input-username">
-                    <label for="email">Email</label>
-                    <input type="text" value={email} disabled={"disabled"}/>
-                    <label for="username">Username</label>
-                    <input id="username" type="text" placeholder={username} value={username} onChange={handleUsernameChange}/>
-                    <input id="firstName" type="text" placeholder="First name" value={firstName} onChange={handleFirstNameChange}/>
-                    <input id="lastName" type="text" placeholder="Last name" value={lastName} onChange={handleLastNameChange}/>
-                    <input id="password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
-                    <input id="passwordRepeat" type="password" placeholder="Password repeat" value={passwordRepeat} onChange={handlePasswordRepeatChange}/>
+                <form onSubmit={(event) => event.preventDefault()}>
+                    <div className="form-inputs">
+                        <div className="form-title">Verification</div>
+                        <div className="input-container">
+                            
+                            <div className="val-width">
+                                <input className="input-code" type="text" placeholder="Validation Code" value={code} onChange={handleCodeChange}/>
+                            </div>
+                            <div>
+                                <label className="email-and-user" for="email">Email</label>
+                                <input type="text" className="name-and-pass" value={email} disabled={"disabled"}/>
+                            </div>
 
-                </div>
-                </div>
-    
-                <button className="form-btn" onClick={handleComplete}>
-                Complete
-                </button>
+                            <div>
+                                <label for="username" className="email-and-user">Username</label>
+                                <input id="username" className="name-and-pass" type="text" placeholder={username} value={username} onChange={handleUsernameChange}/>
+                            </div>
 
-            </form>
+                            <input className="name-and-pass" id="firstName" type="text" placeholder="First name" value={firstName} onChange={handleFirstNameChange}/>
+                            <input className="name-and-pass" id="lastName" type="text" placeholder="Last name" value={lastName} onChange={handleLastNameChange}/>
+                            <input className="name-and-pass" id="password" type="password" placeholder="Password" value={password} onChange={handlePasswordChange}/>
+                            <input className="name-and-pass" id="passwordRepeat" type="password" placeholder="Password repeat" value={passwordRepeat} onChange={handlePasswordRepeatChange}/>
+                        
+                        </div>
+                    </div>
+        
+                    <HomepagePurpleButton className="form-btn" onClick={handleComplete}>
+                    Complete
+                    </HomepagePurpleButton>
+
+                </form>
     
-            <div className="step-container">
-                <div className="step step1"></div>
-                <div className="step step2"></div>
-                <div className="step step3"></div>
-            </div>
+                <div className="step-container">
+                    <div className="step step1"></div>
+                    <div className="step step2"></div>
+                    <div className="step step3"></div>
+                </div>
             </div>
         </DivStyled>
     

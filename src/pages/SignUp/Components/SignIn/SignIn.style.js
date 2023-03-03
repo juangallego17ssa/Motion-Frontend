@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 
-const DivStyled = styled.div`
+const DivStyled = styled.div `
 
     width: 60%;
     height: 100%;
@@ -51,9 +51,9 @@ const DivStyled = styled.div`
         margin: 126px auto 0px;
         padding: 0 26px;
         display: flex;
-        flex-direction: column;
+        flex-wrap:wrap;
         justify-content: space-around;
-        align-items: center;
+        
     
             .form-inputs {
                 display: flex;
@@ -133,25 +133,37 @@ const DivStyled = styled.div`
         }
     
 
-    .step-container {
-        padding: 25px;
-        display: flex;
-        flex-direction: row;
-
-        .step {
-            width: 8px;
-            height: 8px;
-            border: 1px solid black;
-            border-radius: 100%;
-            margin: 8px;
-        }
-        .${props=>props.step} {
-            background-color: black
-        }
 
 
     }
-          
+
+        
+
+        .step-container {
+            padding: 25px;
+            display:flex;
+            justify-content:center;
+            width:100%;
+            
+    
+            .step {
+                width: 8px;
+                height: 8px;
+                border: 1px solid black;
+                border-radius: 100%;
+                margin: 8px;
+            }
+            .${
+        props => props.step
+    } {
+                background-color: black
+            }
+    
+    
+        }
+    
+
+
     .footer-right {
         display: none;
         
