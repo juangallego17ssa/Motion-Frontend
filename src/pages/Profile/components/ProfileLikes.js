@@ -5,12 +5,17 @@ import motionAPI from '../../../axios/motionAPI'
 import MyPost from "../../Posts/Components/Subcomponents/MyPost";
 
 const Container = styled.div`
-    padding: 34px 0;
-    max-width: 1152px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;  
-    gap: 33px;
+  max-width: 1152px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: row dense;
+  gap: 30px;
+
+  @media (max-width: 1152px) {
+    padding-top: 30px;
+    max-width: 700px;
+  }
 `;
 
 const ProfileLikes = () => {
@@ -48,7 +53,7 @@ const ProfileLikes = () => {
         likedPosts
           ?
           likedPosts.map((post) => {
-            return <MyPost postContent={post} />
+            return <MyPost post={post} />
           })
           :
           null
