@@ -1,4 +1,6 @@
 import styled from "styled-components"
+import {BiLinkAlt} from "react-icons/bi"
+import {IoIosCloseCircle} from "react-icons/io"
 
 export const CreatePostStyled = styled.div`
 
@@ -100,7 +102,7 @@ export const CreatePostStyled = styled.div`
                     margin-top: 15px;
                     border: none;
                     width: 400px;
-                    height:200px;
+                    height:100px;
                     font-size: 16px;
                     color: #7d7d7d;
                     display:flex;
@@ -127,6 +129,16 @@ export const CreatePostStyled = styled.div`
 
             }
         }
+
+        .pictureUpload{
+            margin: 0px 0px 7px 115px;
+            width:400px;
+            display: flex;
+            justify-content:flex-start ;
+            align-items: center;
+        }
+
+
             .attachAndSend{
 
                 display:flex;
@@ -171,6 +183,48 @@ export const CreatePostStyled = styled.div`
             }
     }
 
+
+`
+
+
+export const MiniImage = styled.div`
+    height:80px;
+    width: 80px;
+    margin-left: 6px;
+    border-radius: 5px;
+    background-color:rgb(100,100,100,0.5);
+    background-image: url(${props=>props.image.url});
+    background-size: cover;
+
+
+        .closingContainer{
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            border:0px solid red;
+            margin: 4.8px 0px 0px 60.8px;
+            background-color: rgba(255,255,255,0);
+            cursor: pointer;
+            position:absolute;
+            display:flex;
+            justify-content: center;
+            align-items:center;
+        }
+
+`
+
+export const MylinkIcon = styled(BiLinkAlt)`
+    color: rgb(180,180,180);
+    height: 24px;
+    width: 24px;
+
+`
+export const MyCloseImage = styled(IoIosCloseCircle)`
+    color: white;
+    height: 18px;
+    width: 18px;
+    position:absolute;
+    margin: 3px 0px 0px 59px;
 
 `
 
