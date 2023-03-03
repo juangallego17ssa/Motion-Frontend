@@ -6,15 +6,10 @@ import { updateFollowingNumber } from "../../../redux/slices/user";
 import FriendsCard from "../../Friends/FriendsCard";
 
 const Container = styled.div`
-    /* display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 33px; */
     padding: 34px 0;
     max-width: 1152px;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;  
-    gap: 33px;
+    flex-wrap: wrap;
 
     @media (max-width: 1152px) {
     max-width: 800px;
