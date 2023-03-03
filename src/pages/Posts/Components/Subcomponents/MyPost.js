@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import motionAPI from "../../../../axios/motionAPI"
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
+import UserAvatar from "../../../../components/UserAvatar"
 
 
 const MyPostStyled = styled.div`
@@ -180,8 +181,6 @@ const NotLikeIcon = styled(FcLikePlaceholder)`
 
 
 const MyPost = (props) => {
-
-
     const [ShowProfile, setShowPofile] = useState(false)
     const firstName = props.post.user.first_name
     const lastName = props.post.user.last_name
@@ -252,15 +251,15 @@ const MyPost = (props) => {
 
         try {
             const response = (await motionAPI(`/social/posts/toggle-like/${postId}/`, myConfig)).data;
-        if (userLiked) {setLikes(likes-1)} else {setLikes(likes+1)}
+            if (userLiked) { setLikes(likes - 1) } else { setLikes(likes + 1) }
             setUserLiked(!userLiked)
         } catch (exception) {
             console.log(exception)
         }
 
-}
+    }
 
-    const onPictureClick = (pictureURL) =>{
+    const onPictureClick = (pictureURL) => {
 
         props.setShowedPictureURL(pictureURL)
         props.setShowPicture(true)
@@ -268,52 +267,53 @@ const MyPost = (props) => {
 
 
 
-    return(
-    <MyPostStyled>
-                {ShowProfile && (
-            <ProfileBox>
-                {/*<Link className="link" to={'/profile'}><BiUser className="icon" />Profile</Link>*/}
-                <div className="link" onClick={deletePost}><MdDelete className="icon" onClick={deletePost} />Delete</div>
-            </ProfileBox>
-        )}
-        <div className="post1 post">
-            <div className="headerPost">
-                <div className="headerLeft">
-                    <div className="avatarDiv"><img src={avatar} alt="user-avatar"/></div>
-                    <div className="nameAndDate">
-                        <span className="userFullName">{firstName + " " + lastName}</span> 
-                        <span className="datePost">{timeAgo}</span> 
-                    </div>
-                </div>
-                    
-                <div className="headerRight">
-                    {props.isMine ? <img src={menu} alt="menu icon" onClick={()=>setShowPofile(!ShowProfile)}/> : ""}
-                </div>
-                    
-            </div>
-            <div className="textPost">
-                {content}
-            </div>
-            {image1 ?   <div className="imagePost">
-                            <img src={image1} onClick={(e) => onPictureClick(image1)}/>
-                            <img src={image2} onClick={(e) => onPictureClick(image2)}/>
-                            <img src={image3} onClick={(e) => onPictureClick(image3)}/>
-                            <img src={image4} onClick={(e) => onPictureClick(image4)}/>
+    return (
+        <MyPostStyled>
+            {ShowProfile && (
+                <ProfileBox>
+                    {/*<Link className="link" to={'/profile'}><BiUser className="icon" />Profile</Link>*/}
+                    <div className="link" onClick={deletePost}><MdDelete className="icon" onClick={deletePost} />Delete</div>
+                </ProfileBox>
+            )}
+            <div className="post1 post">
+                <div className="headerPost">
+                    <div className="headerLeft">
+                        <UserAvatar userData={props.post.user} isSmallAvatar />
+                        {/* <div className="avatarDiv"><img src={avatar} alt="user-avatar" /></div> */}
+                        <div className="nameAndDate">
+                            <span className="userFullName">{firstName + " " + lastName}</span>
+                            <span className="datePost">{timeAgo}</span>
                         </div>
-            : ""
-        }
-            <div className="picturesPost"></div>
-            <div className="repost post"></div>
-            <div className="footerPost">
-                    <div className="like">
-                    {!props.isMine ? 
-                    <>
-                        {userLiked?<LikeIcon onClick={handleLike}/>:<NotLikeIcon onClick={handleLike}/>}
-                        <span>Like</span>
-                    </> 
-                    : ""}
                     </div>
-                    <div className="amountLikes">{likes + ((likes===1) ? " like" :"  likes")}</div>
+
+                    <div className="headerRight">
+                        {props.isMine ? <img src={menu} alt="menu icon" onClick={() => setShowPofile(!ShowProfile)} /> : ""}
+                    </div>
+
+                </div>
+                <div className="textPost">
+                    {content}
+                </div>
+                {image1 ? <div className="imagePost">
+                    <img src={image1} onClick={(e) => onPictureClick(image1)} />
+                    <img src={image2} onClick={(e) => onPictureClick(image2)} />
+                    <img src={image3} onClick={(e) => onPictureClick(image3)} />
+                    <img src={image4} onClick={(e) => onPictureClick(image4)} />
+                </div>
+                    : ""
+                }
+                <div className="picturesPost"></div>
+                <div className="repost post"></div>
+                <div className="footerPost">
+                    <div className="like">
+                        {!props.isMine ?
+                            <>
+                                {userLiked ? <LikeIcon onClick={handleLike} /> : <NotLikeIcon onClick={handleLike} />}
+                                <span>Like</span>
+                            </>
+                            : ""}
+                    </div>
+                    <div className="amountLikes">{likes + ((likes === 1) ? " like" : "  likes")}</div>
                 </div>
             </div>
 

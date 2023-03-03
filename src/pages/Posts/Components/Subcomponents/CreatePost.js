@@ -1,4 +1,4 @@
-import { CreatePostStyled, MiniImage, MyCloseImage, MylinkIcon } from './CreatePost.style'
+import { CreatePostStyled, MiniImage, MyCloseImage, MylinkIcon, UserAvatarMediumSize } from './CreatePost.style'
 import sendButton from '../../../../assets/images/send_button.png'
 import addPictureIcon from '../../../../assets/images/add_picture.png'
 import { useState } from "react"
@@ -6,16 +6,16 @@ import motionAPI from '../../../../axios/motionAPI'
 import { useNavigate } from 'react-router'
 import { v4 as uuid } from "uuid";
 import { useSelector } from 'react-redux'
+import UserAvatar from '../../../../components/UserAvatar'
 
 
 
 const CreatePost = (props) => {
 
-
     //////// Visual components
 
     //// Shows the create post view
-    const handleCreatePost = () =>{
+    const handleCreatePost = () => {
         setShowCreatePost(true)
         setDraftPost("")
         setMyPostImages([])
@@ -23,7 +23,7 @@ const CreatePost = (props) => {
 
     //// Hide the create post view
     const handleHideCreatePost = (event) => {
-        return (event.target.className==="darkBackground")? setShowCreatePost(false) : ""
+        return (event.target.className === "darkBackground") ? setShowCreatePost(false) : ""
     }
 
 
@@ -38,15 +38,15 @@ const CreatePost = (props) => {
     };
     const [showCreatePost, setShowCreatePost] = useState(false)
 
-    
+
     //// Prepare the images to be uploaded
     const [myPostImages, setMyPostImages] = useState([])
 
     // add images
     const handleUploadImage = e => {
-        if (myPostImages.length===4) {return window.alert("Maximum 4 pictures per post!")}
+        if (myPostImages.length === 4) { return window.alert("Maximum 4 pictures per post!") }
         const myNewImage = {
-            file: e.target.files[0] ,
+            file: e.target.files[0],
             url: URL.createObjectURL(e.target.files[0]),
         }
         const imgs = [...myPostImages, myNewImage]
@@ -60,10 +60,10 @@ const CreatePost = (props) => {
         imgs.splice(index, 1)
         setMyPostImages(imgs)
     }
-    
+
     //// Send the post
     const navigate = useNavigate()
-    const sendPost = async () =>{
+    const sendPost = async () => {
         // declare variables
         const user = localStorage.getItem("user")
         const token = localStorage.getItem("token")
@@ -72,22 +72,22 @@ const CreatePost = (props) => {
 
         // declare formData
         const formData = new FormData();
-        formData.append("user",user)
-        formData.append("content",content)
+        formData.append("user", user)
+        formData.append("content", content)
         for (let myPostImage of myPostImages) {
-            formData.append("images",myPostImage.file)
+            formData.append("images", myPostImage.file)
         }
 
         // declare config file
         const myConfig = {
             headers: {
-                "Authorization":`Bearer ${token}`,
+                "Authorization": `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data',
             },
             method: "post",
             data: formData,
         };
-                
+
         // Fetch the data and save the token in the local storage
         try {
             const response = (await motionAPI("/social/posts/", myConfig)).data;
@@ -101,61 +101,61 @@ const CreatePost = (props) => {
 
     }
 
+    const userData = useSelector((state) => state.user.userData)
+    const firstName = useSelector((state) => state.user.userData.first_name)
+    const avatar = useSelector((state) => state.user.userData.avatar)
 
-    const firstName = useSelector( (state) => state.user.userData.first_name)
-    const avatar = useSelector( (state) => state.user.userData.avatar) 
 
 
+    return (
+        <>
+            <CreatePostStyled showCreatePost={showCreatePost} isImages={myPostImages.length > 0} >
 
-return(
-    <>
-    <CreatePostStyled showCreatePost={showCreatePost} isImages={myPostImages.length>0} >
-
-        <div className="createPostElementContainer">
-            <div className="createPostElementLeft">
-                <img src={avatar} alt="user-avatar"/>
-                <span className="createPostInput" onClick={handleCreatePost} >What’s on your mind, {firstName}?</span> 
-            </div>
-            <div className="createPostElementRight">
-                <img src={sendButton} alt="send_button" />
-            </div>
-        </div>
-        
-        <div className="darkBackground" onClick={(event) => handleHideCreatePost(event)}></div>
-        
-        <div className="createPostElement">
-            <div className="createPostElementContainer">
-                <div className="createPostElementLeft">
-                    <img src={avatar} alt="user-avatar"/>
-                    <textarea type="text" className="createPostInput" placeholder={`What’s on your mind, ${firstName}?`} value={draftPost} onChange={handleDraftPostChange}/> 
+                <div className="createPostElementContainer">
+                    <div className="createPostElementLeft">
+                        <UserAvatar userData={userData} isMediumAvatar />
+                        <span className="createPostInput" onClick={handleCreatePost} >What’s on your mind, {firstName}?</span>
+                    </div>
+                    <div className="createPostElementRight">
+                        <img src={sendButton} alt="send_button" />
+                    </div>
                 </div>
-            </div>
-            
-            <div className='pictureUpload'>
-                {myPostImages.map((image,index) =>   <MiniImage key={uuid()} image={image}>
-                                                        <MyCloseImage/>
-                                                        <div className="closingContainer" index={index} onClick={handleDeleteImage}></div>
-                                                    </MiniImage>)}
-            </div>
 
-            <div className="attachAndSend">
-                <div className="createPostAttachIcons">
-                    <label>
-                        <img src={addPictureIcon} alt="add picture" />
-                        <input type="file" className="uploadInput" accept="image/*" onChange={handleUploadImage}></input>
-                    </label>
-                    <MylinkIcon/>
-                    {/* <img src={addLinkIcon} alt="add link" /> */}
-                </div>
-                <div className="createPostElementRight" onClick={sendPost}>    
-                    <img src={sendButton} alt="send button" />
-                </div>
-            </div>
-        </div>
+                <div className="darkBackground" onClick={(event) => handleHideCreatePost(event)}></div>
 
-    </CreatePostStyled>
-    </>
-)
+                <div className="createPostElement">
+                    <div className="createPostElementContainer">
+                        <div className="createPostElementLeft">
+                            <UserAvatar userData={userData} isSmallAvatar />
+                            <textarea type="text" className="createPostInput" placeholder={`What’s on your mind, ${firstName}?`} value={draftPost} onChange={handleDraftPostChange} />
+                        </div>
+                    </div>
+
+                    <div className='pictureUpload'>
+                        {myPostImages.map((image, index) => <MiniImage key={uuid()} image={image}>
+                            <MyCloseImage />
+                            <div className="closingContainer" index={index} onClick={handleDeleteImage}></div>
+                        </MiniImage>)}
+                    </div>
+
+                    <div className="attachAndSend">
+                        <div className="createPostAttachIcons">
+                            <label>
+                                <img src={addPictureIcon} alt="add picture" />
+                                <input type="file" className="uploadInput" accept="image/*" onChange={handleUploadImage}></input>
+                            </label>
+                            <MylinkIcon />
+                            {/* <img src={addLinkIcon} alt="add link" /> */}
+                        </div>
+                        <div className="createPostElementRight" onClick={sendPost}>
+                            <img src={sendButton} alt="send button" />
+                        </div>
+                    </div>
+                </div>
+
+            </CreatePostStyled>
+        </>
+    )
 
 }
 
