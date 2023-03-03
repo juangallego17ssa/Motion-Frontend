@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import motionAPI from '../../../axios/motionAPI'
 import FriendsCard from "../../Friends/FriendsCard";
@@ -10,9 +11,10 @@ const Container = styled.div`
 `;
 
 const ProfileFriends = () => {
+  const dispatch = useDispatch();
   const [friends, setFriends] = useState([]);
 
-  useEffect(() => {
+  const fetchFriends = () => {
     if (!localStorage.getItem('token')) {
       return;
     }
@@ -34,7 +36,9 @@ const ProfileFriends = () => {
     }
 
     getFriends();
-  }, []);
+  }
+
+  useEffect(fetchFriends, []);
 
   return (
     <Container>

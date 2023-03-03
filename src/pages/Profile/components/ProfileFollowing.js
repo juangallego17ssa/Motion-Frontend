@@ -1,23 +1,36 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import motionAPI from '../../../axios/motionAPI'
+import { updateFollowingNumber } from "../../../redux/slices/user";
 import FriendsCard from "../../Friends/FriendsCard";
 
 const Container = styled.div`
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 33px; */
+    padding: 34px 0;
+    max-width: 1152px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;  
     gap: 33px;
+
+    @media (max-width: 1152px) {
+    max-width: 800px;
+    margin: auto;
+    }
 `;
 
 const ProfileFollowing = () => {
+  const dispatch = useDispatch();
   const [following, setFollowing] = useState([]);
-
-  useEffect(() => {
+  const fetchFollowing = () => {
     if (!localStorage.getItem('token')) {
       return;
     }
-
-    const getFollowing = async () => {
+    console.log('aqui')
+    const getFolling = async () => {
       try {
         const config = {
           headers: {
@@ -28,13 +41,16 @@ const ProfileFollowing = () => {
 
         const response = await motionAPI.get("social/followers/following", config);
         setFollowing(response.data.results);
+        dispatch(updateFollowingNumber(response.data.results.length));
       } catch (error) {
         console.log(error);
       }
     }
 
-    getFollowing();
-  }, []);
+    getFolling();
+  }
+
+  useEffect(fetchFollowing, []);
 
   return (
     <Container>
@@ -42,7 +58,7 @@ const ProfileFollowing = () => {
         following
           ?
           following.map((user) => {
-            return <FriendsCard user={user} key={user.id} />
+            return <FriendsCard user={user} key={user.id} onFetchFollowing={fetchFollowing} />
           })
           :
           null
