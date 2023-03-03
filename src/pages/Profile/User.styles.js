@@ -10,7 +10,7 @@ export const UserContainer = styled.div`
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
 
   @media (max-width: 1152px) {
-    max-width: 800px;
+    max-width: 700px;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -29,7 +29,7 @@ export const UserLeftContainer = styled.div`
   gap: 40px;
 
   @media (max-width: 1152px) {
-    max-width: 700px;
+    max-width: 600px;
     border: none;
     flex-direction: row;
     justify-content: space-between;

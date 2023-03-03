@@ -12,16 +12,23 @@ export const Background = styled.div`
     background-image: url(${props => props.userDataBanner || profileBackground});
     background-position: center;
     width: 100%;
-    height: 240px;
+    height: 280px;
 `;
 
 export const Main = styled.div`
     max-width: 1152px;
     width: 100%;
     margin-top: 120px;
-    margin-bottom: 100px;
     border-radius: 4px;
     position: absolute;
+
+    @media (max-width: 1152px) {
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 120px;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
+  }
 `;
 
 export const BackgroundEditContainer = styled.div`
@@ -57,6 +64,10 @@ export const EditMain = styled.div`
   display: flex;
   flex-direction: row;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 860px) {
+    max-width: 700px;
+  }
 `;
 
 export const LeftContainer = styled.div`
@@ -68,6 +79,10 @@ export const LeftContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-right: 2px solid #f2f2f2;
+
+  @media (max-width: 1152px) {
+    max-width: 200px;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -151,6 +166,10 @@ export const Button = styled.button`
     text-transform: uppercase;
     color: #FFFFFF;
   `}
+
+  @media (max-width: 1152px) {
+    padding: 20px 20px;
+  }
 `;
 
 export const Form = styled.form`
@@ -174,6 +193,7 @@ export const FormField = styled.div`
   flex-direction: column;
 
   &.things-I-like {
+    max-width: 800px;
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
