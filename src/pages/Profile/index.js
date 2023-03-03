@@ -1,12 +1,9 @@
 import styled from "styled-components";
 import profileBackground from '../../assets/images/profile-background-img.jpg'
-import { updateUserData } from "../../redux/slices/user";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Header from "../../components/Header";
 import User from "./User";
 import { Outlet } from "react-router-dom";
-import motionAPI from '../../axios/motionAPI';
 
 //--------Style---------
 const Container = styled.div`
@@ -17,7 +14,6 @@ const Container = styled.div`
 `;
 
 const Background = styled.div`
-    /* margin-top: 80px; */
     background-image: url(${props => props.userDataBanner || profileBackground});
     background-position: center;
     width: 100%;
@@ -25,8 +21,9 @@ const Background = styled.div`
 `;
 
 const Main = styled.div`
-    width: 1152px;
-    margin-top: 180px;
+    max-width: 1152px;
+    width: 100%;
+    margin-top: 120px;
     margin-bottom: 100px;
     border-radius: 4px;
     position: absolute;
@@ -34,32 +31,6 @@ const Main = styled.div`
 
 //--------Profile Page---------
 const Profile = () => {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (!localStorage.getItem('token')) {
-            return;
-        }
-
-        const getMe = async () => {
-            try {
-                const config = {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    },
-                };
-
-                const response = await motionAPI.get("users/me", config);
-                dispatch(updateUserData(response.data));
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        getMe();
-    }, []);
-
     const userData = useSelector(state => state.user.userData);
 
     return (

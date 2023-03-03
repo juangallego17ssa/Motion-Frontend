@@ -39,95 +39,99 @@ const DivStyled = styled.div`
             }
         }
     }
-    .form {
-        margin: 126px auto;
+
+    .form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    form {
+        
+        margin: 126px auto 0px;
         padding: 0 26px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
     
-        @media (min-width: 0px) and (max-width: 700px) {
-            margin: auto;
-            padding: 25px;
-        }
-    
-        .form-inputs {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 400px;
-    
-            .form-title {
-                font-weight: 500;
-                font-size: 40px;
-            
-                @media (min-width: 0px) and (max-width: 700px) {
-                    font-size: 30px;
+            .form-inputs {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 400px;
+        
+                .form-title {
+                    font-weight: 500;
+                    font-size: 40px;
+                
+                    @media (min-width: 0px) and (max-width: 700px) {
+                        font-size: 30px;
+                    }
                 }
-            }
-    
-            .input-password {
-                margin-bottom: 170px;
-            
-                @media (min-width: 0px) and (max-width: 700px) {
-                    margin-bottom: 80px;
+        
+                .input-password {
+                    margin-bottom: 170px;
+                
+                    @media (min-width: 0px) and (max-width: 700px) {
+                        margin-bottom: 80px;
+                    }
                 }
-            }
 
-            .success-icon img{
-                height: 81px;
-                width: 81px;
-                margin: 60px
+                .success-icon img{
+                    height: 81px;
+                    width: 81px;
+                    margin: 60px
 
-            }
+                }
 
-            .success-message {
+                .success-message {
+                    text-align: center;
+                    width: 350 px;
+                }
                 
 
-            }
+                .input-email,
+                .input-password {
+                    width: 288px;
+                    height: 42px;
+                    margin-top: 53px;
+                    padding: 0px 0px 16px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.17);
+                    display: flex;
+                    flex-direction: row;
             
-
-            .input-email,
-            .input-password {
-                width: 288px;
-                height: 42px;
-                margin-top: 53px;
-                padding: 0px 0px 16px;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.17);
-                display: flex;
-                flex-direction: row;
-        
-                @media (max-width: 400px) {
-                    width: 220px;
-                }
+                    @media (max-width: 400px) {
+                        width: 220px;
+                    }
 
 
-                img{
-                    object-fit:contain
+                    img{
+                        object-fit:contain
+                    }
+
+            
+                    ::placeholder {
+                        color: black;
+                    }
+            
+                    input {
+                        border: none;
+                        margin-left: 24px;
+                        width: 100%;
+                    }
+            
+                    input:focus {
+                        outline: none;
+                    }
                 }
 
-        
-                ::placeholder {
-                    color: black;
+                .placeholder-password{
+                    border:none;
                 }
-        
-                input {
-                    border: none;
-                    margin-left: 24px;
-                    width: 100%;
-                }
-        
-                input:focus {
-                    outline: none;
-                }
-            }
-
-            .placeholder-password{
-                border:none;
             }
         }
-    }
+    
 
     .step-container {
         padding: 25px;

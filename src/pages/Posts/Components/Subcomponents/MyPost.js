@@ -1,7 +1,11 @@
+import { useState } from "react"
 import styled from "styled-components"
 import avatar from '../../../../assets/images/users/jennifer.png'
 import menu from '../../../../assets/svgs/menu.svg'
-
+import {MdDelete} from "react-icons/md"
+import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import motionAPI from "../../../../axios/motionAPI"
 
 
 const MyPostStyled = styled.div`
@@ -64,6 +68,10 @@ const MyPostStyled = styled.div`
             height:100%;
             align-items:flex-start;
             justify-content: center;
+
+            img{
+                cursor: pointer;
+            }
         }
 
 
@@ -94,9 +102,47 @@ const MyPostStyled = styled.div`
 
     
 `
+const ProfileBox = styled.div`
+    z-index: 1;
+    /* box-sizing: border-box; */
+    padding:0.5rem 0 ;
+    position: absolute;
+    margin: 50px 0px 0px 350px;
+    width: 180px;
+    border-radius: 4px;
+    background-color: #FFF;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    .link{
+        /* border: 1px solid green; */
+        justify-content: center;
+        align-items: center;
+        padding: .8rem 2rem;
+        display:grid;
+        grid-template-columns: 1fr 3fr;
+        text-align: center;
+        text-decoration: none;
+        opacity:0.5;
+        color: black;
+        cursor: pointer;
+        :hover{
+            background-color: #F2F2F2;
+            opacity: 1;
+        }
+    }
+    .icon{
+        opacity: 0.9;
+        transform: scale(1.5);
+        cursor: pointer;
+        
+    }
+`
+
+
 
 const MyPost = (props) => {
-    console.log(props.post)
+
+
+    const [ShowProfile, setShowPofile] = useState(false)
     const firstName = props.post.user.first_name
     const lastName = props.post.user.last_name
     const avatar = props.post.user.avatar
@@ -125,8 +171,40 @@ const MyPost = (props) => {
     const timeAgo = getTimeAgo()
     const content = props.post.content
     
+
+
+    const navigate = useNavigate()
+    const deletePost = async () =>{
+
+
+            // declare config file
+            const myConfig = {
+            headers: {
+                "Authorization":`Bearer ${localStorage.getItem("token")}`,
+            },
+            method: "delete",
+        };
+                
+        // Fetch the data and save the token in the local storage
+        try {
+            const response = (await motionAPI(`/social/posts/${props.post.id}`, myConfig)).data;
+            navigate("/")
+        } catch (exception) {
+            console.log(exception)
+        }
+
+    }
+
+
+
     return(
     <MyPostStyled>
+                {ShowProfile && (
+            <ProfileBox>
+                {/*<Link className="link" to={'/profile'}><BiUser className="icon" />Profile</Link>*/}
+                <div className="link" onClick={deletePost}><MdDelete className="icon" onClick={deletePost} />Delete</div>
+            </ProfileBox>
+        )}
         <div className="post1 post">
             <div className="headerPost">
                 <div className="headerLeft">
@@ -138,7 +216,7 @@ const MyPost = (props) => {
                 </div>
                     
                 <div className="headerRight">
-                    <img src={menu} alt="menu icon" />
+                    {props.isMine ? <img src={menu} alt="menu icon" onClick={()=>setShowPofile(!ShowProfile)}/> : ""}
                 </div>
                     
             </div>
@@ -155,6 +233,7 @@ const MyPost = (props) => {
             <div className="repost post"></div>
             <div className="footerPost"></div>
         </div>
+
     </MyPostStyled>
 )
 

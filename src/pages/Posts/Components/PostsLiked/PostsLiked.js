@@ -6,6 +6,7 @@ import motionAPI from "../../../../axios/motionAPI";
 
 const PostsLiked = () => {
   const [postArray, setPostArray] = useState([]);
+  const [myPostArray, setMyPostArray] = useState([]);
   const token = localStorage.getItem("token");
 
   //// on load, get postArray
@@ -24,8 +25,10 @@ const PostsLiked = () => {
 
     // send axios request
     try {
-      const response = await motionAPI("social/posts/likes/", myConfig);
-      setPostArray(response.data.results);
+      const response1 = await motionAPI("social/posts/me/", myConfig);
+      const response2 = await motionAPI("social/posts/likes/", myConfig);
+      setMyPostArray(response1.data.results);
+      setPostArray(response2.data.results);
     } catch (exception) {
       console.log(exception);
     }
@@ -33,7 +36,7 @@ const PostsLiked = () => {
 
   return (
     <PostsContainer>
-        <Posts postArray={postArray} filter={"liked"} />
+        <Posts myPostArray={myPostArray} postArray={postArray} filter={"liked"} />
     </PostsContainer>
   );
 };

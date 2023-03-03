@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { Button, Location, Name, NavLinkItem, Number, Tag, TagContainer, Text, TextAbout, UserAbout, UserContactDetails, UserContainer, UserDetails, UserContact, UserInfo, UserInfoLeft, UserInfoRight, UserLeftContainer, UserNumbers, UserRightContainer } from "./User.styles";
 import UserAvatar from "../../components/UserAvatar";
 
-
 const User = ({ userData }) => {
   const navigate = useNavigate();
   const handleEditClick = () => {
