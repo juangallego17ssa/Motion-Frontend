@@ -50,7 +50,7 @@ const UserLocation = styled.p`
 
 //------------- Component -------------// 
 export default function ReceivedRequest(props) {
-    console.log(props)
+    // console.log(props)
   return (
              <Friend>
                 <UserAvatar userData={props} isHeaderAvatar isSmallAvatar={true} />

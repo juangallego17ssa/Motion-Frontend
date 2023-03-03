@@ -60,7 +60,7 @@ const SignUp = () => {
       }
     } catch (exception) {
       if (exception.response.data.email[0] === "This email is taken") {
-        setError("This email is taken!");
+        window.alert("This email is taken!");
       } else {
         setError("Error!");
       }

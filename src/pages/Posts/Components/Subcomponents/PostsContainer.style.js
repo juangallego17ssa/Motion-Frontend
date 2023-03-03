@@ -15,12 +15,21 @@ export const PostsContainer = styled.div`
     .posts{
         margin-top: 30px;
         display: flex;
-        flex-flow: wrap;
+        
         height: 100%;
         width: 90%;
         background-color:#F2F2F2;
 
-
+        .left{
+            display: flex;
+            flex-flow: column;
+        }
+        .right{
+            display: flex;
+            flex-flow: column;
+        }
+    
 }
+
 `
 
