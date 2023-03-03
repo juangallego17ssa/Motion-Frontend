@@ -25,7 +25,7 @@ const ProfileFollowing = () => {
     if (!localStorage.getItem('token')) {
       return;
     }
-    console.log('aqui')
+    // console.log('aqui')
     const getFolling = async () => {
       try {
         const config = {
