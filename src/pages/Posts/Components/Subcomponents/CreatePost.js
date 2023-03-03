@@ -12,7 +12,6 @@ import UserAvatar from '../../../../components/UserAvatar'
 
 const CreatePost = (props) => {
 
-    console.log(props)
     //////// Visual components
 
     //// Shows the create post view
