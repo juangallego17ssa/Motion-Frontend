@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import UserAvatar from '../UserAvatar';
-
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { removeRequestData } from '../../redux/slices/request';
 //  >>>>>> icon <<<<<<<
 import { BiTimeFive} from 'react-icons/bi'
 import axios from 'axios';
+import request from '../../redux/slices/request';
 
 
 
@@ -47,8 +50,10 @@ const UserLocation = styled.p`
 
 //------------- Component -------------// 
 export default function SentRequest(props) {
+     const requests = useSelector(state=>state.request.requestsData)
+     const dispatch = useDispatch()
    
-    const cancleRequest = async() => {
+    const deleteFriendRequest = async() => {
         const config={
             headers: { 
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -60,6 +65,13 @@ export default function SentRequest(props) {
         catch(error){console.log(error)}
     }
 
+    const cancelRequest =()=>{
+        deleteFriendRequest()
+        // dispatch(removeRequestData(requests.results))
+        // console.log(requests.results)
+    }
+    
+
   return (
              <Friend>
                 <UserAvatar userData={props} isHeaderAvatar isSmallAvatar={true} />
@@ -69,7 +81,7 @@ export default function SentRequest(props) {
                      <UserLocation>{props.location?props.location:'unknown location'}</UserLocation>
                  </div>
                  <div className="button-container">
-                     <BiTimeFive className="icon" onClick={cancleRequest}/>
+                     <BiTimeFive className="icon" onClick={cancelRequest}/>
                  </div>
              </Friend>   
   );

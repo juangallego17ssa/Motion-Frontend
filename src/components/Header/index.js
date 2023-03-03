@@ -247,6 +247,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                              location = {request.requester.location}
                              avatar = {request.requester.avatar}
                              className='notice' 
+                             requests={requests}
                              
                              />
                                 )}
@@ -259,6 +260,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                                  last_name={request.receiver.last_name}
                                  location = {request.receiver.location}
                                  avatar = {request.receiver.avatar}
+                                 requests = {requestsFromUser}
                                  />)}
 
                         </NotificationBox>
