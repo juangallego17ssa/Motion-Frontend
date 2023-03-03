@@ -254,6 +254,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                             <h2>Sent request</h2>
                             {requestsFromUser?.map(request=>
                                  <SentRequest key={request.id} 
+                                 id={request.id}
                                  first_name={request.receiver.first_name}
                                  last_name={request.receiver.last_name}
                                  location = {request.receiver.location}

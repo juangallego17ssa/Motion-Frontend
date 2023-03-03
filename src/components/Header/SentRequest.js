@@ -4,6 +4,7 @@ import UserAvatar from '../UserAvatar';
 
 //  >>>>>> icon <<<<<<<
 import { BiTimeFive} from 'react-icons/bi'
+import axios from 'axios';
 
 
 
@@ -44,10 +45,20 @@ const UserLocation = styled.p`
 `
 
 
-
 //------------- Component -------------// 
 export default function SentRequest(props) {
-    // console.log(props)
+   
+    const cancleRequest = async() => {
+        const config={
+            headers: { 
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+        try{
+            await axios.delete(`https://motion.propulsion-home.ch/backend/api/social/friends/requests/${props.id}/`,config)
+        }
+        catch(error){console.log(error)}
+    }
 
   return (
              <Friend>
@@ -58,7 +69,7 @@ export default function SentRequest(props) {
                      <UserLocation>{props.location?props.location:'unknown location'}</UserLocation>
                  </div>
                  <div className="button-container">
-                     <BiTimeFive className="icon"/>
+                     <BiTimeFive className="icon" onClick={cancleRequest}/>
                  </div>
              </Friend>   
   );
