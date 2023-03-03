@@ -10,6 +10,7 @@ const Container = styled.div`
     max-width: 1152px;
     display: flex;
     flex-wrap: wrap;
+    gap:33px;
 
     @media (max-width: 1152px) {
     max-width: 800px;
