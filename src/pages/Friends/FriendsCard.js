@@ -109,7 +109,7 @@ const User = styled.p`
   }
 `
 //-------Component--------->
-export default function FriendsCard({ user, func }) {
+export default function FriendsCard({ user, onFetchFollowing, onFetchFriends }) {
   const dispatch = useDispatch()
 
   const userData = useSelector(state => state.user.userData);
@@ -143,8 +143,8 @@ export default function FriendsCard({ user, func }) {
     setIsFollowing(!isFollowing)
     await postUser()
     // console.log(user)
-    if (func) {
-      func();
+    if (onFetchFollowing) {
+      onFetchFollowing();
     }
   }
 
@@ -199,10 +199,15 @@ export default function FriendsCard({ user, func }) {
   const handleAddFriend = () => {
     sendFriendRequest()
     setIsFriend(!isFriend)
+    if (onFetchFriends) {
+      onFetchFriends();
+    }
   };
 
   const handleDeleteFriend = () => {
-
+    if (onFetchFriends) {
+      onFetchFriends();
+    }
   }
 
   return (

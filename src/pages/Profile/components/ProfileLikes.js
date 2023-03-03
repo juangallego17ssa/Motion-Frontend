@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import motionAPI from '../../../axios/motionAPI'
 import FriendsCard from "../../Friends/FriendsCard";
@@ -10,9 +11,10 @@ const Container = styled.div`
 `;
 
 const ProfileLikes = () => {
+  const dispatch = useDispatch();
   const [likedPosts, setLikedPosts] = useState([]);
 
-  useEffect(() => {
+  const fetchLikes = () => {
     if (!localStorage.getItem('token')) {
       return;
     }
@@ -34,7 +36,9 @@ const ProfileLikes = () => {
     }
 
     getLikedPosts();
-  }, []);
+  }
+
+  useEffect(fetchLikes, []);
 
   return (
     <Container>

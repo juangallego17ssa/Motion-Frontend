@@ -9,7 +9,7 @@ const Container = styled.div`
     /* display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 33px; */
-    padding-top: 34px;
+    padding: 34px 0;
     max-width: 1152px;
     display: flex;
     justify-content: center;
@@ -30,7 +30,7 @@ const ProfileFollowing = () => {
       return;
     }
     console.log('aqui')
-    const foo = async () => {
+    const getFolling = async () => {
       try {
         const config = {
           headers: {
@@ -47,11 +47,10 @@ const ProfileFollowing = () => {
       }
     }
 
-    foo();
+    getFolling();
   }
 
   useEffect(fetchFollowing, []);
-
 
   return (
     <Container>
@@ -59,7 +58,7 @@ const ProfileFollowing = () => {
         following
           ?
           following.map((user) => {
-            return <FriendsCard user={user} key={user.id} func={fetchFollowing} />
+            return <FriendsCard user={user} key={user.id} onFetchFollowing={fetchFollowing} />
           })
           :
           null
