@@ -63,7 +63,8 @@ const UserEdit = () => {
   };
 
   const handleDeleteAccountClick = () => {
-    console.log('delete');
+    const userEmail = userData.email;
+    deleteUserAccount(userEmail);
   };
 
   const handleSaveClick = async (e) => {
@@ -114,6 +115,22 @@ const UserEdit = () => {
       console.log(error);
     }
   };
+
+  const deleteUserAccount = async (dataToUpdate) => {
+    const data = JSON.stringify(dataToUpdate)
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    };
+    try {
+      const res = await motionAPI.delete('users/me/', data, config);
+      dispatch(updateUserData({}));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
 
