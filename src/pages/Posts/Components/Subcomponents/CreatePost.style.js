@@ -26,7 +26,8 @@ export const CreatePostStyled = styled.div`
                 height: 60px;
                 width: 60px;
                 /* border: 1px solid purple; */
-                border-radius: 50%
+                border-radius: 50%;
+                object-fit: cover;
             }
 
             .createPostInput{
@@ -98,6 +99,7 @@ export const CreatePostStyled = styled.div`
                 img{
                     height: 60px;
                     width: 60px;
+                    
                 }
 
                 .createPostInput{
