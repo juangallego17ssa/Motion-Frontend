@@ -50,7 +50,7 @@ const ProfilePosts = () => {
         posts
           ?
           posts.map((post) => {
-            console.log(post)
+            // console.log(post)
             return (
               <div>
                 <MyPost post={post} />
