@@ -1,11 +1,10 @@
 import styled from "styled-components"
-import {BiLinkAlt} from "react-icons/bi"
-import {IoIosCloseCircle} from "react-icons/io"
+import { BiLinkAlt } from "react-icons/bi"
+import { IoIosCloseCircle } from "react-icons/io"
 
 export const CreatePostStyled = styled.div`
 
     background-color: white;
-    margin: 0px 0px 30px 30px;
     /* width: 20%;
     min-width: 560px; */
     width: 560px;
@@ -66,14 +65,14 @@ export const CreatePostStyled = styled.div`
         position: absolute;
         top: -162px;
         left: -0px;
-        display:${props=>props.showCreatePost?"flex":"none"};
+        display:${props => props.showCreatePost ? "flex" : "none"};
 
     }
 
 
     .createPostElement{
         position:relative;
-        display:${props=>props.showCreatePost?"flex":"none"};
+        display:${props => props.showCreatePost ? "flex" : "none"};
         flex-direction:column;
         background-color: white;
         /* margin: 30px; */
@@ -198,7 +197,7 @@ export const MiniImage = styled.div`
     margin-left: 6px;
     border-radius: 5px;
     background-color:rgb(100,100,100,0.5);
-    background-image: url(${props=>props.image.url});
+    background-image: url(${props => props.image.url});
     background-size: cover;
 
 

@@ -1,20 +1,18 @@
 import { useState } from "react"
 import styled from "styled-components"
-import avatar from '../../../../assets/images/users/jennifer.png'
 import menu from '../../../../assets/svgs/menu.svg'
-import {MdDelete} from "react-icons/md"
+import { MdDelete } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
 import motionAPI from "../../../../axios/motionAPI"
-import {FcLike, FcLikePlaceholder} from "react-icons/fc"
+import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 
 
 const MyPostStyled = styled.div`
-
     background-color: white;
-    margin: 0px 0px 30px 30px;
     width: 560px;
     border-radius: 3px;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
+    padding: 10px 0;
 
     .headerPost{
         margin: 30px;
@@ -181,18 +179,18 @@ const MyPost = (props) => {
     const lastName = props.post.user.last_name
     const avatar = props.post.user.avatar
     const created = new Date(props.post.created)
-    const image1 = props.post.images[0] ? props.post.images[0].image :""
-    const image2 = props.post.images[1] ? props.post.images[1].image :""
-    const image3 = props.post.images[2] ? props.post.images[2].image :""
-    const image4 = props.post.images[3] ? props.post.images[3].image :""
+    const image1 = props.post.images[0] ? props.post.images[0].image : ""
+    const image2 = props.post.images[1] ? props.post.images[1].image : ""
+    const image3 = props.post.images[2] ? props.post.images[2].image : ""
+    const image4 = props.post.images[3] ? props.post.images[3].image : ""
     const [userLiked, setUserLiked] = useState(props.post.logged_in_user_liked)
     const postId = props.post.id
     const now = new Date()
-    const minutesAgo = Math.abs(now-created)/1000/60
-    const hoursAgo = minutesAgo/60
-    const daysAgo = hoursAgo/24
+    const minutesAgo = Math.abs(now - created) / 1000 / 60
+    const hoursAgo = minutesAgo / 60
+    const daysAgo = hoursAgo / 24
     const getTimeAgo = () => {
-        if (minutesAgo<=5){
+        if (minutesAgo <= 5) {
             return "just now"
         } else if (minutesAgo < 60) {
             return Math.floor(minutesAgo) + " minutes ago"
@@ -206,21 +204,21 @@ const MyPost = (props) => {
     }
     const timeAgo = getTimeAgo()
     const content = props.post.content
-    
+
 
 
     const navigate = useNavigate()
-    const deletePost = async () =>{
+    const deletePost = async () => {
 
 
-            // declare config file
-            const myConfig = {
+        // declare config file
+        const myConfig = {
             headers: {
-                "Authorization":`Bearer ${localStorage.getItem("token")}`,
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
             },
             method: "delete",
         };
-                
+
         // Fetch the data and save the token in the local storage
         try {
             const response = (await motionAPI(`/social/posts/${props.post.id}`, myConfig)).data;
@@ -232,78 +230,78 @@ const MyPost = (props) => {
     }
 
 
-    const handleLike =  async () =>{
+    const handleLike = async () => {
 
 
         // declare config file
         const myConfig = {
-        headers: {
-            "Authorization":`Bearer ${localStorage.getItem("token")}`,
-        },
-        method: "post",
-    };
-            
-    try {
-        const response = (await motionAPI(`/social/posts/toggle-like/${postId}/`, myConfig)).data;
-        setUserLiked(!userLiked)
-    } catch (exception) {
-        console.log(exception)
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+            method: "post",
+        };
+
+        try {
+            const response = (await motionAPI(`/social/posts/toggle-like/${postId}/`, myConfig)).data;
+            setUserLiked(!userLiked)
+        } catch (exception) {
+            console.log(exception)
+        }
+
     }
 
-}
 
-
-    return(
-    <MyPostStyled>
-                {ShowProfile && (
-            <ProfileBox>
-                {/*<Link className="link" to={'/profile'}><BiUser className="icon" />Profile</Link>*/}
-                <div className="link" onClick={deletePost}><MdDelete className="icon" onClick={deletePost} />Delete</div>
-            </ProfileBox>
-        )}
-        <div className="post1 post">
-            <div className="headerPost">
-                <div className="headerLeft">
-                    <div className="avatarDiv"><img src={avatar} alt="user-avatar"/></div>
-                    <div className="nameAndDate">
-                        <span className="userFullName">{firstName + " " + lastName}</span> 
-                        <span className="datePost">{timeAgo}</span> 
-                    </div>
-                </div>
-                    
-                <div className="headerRight">
-                    {props.isMine ? <img src={menu} alt="menu icon" onClick={()=>setShowPofile(!ShowProfile)}/> : ""}
-                </div>
-                    
-            </div>
-            <div className="textPost">
-                {content}
-            </div>
-            {image1 ?   <div className="imagePost">
-                            <img src={image1} />
-                            <img src={image2} />
-                            <img src={image3} />
-                            <img src={image4} />
+    return (
+        <MyPostStyled>
+            {ShowProfile && (
+                <ProfileBox>
+                    {/*<Link className="link" to={'/profile'}><BiUser className="icon" />Profile</Link>*/}
+                    <div className="link" onClick={deletePost}><MdDelete className="icon" onClick={deletePost} />Delete</div>
+                </ProfileBox>
+            )}
+            <div className="post1 post">
+                <div className="headerPost">
+                    <div className="headerLeft">
+                        <div className="avatarDiv"><img src={avatar} alt="user-avatar" /></div>
+                        <div className="nameAndDate">
+                            <span className="userFullName">{firstName + " " + lastName}</span>
+                            <span className="datePost">{timeAgo}</span>
                         </div>
-            : ""
-        }
-            <div className="picturesPost"></div>
-            <div className="repost post"></div>
-            <div className="footerPost">
-                    <div className="like">
-                    {!props.isMine ? 
-                    <>
-                        {userLiked?<LikeIcon onClick={handleLike}/>:<NotLikeIcon onClick={handleLike}/>}
-                        <span>Like</span>
-                    </> 
-                    : ""}
-                        
                     </div>
-            </div>
-        </div>
 
-    </MyPostStyled>
-)
+                    <div className="headerRight">
+                        {props.isMine ? <img src={menu} alt="menu icon" onClick={() => setShowPofile(!ShowProfile)} /> : ""}
+                    </div>
+
+                </div>
+                <div className="textPost">
+                    {content}
+                </div>
+                {image1 ? <div className="imagePost">
+                    <img src={image1} />
+                    <img src={image2} />
+                    <img src={image3} />
+                    <img src={image4} />
+                </div>
+                    : ""
+                }
+                <div className="picturesPost"></div>
+                <div className="repost post"></div>
+                <div className="footerPost">
+                    <div className="like">
+                        {!props.isMine ?
+                            <>
+                                {userLiked ? <LikeIcon onClick={handleLike} /> : <NotLikeIcon onClick={handleLike} />}
+                                <span>Like</span>
+                            </>
+                            : ""}
+
+                    </div>
+                </div>
+            </div>
+
+        </MyPostStyled>
+    )
 
 }
 
