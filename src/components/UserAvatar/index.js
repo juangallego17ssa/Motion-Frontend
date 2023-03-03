@@ -5,7 +5,6 @@ const Avatar = styled.div`
   height: ${props => props.isSmallAvatar ? "40px" : "100px"};
   font-size: ${props => props.isSmallAvatar ? "20px" : "40px"};
   margin-bottom: 12px;
-  border: 1px solid grey;
   display: flex;
   justify-content: center;
   align-items: center;
