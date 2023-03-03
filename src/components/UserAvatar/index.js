@@ -4,6 +4,7 @@ const Avatar = styled.div`
   width: ${props => props.isSmallAvatar ? "40px" : "100px"};
   height: ${props => props.isSmallAvatar ? "40px" : "100px"};
   font-size: ${props => props.isSmallAvatar ? "20px" : "40px"};
+  border: ${props => props.noAvatar ? "1px solid black" : "none"};
   margin-bottom: 12px;
   display: flex;
   justify-content: center;
@@ -24,7 +25,7 @@ const UserAvatar = ({ userData, isSmallAvatar }) => {
           ?
           <Avatar avatarURL={userData.avatar} isSmallAvatar={isSmallAvatar} />
           :
-          <Avatar isSmallAvatar={isSmallAvatar} >{userData.first_name?.charAt(0).toUpperCase()}</Avatar>
+          <Avatar noAvatar isSmallAvatar={isSmallAvatar} >{userData.first_name?.charAt(0).toUpperCase()}</Avatar>
       )
       :
       null
