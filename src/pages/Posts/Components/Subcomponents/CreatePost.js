@@ -1,5 +1,4 @@
 import { CreatePostStyled, MiniImage, MyCloseImage, MylinkIcon } from './CreatePost.style'
-import jennifer from '../../../../assets/images/users/jennifer.png'
 import sendButton from '../../../../assets/images/send_button.png'
 import addPictureIcon from '../../../../assets/images/add_picture.png'
 import { useState } from "react"
@@ -106,13 +105,13 @@ const CreatePost = (props) => {
     const firstName = useSelector( (state) => state.user.userData.first_name)
     const avatar = useSelector( (state) => state.user.userData.avatar) 
 
-    // let box = document.querySelector('.mainPostContainer');
-    // console.log(box)
+
+        
 
 
 return(
     <>
-    <CreatePostStyled showCreatePost={showCreatePost} isImages={myPostImages.length>0}>
+    <CreatePostStyled showCreatePost={showCreatePost} isImages={myPostImages.length>0} >
         
         <div className="createPostElementContainer">
             <div className="createPostElementLeft">

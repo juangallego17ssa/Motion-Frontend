@@ -6,6 +6,7 @@ import {MdDelete} from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import motionAPI from "../../../../axios/motionAPI"
+import {FcLike, FcLikePlaceholder} from "react-icons/fc"
 
 
 const MyPostStyled = styled.div`
@@ -34,10 +35,11 @@ const MyPostStyled = styled.div`
                 border-radius: 50%;
 
                 img{
-                    display: inline;
-                    margin: 0 auto;
-                    height: 100%;
-                    width: auto;
+                    height: 40px;
+                    width: 40px;
+                    /* border: 1px solid purple; */
+                    border-radius: 50%;
+                    object-fit: cover;
                 }
             }
 
@@ -100,6 +102,23 @@ const MyPostStyled = styled.div`
         }
     }
 
+    .footerPost{
+        height: 100 px;
+        width: 100%;
+        background-color: white;
+        display: flex;
+        align-items:center;
+
+        .like{
+            margin:15px 30px;
+            display: flex;
+            align-items: center;
+
+            span{
+                margin-left:15px;
+            }
+        }
+    }
     
 `
 const ProfileBox = styled.div`
@@ -137,6 +156,21 @@ const ProfileBox = styled.div`
     }
 `
 
+const LikeIcon = styled(FcLike)`
+    height:30px;
+    width: 30px;
+    color: rgb(180,180,180);
+    cursor: pointer;
+`
+const NotLikeIcon = styled(FcLikePlaceholder)`
+    height:30px;
+    width: 30px;
+    color: rgb(180,180,180);
+    cursor: pointer;
+`
+
+
+
 
 
 const MyPost = (props) => {
@@ -151,6 +185,8 @@ const MyPost = (props) => {
     const image2 = props.post.images[1] ? props.post.images[1].image :""
     const image3 = props.post.images[2] ? props.post.images[2].image :""
     const image4 = props.post.images[3] ? props.post.images[3].image :""
+    const [userLiked, setUserLiked] = useState(props.post.logged_in_user_liked)
+    const postId = props.post.id
     const now = new Date()
     const minutesAgo = Math.abs(now-created)/1000/60
     const hoursAgo = minutesAgo/60
@@ -196,6 +232,26 @@ const MyPost = (props) => {
     }
 
 
+    const handleLike =  async () =>{
+
+
+        // declare config file
+        const myConfig = {
+        headers: {
+            "Authorization":`Bearer ${localStorage.getItem("token")}`,
+        },
+        method: "post",
+    };
+            
+    try {
+        const response = (await motionAPI(`/social/posts/toggle-like/${postId}/`, myConfig)).data;
+        setUserLiked(!userLiked)
+    } catch (exception) {
+        console.log(exception)
+    }
+
+}
+
 
     return(
     <MyPostStyled>
@@ -223,15 +279,27 @@ const MyPost = (props) => {
             <div className="textPost">
                 {content}
             </div>
-            <div className="imagePost">
-                <img src={image1} />
-                <img src={image2} />
-                <img src={image3} />
-                <img src={image4} />
-            </div>
+            {image1 ?   <div className="imagePost">
+                            <img src={image1} />
+                            <img src={image2} />
+                            <img src={image3} />
+                            <img src={image4} />
+                        </div>
+            : ""
+        }
             <div className="picturesPost"></div>
             <div className="repost post"></div>
-            <div className="footerPost"></div>
+            <div className="footerPost">
+                    <div className="like">
+                    {!props.isMine ? 
+                    <>
+                        {userLiked?<LikeIcon onClick={handleLike}/>:<NotLikeIcon onClick={handleLike}/>}
+                        <span>Like</span>
+                    </> 
+                    : ""}
+                        
+                    </div>
+            </div>
         </div>
 
     </MyPostStyled>
