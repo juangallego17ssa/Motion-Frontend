@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import motionAPI from '../../../axios/motionAPI'
+import { updateFollowingNumber } from "../../../redux/slices/user";
 import FriendsCard from "../../Friends/FriendsCard";
 
 const Container = styled.div`
@@ -21,14 +23,14 @@ const Container = styled.div`
 `;
 
 const ProfileFollowing = () => {
+  const dispatch = useDispatch();
   const [following, setFollowing] = useState([]);
-
-  useEffect(() => {
+  const fetchFollowing = () => {
     if (!localStorage.getItem('token')) {
       return;
     }
-
-    const getFollowing = async () => {
+    console.log('aqui')
+    const foo = async () => {
       try {
         const config = {
           headers: {
@@ -39,13 +41,17 @@ const ProfileFollowing = () => {
 
         const response = await motionAPI.get("social/followers/following", config);
         setFollowing(response.data.results);
+        dispatch(updateFollowingNumber(response.data.results.length));
       } catch (error) {
         console.log(error);
       }
     }
 
-    getFollowing();
-  }, []);
+    foo();
+  }
+
+  useEffect(fetchFollowing, []);
+
 
   return (
     <Container>
@@ -53,7 +59,7 @@ const ProfileFollowing = () => {
         following
           ?
           following.map((user) => {
-            return <FriendsCard user={user} key={user.id} />
+            return <FriendsCard user={user} key={user.id} func={fetchFollowing} />
           })
           :
           null

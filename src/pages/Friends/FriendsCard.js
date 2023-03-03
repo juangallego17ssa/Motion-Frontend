@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { BiCheck } from "react-icons/bi";
 import UserAvatar from '../../components/UserAvatar'
@@ -109,7 +109,7 @@ const User = styled.p`
   }
 `
 //-------Component--------->
-export default function FriendsCard({ user }) {
+export default function FriendsCard({ user, func }) {
   const dispatch = useDispatch()
 
   const userData = useSelector(state => state.user.userData);
@@ -139,60 +139,62 @@ export default function FriendsCard({ user }) {
   };
 
 
-    const followHandler = ()=>{
-      setIsFollowing(!isFollowing)
-      postUser()
-      // console.log(user)
-      
+  const followHandler = async () => {
+    setIsFollowing(!isFollowing)
+    await postUser()
+    // console.log(user)
+    if (func) {
+      func();
     }
+  }
 
-//>>>>>>>>>> Send friend request <<<<<<<<<<<
-const sendFriendRequest = async()=>{
-  var data = JSON.stringify({
-    "logged_in_user_sent_fr": true
-  });
-  
-  var config = {
-    method: 'post',
-  maxBodyLength: Infinity,
-    url:` https://motion.propulsion-home.ch/backend/api/social/friends/request/${user.id}/`,
-    headers: { 
-      'Authorization': `Bearer ${localStorage.getItem('token')}`, 
-      'Content-Type': 'application/json'
-    },
-    data : data
-  };
-  
-  axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-  // console.log(user)
-}
+  //>>>>>>>>>> Send friend request <<<<<<<<<<<
+  const sendFriendRequest = async () => {
+    var data = JSON.stringify({
+      "logged_in_user_sent_fr": true
+    });
 
-// const deleteFriend = async()=>{
-//   var data = '';
-//   var config = {
-//   method: 'delete',
-//   url: `https://motion.propulsion-home.ch/backend/api/social/friends/requests/${user.id}/`,
-//   headers: { 
-//     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3ODU4MjM3LCJqdGkiOiI3YThkMzUzZjU3MTY0MTBmYmVjYzhmNGZkMjRlMjE4OCIsInVzZXJfaWQiOjIyNDV9.A1NVzg1BtEIGPVCQcxzbRK385oIdIDvPFJqfukQ0GdA'
-//   },
-//   data : data
-// };
+    var config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: ` https://motion.propulsion-home.ch/backend/api/social/friends/request/${user.id}/`,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
 
-// axios(config)
-// .then(function (response) {
-//   console.log(JSON.stringify(response.data));
-// })
-// .catch(function (error) {
-//   console.log(error);
-// });
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    // console.log(user)
+  }
 
-// }
+  // const deleteFriend = async()=>{
+  //   var data = '';
+  //   var config = {
+  //   method: 'delete',
+  //   url: `https://motion.propulsion-home.ch/backend/api/social/friends/requests/${user.id}/`,
+  //   headers: { 
+  //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3ODU4MjM3LCJqdGkiOiI3YThkMzUzZjU3MTY0MTBmYmVjYzhmNGZkMjRlMjE4OCIsInVzZXJfaWQiOjIyNDV9.A1NVzg1BtEIGPVCQcxzbRK385oIdIDvPFJqfukQ0GdA'
+  //   },
+  //   data : data
+  // };
+
+  // axios(config)
+  // .then(function (response) {
+  //   console.log(JSON.stringify(response.data));
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+
+  // }
 
   const handleAddFriend = () => {
     sendFriendRequest()
@@ -215,10 +217,10 @@ const sendFriendRequest = async()=>{
           <Button className='true' onClick={followHandler} check={user.logged_in_user_is_following} >FOLLOWING</Button> :
           <Button className='false' onClick={followHandler}>FOLLOW</Button>}
         {/* <Button onClick={followHandler}>{isFollowing?`FOLLOWING`:`FOLLOW`}</Button> */}
-        {user.logged_in_user_is_friends?
+        {user.logged_in_user_is_friends ?
           <Button onClick={handleDeleteFriend}><BiCheck />FRIEND</Button> :
-          user.logged_in_user_sent_fr?
-            <Button className='pending'>PENDING</Button>:
+          user.logged_in_user_sent_fr ?
+            <Button className='pending'>PENDING</Button> :
             <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
       </ButtonContainer>
       <FlexDiv>
