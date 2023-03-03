@@ -1,29 +1,5 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import profileBackground from '../../assets/images/profile-background-img.jpg'
-
-export const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #F2F2F2;
-`;
-
-export const Background = styled.div`
-    margin-top: 80px;
-    background-image: url(${props => props.userDataBanner || profileBackground});
-    background-position: center;
-    width: 100%;
-    height: 240px;
-`;
-
-export const Main = styled.div`
-    width: 1152px;
-    margin-top: 200px;
-    margin-bottom: 100px;
-    border-radius: 4px;
-    position: absolute;
-`;
 
 export const UserContainer = styled.div`
   background-color: #FFFFFF;
@@ -36,12 +12,13 @@ export const UserContainer = styled.div`
 
 export const UserLeftContainer = styled.div`
   border-right: 2px solid #f2f2f2;
-  min-width: 320px;
+  max-width: 320px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap:40px;
+  gap: 40px;
 `;
 
 export const UserDetails = styled.div`
@@ -77,7 +54,6 @@ export const Button = styled.button`
 `;
 
 export const UserRightContainer = styled.div`
-  min-width: 832px;
   display: flex;
   flex-direction: column;
   align-items: center;

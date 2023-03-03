@@ -1,16 +1,15 @@
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import motionAPI from "../../axios/motionAPI";
-import { updateUserData } from "../../redux/slices/user";
 import { BsFillCameraFill } from 'react-icons/bs';
-import { RxCross1 } from 'react-icons/rx';
-import { MdFileUpload } from 'react-icons/md';
 import { ImBin2 } from 'react-icons/im';
-import { BackgroundEditContainer, Button, ButtonsContainer, EditMain, Form, FormField, ImageContainer, Input, InputGrid, InputImg, Label, LabelImg, LeftContainer, Popover, Tag, ThingsUserLikes, ThingsUserLikesContainer } from "./UserEdit.styles";
+import { MdFileUpload } from 'react-icons/md';
+import { RxCross1 } from 'react-icons/rx';
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import motionAPI from "../../axios/motionAPI";
 import Header from "../../components/Header";
-import { Background, Container, Main } from "./User.styles";
 import UserAvatar from "../../components/UserAvatar";
+import { updateUserData } from "../../redux/slices/user";
+import { Background, BackgroundEditContainer, Button, ButtonsContainer, Container, EditMain, Form, FormField, ImageContainer, Input, InputGrid, InputImg, Label, LabelImg, LeftContainer, Main, Popover, Tag, ThingsUserLikes, ThingsUserLikesContainer } from "./UserEdit.styles";
 
 const UserEdit = () => {
   const formRef = useRef();
@@ -19,7 +18,7 @@ const UserEdit = () => {
   const userData = useSelector(state => state.user.userData);
 
   const [thingUserLikes, setThingUserLikes] = useState('');
-  const [thingsUserLikesList, setThingsUserLikesList] = useState(userData ? userData.things_user_likes : []);
+  const [thingsUserLikesList, setThingsUserLikesList] = useState(userData && userData.things_user_likes ? userData.things_user_likes : []);
   const [isOpenAvatarPopover, setIsOpenAvatarPopover] = useState(false);
 
   const handleThingsChange = e => {
@@ -64,7 +63,8 @@ const UserEdit = () => {
   };
 
   const handleDeleteAccountClick = () => {
-    console.log('delete');
+    const userEmail = userData.email;
+    deleteUserAccount(userEmail);
   };
 
   const handleSaveClick = async (e) => {
@@ -115,6 +115,22 @@ const UserEdit = () => {
       console.log(error);
     }
   };
+
+  const deleteUserAccount = async (dataToUpdate) => {
+    const data = JSON.stringify(dataToUpdate)
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    };
+    try {
+      const res = await motionAPI.delete('users/me/', data, config);
+      dispatch(updateUserData({}));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
 
