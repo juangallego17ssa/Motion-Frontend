@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+
 import { BiCheck } from "react-icons/bi";
 import UserAvatar from '../../components/UserAvatar'
-
 //-------STYLE--------->
 
 const StyledFriendCard = styled.div`
@@ -66,11 +66,16 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
+    position: relative;
+    box-shadow: 0 0 2px rgba(0,0,0,.3);
     width: 120px; height: 40px;
     border-radius: 30px;
-    border: 1px solid rgba(0,0,0,.5);
+    border: none;
     font-size: 0.8rem; font-weight: 500;  
     background-color: #fff;
+    &.pending{
+      background-color: #F2F2F2;
+    }
     &.false{
       background-color: #fff;
     }
@@ -80,6 +85,7 @@ const Button = styled.button`
     }
     
         :hover{
+        cursor: pointer;
         background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
         border: none;
         color: #FFF;
@@ -104,6 +110,7 @@ const User = styled.p`
 `
 //-------Component--------->
 export default function FriendsCard({ user }) {
+  const dispatch = useDispatch()
 
   const userData = useSelector(state => state.user.userData);
   const [isFollowing, setIsFollowing] = useState(user.logged_in_user_is_following);
@@ -123,9 +130,9 @@ export default function FriendsCard({ user }) {
     };
 
     axios(config)
-      // .then(response => {
-      //   console.log(JSON.stringify(response.data));
-      // })
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
       .catch(function (error) {
         console.log(error);
       });
@@ -166,10 +173,35 @@ const sendFriendRequest = async()=>{
   // console.log(user)
 }
 
+// const deleteFriend = async()=>{
+//   var data = '';
+//   var config = {
+//   method: 'delete',
+//   url: `https://motion.propulsion-home.ch/backend/api/social/friends/requests/${user.id}/`,
+//   headers: { 
+//     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3ODU4MjM3LCJqdGkiOiI3YThkMzUzZjU3MTY0MTBmYmVjYzhmNGZkMjRlMjE4OCIsInVzZXJfaWQiOjIyNDV9.A1NVzg1BtEIGPVCQcxzbRK385oIdIDvPFJqfukQ0GdA'
+//   },
+//   data : data
+// };
+
+// axios(config)
+// .then(function (response) {
+//   console.log(JSON.stringify(response.data));
+// })
+// .catch(function (error) {
+//   console.log(error);
+// });
+
+// }
+
   const handleAddFriend = () => {
     sendFriendRequest()
     setIsFriend(!isFriend)
   };
+
+  const handleDeleteFriend = () => {
+
+  }
 
   return (
     <StyledFriendCard >
@@ -183,9 +215,11 @@ const sendFriendRequest = async()=>{
           <Button className='true' onClick={followHandler} check={user.logged_in_user_is_following} >FOLLOWING</Button> :
           <Button className='false' onClick={followHandler}>FOLLOW</Button>}
         {/* <Button onClick={followHandler}>{isFollowing?`FOLLOWING`:`FOLLOW`}</Button> */}
-        {isFriend ?
-          <Button onClick={handleAddFriend}><BiCheck />FRIEND</Button> :
-          <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
+        {user.logged_in_user_is_friends?
+          <Button onClick={handleDeleteFriend}><BiCheck />FRIEND</Button> :
+          user.logged_in_user_sent_fr?
+            <Button className='pending'>PENDING</Button>:
+            <Button onClick={handleAddFriend}>ADD FRIEND</Button>}
       </ButtonContainer>
       <FlexDiv>
         <p>{user.about_me}</p>

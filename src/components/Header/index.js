@@ -2,7 +2,8 @@
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { updateRequestData } from "../../redux/slices/request";
 import { useState , useEffect } from "react";
 import axios from "axios";
 
@@ -29,7 +30,7 @@ const StyledHeader = styled.header`
     height: 80px;
     width: 100vw;
     position: sticky; top: 0; left: 0;
-    box-shadow: 0 0 10px rgba(0,0,0,.5);
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
     padding: 2rem;
     gap: 5em;
     color: black;
@@ -38,6 +39,7 @@ const StyledHeader = styled.header`
     align-items: center;
     justify-content: flex-start;
     .icon{
+        cursor: pointer;
         transform: scale(1.8);
         opacity: 0.3;
         :hover{
@@ -91,7 +93,8 @@ const UserDiv = styled.div`
       display: flex;
       .notification_num{
         position: relative; top: -1rem; left:3px;
-        width: 20px; height: 20px;
+        width: 20px;
+        height: 20px;
         background: linear-gradient(132.96deg, #C468FF 3.32%, #6E91F6 100%);
         border-radius: 20px;
         span{
@@ -108,7 +111,7 @@ const ProfileBox = styled.div`
     /* box-sizing: border-box; */
     padding:0.5rem 0 ;
     position: absolute; 
-    right:10%; top: 120%;
+    right:5%; top: 100%;
     width: 180px;
     border-radius: 4px;
     background-color: #FFF;
@@ -125,6 +128,7 @@ const ProfileBox = styled.div`
         opacity:0.5;
         color: black;
         :hover{
+            cursor: pointer;
             background-color: #F2F2F2;
             opacity: 1;
         }
@@ -135,18 +139,6 @@ const ProfileBox = styled.div`
 
     }
 `;
-
-const UserName = styled.h1`
-    display: flex;
-    width: 40px; height:40px;
-    background-color: rgba(0,0,0,0.3);
-    border-radius: 30px;
-    align-items: center;
-    justify-content: center;
-    color: #FFF;
-    cursor: default;
-`;
-
 const NotificationBox = styled.div`
     /* border: 1px solid blue; */
     border-radius:4px;
@@ -162,6 +154,9 @@ const NotificationBox = styled.div`
 `;
 
 const Header = () => {
+    const dispatch = useDispatch()
+    const requestsData = useSelector(state => state.request.requestsData)
+    
     const userData = useSelector(state => state.user.userData);
     const [ShowNotification, setShowNotification] = useState(false);
     const [ShowProfile, setShowProfile] = useState(false);
@@ -185,7 +180,7 @@ useEffect(()=>{
       try {
         const res = await axios.get(`https://motion.propulsion-home.ch/backend/api/social/friends/requests/`, config);
         setRequests(res.data)
-        // console.log(res.data)
+        dispatch(updateRequestData(res.data))
       } catch (error) {
         console.log(error);
       }
@@ -194,16 +189,14 @@ useEffect(()=>{
   getRequests()
   },[])
 
-const requestsToUser = requests.results?.filter(result => {
-    // console.log(result.requester)
-    if(result.receiver.id === userData.id ){return result.requester;} 
+const requestsToUser = requestsData.results?.filter(result => {
+    if(result.receiver.id === userData.id && result.status === 'P'){return result.requester;} 
 });
-const requestsFromUser = requests.results?.filter(result => {
-    // console.log(result.receiver)
-    if(result.receiver.id !== userData.id ){return result.receiver;} 
+
+const requestsFromUser = requestsData.results?.filter(result => {
+    if(result.receiver.id !== userData.id && result.status === 'P'){return result.receiver;} 
 })
 
-// console.log(requestsToUser)
   
 const totalNotification = requestsToUser?.length+requestsFromUser?.length
 
@@ -228,16 +221,18 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
             {/*   ========= Notification drop-down box =========  */}
             <UserDiv>
                 <div className="notification">
-                    <IoMdNotifications className="icon" onClick={() => setShowNotification(!ShowNotification)} />
+                    <IoMdNotifications className="icon" onClick={() => {setShowNotification(!ShowNotification);setShowProfile(false)}} />
 
                     <div className="notification_num">
-                        <span >{totalNotification?totalNotification:""}</span>
+                        {requests? <span >{totalNotification}</span>:''}
+                       
                     </div>
                     {ShowNotification && (
                         <NotificationBox>
                             <h2>Received request</h2>
                             {requestsToUser?.map(request => 
                              <ReceivedRequest key={request.id}
+                             id={request.id}
                              first_name={request.requester.first_name}
                              last_name={request.requester.last_name}
                              location = {request.requester.location}
@@ -275,7 +270,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                     )}
 
                 </div>
-                <BiDotsVerticalRounded className="icon" onClick={()=>setShowProfile(!ShowProfile)}/>
+                <BiDotsVerticalRounded className="icon" onClick={()=>{setShowProfile(!ShowProfile);setShowNotification(false)}}/>
             </UserDiv>
         </StyledHeader >
     )

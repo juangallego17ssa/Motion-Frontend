@@ -78,7 +78,7 @@ useEffect(()=>{
     };
     try {
       const res = await axios.get(`https://motion.propulsion-home.ch/backend/api/social/friends/requests/`, config);
-      console.log(res.data)
+      // console.log(res.data)
   
     } catch (error) {
       console.log(error);
