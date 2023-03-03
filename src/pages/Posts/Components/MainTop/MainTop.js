@@ -23,8 +23,8 @@ const MainTop = () => {
         // friend request /social/friends/request/{user_id}/
 
         try {
-            const response = (await motionAPI(`/social/friends/request/2245/`, myConfig)).data;
-            window.alert("sent")
+            const response = (await motionAPI(`/social/friends/request/2318/`, myConfig)).data;
+            // window.alert("sent")
         } catch (exception) {
             console.log(exception)
         }
@@ -32,7 +32,9 @@ const MainTop = () => {
     }
 
 
-
+    const gotoPingPong = () => {
+        navigate()
+    }
 
 
 
@@ -42,7 +44,7 @@ const MainTop = () => {
         <DivMainTop className="mainTop">
             <div className="navigation">
                 <div className="leftNav">
-                    <div className="searchLogo">
+                    <div className="searchLogo" onDoubleClick={gotoPingPong}>
                     <SearchLogo />
                     </div>
                     <div className="searchText" onClick={sendfriendRequest}>Search posts...</div>
