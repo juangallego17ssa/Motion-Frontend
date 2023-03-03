@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 
 const CreatePost = (props) => {
 
-    
+
     //////// Visual components
 
     //// Shows the create post view
@@ -106,13 +106,11 @@ const CreatePost = (props) => {
     const avatar = useSelector( (state) => state.user.userData.avatar) 
 
 
-        
-
 
 return(
     <>
     <CreatePostStyled showCreatePost={showCreatePost} isImages={myPostImages.length>0} >
-        
+
         <div className="createPostElementContainer">
             <div className="createPostElementLeft">
                 <img src={avatar} alt="user-avatar"/>

@@ -23,7 +23,10 @@ export const PostsContainer = styled.div`
         .left{
             display: flex;
             flex-flow: column;
-            gap: 30px;
+
+            .postNew{
+                margin-bottom:30px;
+            }
         }
         .right{
             display: flex;

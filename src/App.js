@@ -25,6 +25,7 @@ import Validation from "./pages/SignUp/Components/Validation/Validation";
 import UserEdit from "./pages/UserEdit/UserEdit";
 import { updateUserData } from "./redux/slices/user";
 
+
 function App() {
   const dispatch = useDispatch();
 
