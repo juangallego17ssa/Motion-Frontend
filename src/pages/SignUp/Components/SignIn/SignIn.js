@@ -19,9 +19,15 @@ import { useState } from "react"
 
 // import useNavigate to handle the button signUp
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { updateUserData } from "../../../../redux/slices/user"
 
 
 const SignIn = () => {
+
+
+    const dispatch = useDispatch()
+
 
     //// controlled form
     // email input
@@ -74,7 +80,8 @@ const SignIn = () => {
             const token = response.access;
             const user = response.user
             localStorage.setItem("token", token);
-            localStorage.setItem("user", user);
+            localStorage.setItem("user", JSON.stringify(user));
+            dispatch(updateUserData(JSON.stringify(user)))
             navigate("/")
             
         } catch (exception) {

@@ -1,6 +1,13 @@
 import styled from "styled-components"
+import {AiOutlineSearch} from "react-icons/ai"
 
 
+export const SearchLogo = styled(AiOutlineSearch)`
+    color: black;
+    height:20px;
+    width: 20px;
+
+`
 
 export const DivMainTop = styled.div`
 
@@ -28,7 +35,7 @@ export const DivMainTop = styled.div`
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
 
 
             .searchLogo{
@@ -47,7 +54,7 @@ export const DivMainTop = styled.div`
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                @include grayText;
+                color: rgb(124, 124, 125);
                 justify-content: space-between;
             }
 

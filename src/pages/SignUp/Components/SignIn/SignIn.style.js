@@ -39,167 +39,99 @@ const DivStyled = styled.div `
             }
         }
     }
-    
-    .form {
-        margin: 126px auto;
+
+    .form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    form {
+        
+        margin: 126px auto 0px;
         padding: 0 26px;
         display: flex;
         flex-wrap:wrap;
         justify-content: space-around;
         
     
-        @media (min-width: 0px) and (max-width: 700px) {
-            margin: auto;
-            padding: 25px;
-        }
-    
-        .form-inputs {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 400px;
-            
-            
-    
-            .form-title {
-                font-weight: 400;
-                font-size: 40px;
-                line-height: 46.88px;
-
-                @media (min-width: 0px) and (max-width: 700px) {
-                    font-size: 30px;
-                }
-            }
-    
-            
-            .input-container{
-                width: 100%;
-                display:grid;
-                grid-template-columns:1fr 1fr;
-                column-gap: 40px;
-
-                .val-width{
-                    display:grid;
-                    grid-column-start:1;
-                    grid-column-end:-1;
-                    width: 100%;
-                    padding-bottom:20px;
-                
-                
-    
-                    .input-code{
-                        font-size: 16px;
-                        font-weight:400;
-                        line-height:26px;
-                        color: #000000;
-                        padding: 10px 0;
-                        outline: none;
-                        border: none;
-                        font-size: 14px;
-                        border-bottom: 1px solid grey;
-                        
-                    }
-    
-    
-                }
-                
-                .email-and-user {
-                    display:grid;
-                    font-size: 12px;
-                    font-weight:400;
-                    line-height:14.06px;
-                    color: #000000;
-                    mix-blend-mode: normal;
-                    opacity: 0.5;
-                    
-                }
-
-                .name-and-pass {
-                    font-size: 16px;
-                    font-weight:400;
-                    line-height:26px;
-                    color: #000000;
-                    padding: 10px 0;
-                    outline: none;
-                    border: none;
-                    font-size: 14px;
-                    border-bottom: 1px solid grey;
-                    }
-                
-            
-
-            .input-password {
-                margin-bottom: 170px;
-            
-                @media (min-width: 0px) and (max-width: 700px) {
-                    margin-bottom: 80px;
-                }
-            }
-
-            .success-icon img{
-                height: 81px;
-                width: 81px;
-                margin: 60px
-
-            }
-
-            .success-message {
-                
-
-            }
-            
-
-            .input-email,
-            .input-password {
-                width: 288px;
-                height: 42px;
-                margin-top: 53px;
-                padding: 0px 0px 16px;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.17);
+            .form-inputs {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
+                align-items: center;
+                height: 400px;
         
-                @media (max-width: 400px) {
-                    width: 220px;
-                }
-
-
-                img{
-                    object-fit:contain
-                }
-
-        
-                ::placeholder {
-                    color: black;
+                .form-title {
+                    font-weight: 500;
+                    font-size: 40px;
+                
+                    @media (min-width: 0px) and (max-width: 700px) {
+                        font-size: 30px;
+                    }
                 }
         
-                input {
-                    border: none;
-                    margin-left: 24px;
-                    width: 100%;
+                .input-password {
+                    margin-bottom: 170px;
+                
+                    @media (min-width: 0px) and (max-width: 700px) {
+                        margin-bottom: 80px;
+                    }
                 }
-        
-                input:focus {
-                    outline: none;
-                }
-            }
 
-            .placeholder-password{
-                border:none;
+                .success-icon img{
+                    height: 81px;
+                    width: 81px;
+                    margin: 60px
+
+                }
+
+                .success-message {
+                    text-align: center;
+                    width: 350 px;
+                }
+                
+
+                .input-email,
+                .input-password {
+                    width: 288px;
+                    height: 42px;
+                    margin-top: 53px;
+                    padding: 0px 0px 16px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.17);
+                    display: flex;
+                    flex-direction: row;
+            
+                    @media (max-width: 400px) {
+                        width: 220px;
+                    }
+
+
+                    img{
+                        object-fit:contain
+                    }
+
+            
+                    ::placeholder {
+                        color: black;
+                    }
+            
+                    input {
+                        border: none;
+                        margin-left: 24px;
+                        width: 100%;
+                    }
+            
+                    input:focus {
+                        outline: none;
+                    }
+                }
+
+                .placeholder-password{
+                    border:none;
+                }
             }
         }
-
-
-
-
-
-    }
     
-    .form-btn{
-        display:flex;
-        justify-content:center;
-        width:100%;
-    }
 
 
 
