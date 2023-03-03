@@ -8,6 +8,14 @@ export const UserContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 34px;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 1152px) {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 10px 20px rgba(0, 0, 0, 0.05);
+  }
 `;
 
 export const UserLeftContainer = styled.div`
@@ -19,12 +27,26 @@ export const UserLeftContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 40px;
+
+  @media (max-width: 1152px) {
+    max-width: 700px;
+    border: none;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 40px 0 40px;
+  }
 `;
 
 export const UserDetails = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 1152px) {
+    padding: 20px 20px 0 20px;
+    flex-direction: row;
+    gap: 20px
+  }
 `;
 
 export const Name = styled.p`
@@ -58,6 +80,11 @@ export const UserRightContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1152px) {
+    max-width: 800px;
+    border: none;
+  }
 `;
 
 export const UserInfo = styled.div`
@@ -66,6 +93,12 @@ export const UserInfo = styled.div`
   padding: 40px 60px;
   display: grid;
   grid-template-columns: 3fr 2fr;
+
+  @media (max-width: 1152px) {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+  }
 `;
 
 export const UserInfoLeft = styled.div`
@@ -84,6 +117,10 @@ export const TextAbout = styled.p`
   width: 320px;
   min-height: 30px;
   font-size: 16px;
+
+  @media (max-width: 1152px) {
+    width: auto;
+  }
 `;
 
 export const UserContactDetails = styled.div`
@@ -128,6 +165,10 @@ export const UserNumbers = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 78px;
+
+  @media (max-width: 1152px) {
+    gap: 40px;
+  }
 `;
 
 export const NavLinkItem = styled(NavLink)`

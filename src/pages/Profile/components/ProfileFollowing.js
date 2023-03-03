@@ -4,9 +4,20 @@ import motionAPI from '../../../axios/motionAPI'
 import FriendsCard from "../../Friends/FriendsCard";
 
 const Container = styled.div`
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 33px; */
+    padding-top: 34px;
+    max-width: 1152px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;  
     gap: 33px;
+
+    @media (max-width: 1152px) {
+    max-width: 800px;
+    margin: auto;
+    }
 `;
 
 const ProfileFollowing = () => {

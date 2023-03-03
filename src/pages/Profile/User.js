@@ -13,8 +13,10 @@ const User = ({ userData }) => {
       <UserLeftContainer>
         <UserDetails>
           <UserAvatar userData={userData} />
-          <Name>{userData.first_name} {userData.last_name}</Name>
-          <Location>{userData.location}</Location>
+          <div>
+            <Name>{userData.first_name} {userData.last_name}</Name>
+            <Location>{userData.location}</Location>
+          </div>
         </UserDetails>
         <Button onClick={handleEditClick}>Edit profile</Button>
       </UserLeftContainer>
