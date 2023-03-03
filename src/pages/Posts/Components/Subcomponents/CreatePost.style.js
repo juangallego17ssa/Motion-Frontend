@@ -66,6 +66,7 @@ export const CreatePostStyled = styled.div`
         top: -162px;
         left: -0px;
         display:${props=>props.showCreatePost?"flex":"none"};
+
     }
 
 
