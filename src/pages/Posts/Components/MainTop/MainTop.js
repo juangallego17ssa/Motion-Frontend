@@ -9,26 +9,25 @@ const MainTop = () => {
     const sendfriendRequest = async () =>{
 
 
-            console.log("hey")
-            // declare config file
-            const myConfig = {
-            headers: {
-                "Authorization":`Bearer ${localStorage.getItem("token")}`,
-            },
-            method: "post",
-        };
+        //     // declare config file
+        //     const myConfig = {
+        //     headers: {
+        //         "Authorization":`Bearer ${localStorage.getItem("token")}`,
+        //     },
+        //     method: "post",
+        // };
                 
-        // Fetch the data and save the token in the local storage
+        // // Fetch the data and save the token in the local storage
 
-        // follow someone /social/followers/toggle-follow/{user_id}/
-        // friend request /social/friends/request/{user_id}/
+        // // follow someone /social/followers/toggle-follow/{user_id}/
+        // // friend request /social/friends/request/{user_id}/
 
-        try {
-            const response = (await motionAPI(`/social/followers/toggle-follow/2314/`, myConfig)).data;
-            window.alert("sent")
-        } catch (exception) {
-            console.log(exception)
-        }
+        // try {
+        //     const response = (await motionAPI(`/social/followers/toggle-follow/2315/`, myConfig)).data;
+        //     window.alert("sent")
+        // } catch (exception) {
+        //     console.log(exception)
+        // }
 
     }
 

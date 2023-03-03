@@ -9,7 +9,6 @@ const Posts = (props)=>{
 
     const myPostArray = props.myPostArray
     const postArray = props.postArray
-    console.log(postArray)
 
 
     return (

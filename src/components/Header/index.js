@@ -203,7 +203,7 @@ const requestsFromUser = requests.results?.filter(result => {
     if(result.receiver.id !== userData.id ){return result.receiver;} 
 })
 
-console.log(requestsToUser)
+// console.log(requestsToUser)
   
 const totalNotification = requestsToUser?.length+requestsFromUser?.length
 
@@ -231,7 +231,7 @@ const totalNotification = requestsToUser?.length+requestsFromUser?.length
                     <IoMdNotifications className="icon" onClick={() => setShowNotification(!ShowNotification)} />
 
                     <div className="notification_num">
-                        <span >{totalNotification}</span>
+                        <span >{totalNotification?totalNotification:""}</span>
                     </div>
                     {ShowNotification && (
                         <NotificationBox>

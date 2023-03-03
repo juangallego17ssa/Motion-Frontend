@@ -177,7 +177,6 @@ const MyPost = (props) => {
     const deletePost = async () =>{
 
 
-            console.log("hey")
             // declare config file
             const myConfig = {
             headers: {

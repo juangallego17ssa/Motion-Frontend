@@ -106,7 +106,9 @@ const CreatePost = (props) => {
     const firstName = useSelector( (state) => state.user.userData.first_name)
     const avatar = useSelector( (state) => state.user.userData.avatar) 
 
-        
+    // let box = document.querySelector('.mainPostContainer');
+    // console.log(box)
+
 
 return(
     <>
