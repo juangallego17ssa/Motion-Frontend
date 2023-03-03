@@ -10,6 +10,7 @@ export const CreatePostStyled = styled.div`
     width: 560px;
     border-radius: 3px;
     height: 120px;
+    margin-bottom: 30px;
 
     .createPostElementContainer {
         margin: 30px;
